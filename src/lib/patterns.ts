@@ -8,7 +8,14 @@ export interface Pattern {
   content: {
     description: string;
     designConsiderations: string;
-     relatedPatterns: string[];
+    relatedPatterns: string[];
+    relatedPatternDetails?: Record<
+      string,
+      {
+        title?: string;
+        description?: string;
+      }
+    >;
     examples: Array<{
       image: string;
       description: string;

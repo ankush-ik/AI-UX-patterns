@@ -26,8 +26,8 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
   // Build tabs array
   const tabs: { id: TabType; label: string }[] = [
     { id: "description", label: "Description" },
-    { id: "design-considerations", label: "Design Considerations" },
-    { id: "related-patterns", label: "Related Patterns" },
+    { id: "design-considerations", label: "Design considerations" },
+    { id: "related-patterns", label: "Related patterns" },
     ...(pattern.content.examples.length > 0 ? [{ id: "examples" as TabType, label: "Examples" }] : []),
   ];
 
@@ -82,7 +82,12 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
     }
   };
 
-  const renderMarkdownContent = (content: string) => {
+  const renderMarkdownContent = (
+    content: string,
+    options?: {
+      compactSectionHeadings?: boolean;
+    }
+  ) => {
     const lines = content.split("\n");
     const elements: JSX.Element[] = [];
     let currentParagraph: string[] = [];
@@ -114,13 +119,10 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
     const flushList = () => {
       if (currentList.length > 0) {
         elements.push(
-          <ul key={`ul-${key++}`} className="space-y-3 mb-6">
+          <ul key={`ul-${key++}`} className="mb-6 ml-6 list-disc space-y-3 text-gray-700">
             {currentList.map((item, i) => (
-              <li key={i} className="flex gap-3 text-gray-700">
-                <span className="text-gray-400 mt-1">•</span>
-                <span className="flex-1">
-                  {typeof item === "string" ? renderInlineMarkdown(item) : item}
-                </span>
+              <li key={i} className="pl-1 leading-relaxed marker:text-gray-400">
+                {typeof item === "string" ? renderInlineMarkdown(item) : item}
               </li>
             ))}
           </ul>
@@ -133,7 +135,18 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
       const trimmedLine = line.trim();
       if (trimmedLine.startsWith("### ")) {
         flushParagraph(); flushList();
-        elements.push(<h3 key={`h3-${key++}`} className="text-xl font-semibold mb-4 mt-8 first:mt-0 text-gray-900">{trimmedLine.substring(4)}</h3>);
+        elements.push(
+          <h3
+            key={`h3-${key++}`}
+            className={
+              options?.compactSectionHeadings
+                ? "text-lg font-semibold mb-3 mt-7 first:mt-0 text-gray-900"
+                : "text-xl font-semibold mb-4 mt-8 first:mt-0 text-gray-900"
+            }
+          >
+            {trimmedLine.substring(4)}
+          </h3>
+        );
       } else if (trimmedLine.match(/^\*\*[^*]+\*\*:/)) {
         flushParagraph();
         const m = trimmedLine.match(/^\*\*([^*]+)\*\*:\s*(.+)$/);
@@ -151,6 +164,57 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
 
     flushParagraph(); flushList();
     return <>{elements}</>;
+  };
+
+  const renderDesignConsiderationsContent = (content: string) => {
+    const lines = content.split("\n");
+    const items: { title: string; body: string }[] = [];
+    let currentTitle = "";
+    let currentBody: string[] = [];
+
+    const pushCurrent = () => {
+      if (!currentTitle) return;
+      items.push({
+        title: currentTitle,
+        body: currentBody.join(" ").trim(),
+      });
+      currentTitle = "";
+      currentBody = [];
+    };
+
+    lines.forEach((line) => {
+      const trimmed = line.trim();
+
+      if (trimmed.startsWith("### ")) {
+        pushCurrent();
+        currentTitle = trimmed.substring(4).replace(/[.:]+$/, "");
+        return;
+      }
+
+      if (trimmed === "") {
+        return;
+      }
+
+      if (currentTitle) {
+        currentBody.push(trimmed);
+      }
+    });
+
+    pushCurrent();
+
+    if (items.length === 0) {
+      return renderMarkdownContent(content, { compactSectionHeadings: true });
+    }
+
+    return (
+      <ul className="space-y-4">
+        {items.map((item, index) => (
+          <li key={`${item.title}-${index}`} className="text-gray-700 leading-relaxed">
+            <strong className="text-gray-900">{item.title}.</strong> {item.body}
+          </li>
+        ))}
+      </ul>
+    );
   };
 
   return (
@@ -209,51 +273,55 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
             </div>
 
             <div id="section-design-considerations" className="scroll-mt-20">
-              <h2 className="text-2xl font-bold mb-6 text-gray-900">Design Considerations</h2>
-              {renderMarkdownContent(pattern.content.designConsiderations)}
+              <h2 className="text-2xl font-bold mb-6 text-gray-900">Design considerations</h2>
+              {renderDesignConsiderationsContent(pattern.content.designConsiderations)}
             </div>
 
             {relatedPatterns.length > 0 && (
               <div id="section-related-patterns" className="scroll-mt-20">
                 <h2 className="text-2xl font-bold mb-6 text-gray-900">Related Patterns</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <ul className="space-y-6">
                   {relatedPatterns.map((relPattern) => (
-                    <Link
-                      key={relPattern.id}
-                      href={`/patterns/${relPattern.id}`}
-                      className="group block rounded-lg border border-gray-200 p-4 hover:border-gray-900 hover:shadow-md transition"
-                    >
-                      <h3 className="font-semibold text-gray-900 group-hover:text-gray-700">{relPattern.title}</h3>
-                      <p className="text-sm text-gray-500 mt-2">{relPattern.description}</p>
-                    </Link>
+                    <li key={relPattern.id} className="list-none">
+                      <h3 className="text-lg font-semibold text-gray-900">
+                        <Link
+                          href={`/patterns/${relPattern.id}`}
+                          className="transition hover:underline"
+                        >
+                          {pattern.content.relatedPatternDetails?.[relPattern.id]?.title ?? relPattern.title}
+                        </Link>
+                      </h3>
+                      <p className="mt-2 ml-6 leading-relaxed text-gray-600">
+                        {pattern.content.relatedPatternDetails?.[relPattern.id]?.description ?? relPattern.description}
+                      </p>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             )}
 
             {pattern.content.examples.length > 0 && (
               <div id="section-examples" className="scroll-mt-20">
                 <h2 className="text-2xl font-bold mb-6 text-gray-900">Examples</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <ul className="space-y-4">
                   {pattern.content.examples.map((example, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setSelectedImageIndex(index)}
-                      className="relative aspect-video overflow-hidden rounded-lg border border-gray-200 hover:border-gray-900 transition group"
-                    >
-                      <Image
-                        src={example.image}
-                        alt={example.description}
-                        fill
-                        sizes="(min-width: 768px) 50vw, 100vw"
-                        className="object-cover group-hover:scale-105 transition-transform"
-                      />
-                      <div className="absolute inset-0 flex items-end bg-gradient-to-t from-black/60 to-transparent p-4 opacity-0 group-hover:opacity-100 transition">
-                        <p className="text-white font-semibold">{example.description}</p>
-                      </div>
-                    </button>
+                    <li key={index} className="list-none">
+                      <button
+                        onClick={() => setSelectedImageIndex(index)}
+                        className="group -mx-2 w-[calc(100%+1rem)] rounded-lg px-2 py-2 text-left transition hover:bg-gray-50"
+                      >
+                        <div className="flex items-start gap-3">
+                          <span className="shrink-0 text-sm text-gray-500 underline decoration-gray-300 underline-offset-4 transition group-hover:text-gray-700 group-hover:decoration-gray-900">
+                            Open lightbox
+                          </span>
+                          <p className="leading-relaxed text-gray-700 transition group-hover:text-gray-900">
+                            {example.description}
+                          </p>
+                        </div>
+                      </button>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             )}
           </main>

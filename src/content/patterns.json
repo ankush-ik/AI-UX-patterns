@@ -67,6 +67,28 @@
           "suggestions",
           "preset-styles"
         ],
+        "relatedPatternDetails": {
+          "initial-cta": {
+            "title": "Initial CTA",
+            "description": "Make it frictionless to get started by including galleries near the initial CTA to help users avoid feeling intimidated by the blank canvas."
+          },
+          "templates": {
+            "title": "Templates",
+            "description": "When galleries contain examples of repeatable work, allow users to leverage examples as templates so they can produce something similar on their own."
+          },
+          "prompt-details": {
+            "title": "Prompt details",
+            "description": "To make the gallery more educational, use prompt transparency to reveal the prompt behind the example generation."
+          },
+          "suggestions": {
+            "title": "Suggestions",
+            "description": "Use suggestions alongside galleries to provide inline generation without requiring browsing."
+          },
+          "preset-styles": {
+            "title": "Preset styles",
+            "description": "Just as example galleries help users unblock their initiation creation, style pre-sets get users started with customizing their generations through parameters and references."
+          }
+        },
         "examples": [
           {
             "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d19458c9bae3c06a0253c2_gallery_copyai.webp",
