@@ -1,168 +1,422 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# AI Design Patterns
 
-## Getting Started
+> A comprehensive library of design patterns and interactions for AI-enabled user interfaces, with a production-ready CMS adapter system for flexible content management.
 
-First, run the development server:
+[![Next.js](https://img.shields.io/badge/next.js-16.2.1-black)](https://nextjs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
+[![React](https://img.shields.io/badge/React-19-blue)](https://react.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind%20CSS-3.4-06B6D4)](https://tailwindcss.com/)
+
+## 📋 Overview
+
+This project catalogs **foundational design patterns and UI interactions** to help teams design better experiences for AI-enabled interfaces. It explores how users construct prompts, interpret AI results, and interact with AI-powered features.
+
+Patterns are organized by category (Wayfinders, Prompt Actions, Settings, Results, etc.) and include:
+- Visual examples and use cases
+- Design considerations and best practices
+- Related patterns for cross-cutting concerns
+- Source references and inspiration links
+
+## ✨ Features
+
+- **56+ AI/UX Design Patterns** - Organized by category with detailed descriptions
+- **Interactive Pattern Gallery** - Browse, search, and explore patterns with rich media
+- **Content Admin Dashboard** - Audit pattern coverage, validate references, spot gaps
+- **Production-Ready CMS Architecture** - Flexible adapter pattern for seamless provider switching
+- **Static JSON APIs** - Export patterns for integration with external tools
+- **Optimized Images** - Next.js Image optimization with remote host support
+- **Type-Safe** - Full TypeScript support throughout
+- **Zero Lint Errors** - Production-ready code quality
+
+## 🚀 Quick Start
+
+### Prerequisites
+
+- Node.js 18+ 
+- npm or yarn
+
+### Installation
 
 ```bash
+# Clone the repository
+git clone https://github.com/ankush-ik/AI-UX-patterns.git
+cd AI-UX-patterns
+
+# Install dependencies
+npm install
+```
+
+### Development
+
+```bash
+# Start development server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-### Typography Source
+The app supports hot reload as you edit files.
 
-This project is configured to use **Noto IKEA Latin** globally via a stylesheet served by your Skapa MCP server.
-
-Set either the full stylesheet URL, or just the MCP base URL:
+### Build
 
 ```bash
-export NEXT_PUBLIC_SKAPA_FONT_STYLESHEET="http://<your-skapa-mcp-host>/fonts/noto-ikea-latin.css"
-# or
-export NEXT_PUBLIC_SKAPA_MCP_BASE_URL="http://<your-skapa-mcp-host>"
+# Create production build
+npm run build
+
+# Start production server
+npm start
 ```
 
-If `NEXT_PUBLIC_SKAPA_FONT_STYLESHEET` is not set, the app will automatically use:
-
-`$NEXT_PUBLIC_SKAPA_MCP_BASE_URL/fonts/noto-ikea-latin.css`
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-## Content Admin & CMS Architecture
-
-Phase 3 adds a local content-management surface at `/admin` with a production-ready CMS adapter pattern.
-
-### Admin Dashboard
-
-Use it to:
-
-- Audit pattern coverage by category
-- Spot patterns missing examples or source URLs
-- Validate related-pattern references
-- See which CMS provider is currently connected
-- Export the current dataset as JSON
-
-### CMS Adapter Pattern
-
-The app uses a flexible **CMS adapter pattern** to abstract content sources. This enables seamless switching between providers without changing application code.
-
-#### Supported Providers
-
-- **Local JSON** (default) ✓ Fully implemented
-  - Uses `src/content/patterns.json`
-  - Perfect for static sites and development
-  - No external dependencies
-
-- **Contentful** (template provided)
-  - Template in `src/lib/cms/contentfulAdapter.ts`
-  - Follow the implementation guide to activate
-
-- **Sanity** (coming soon)
-  - Template placeholder for future implementation
-
-#### Switching Providers
-
-To use Contentful instead of local JSON:
+### Linting
 
 ```bash
-# Set environment variables in .env.local
-export CMS_PROVIDER=contentful
-export CONTENTFUL_SPACE_ID=your_space_id
-export CONTENTFUL_ACCESS_TOKEN=your_api_token
+# Check code quality
+npm run lint
 ```
 
-That's it! The app automatically uses the configured provider. No code changes needed.
+## 📚 Usage
 
-#### Architecture
+### Viewing Patterns
 
-See [docs/CMS_ADAPTER.md](docs/CMS_ADAPTER.md) for:
-
-- Complete architecture explanation
-- How to implement a new adapter
-- Migration guide for adding new CMS providers
-- Performance considerations
-- Debugging and health checks
+1. **Home Page** - Browse all patterns organized by category
+2. **Pattern Details** - Click any pattern to see:
+   - Full description and design considerations
+   - Visual examples and use cases
+   - Related patterns
+   - Source URLs for further reading
+3. **Admin Dashboard** - Visit `/admin` to:
+   - View content coverage metrics
+   - Spot missing examples or source URLs
+   - Validate pattern relationships
+   - Export pattern data as JSON
 
 ### API Endpoints
 
-The app exposes static JSON endpoints:
+The app exposes static JSON endpoints for programmatic access:
 
-- `/api/categories` - All categories
-- `/api/patterns` - All patterns (with optional category inclusion)
-- `/api/patterns?include=category` - Patterns with enriched category data
-- `/api/patterns/[id]` - Single pattern details
-- `/api/patterns/[id]?include=category,related` - Pattern with related patterns
-- `/api/content-report` - Content health audit report
-- `/api/health` - CMS provider health check
+```bash
+# Get all categories
+GET /api/categories
 
-## Project Structure
+# Get all patterns
+GET /api/patterns
 
-### Core Application
+# Get patterns with category data
+GET /api/patterns?include=category
+
+# Get single pattern
+GET /api/patterns/[id]
+
+# Get pattern with related patterns
+GET /api/patterns/[id]?include=category,related
+
+# Get content health audit
+GET /api/content-report
+
+# Check CMS provider health
+GET /api/health
+```
+
+## 🗂️ Where Things Live
 
 ```
 src/
-├── app/
-│   ├── page.tsx                 # Home page (SSR with async content)
-│   ├── patterns/[id]/page.tsx  # Pattern detail page (SSR)
-│   ├── admin/page.tsx           # Content admin dashboard
-│   ├── api/
-│   │   ├── categories/          # Category list endpoint
-│   │   ├── patterns/            # Patterns endpoint (supports filtering)
-│   │   ├── patterns/[id]/       # Single pattern endpoint
-│   │   ├── content-report/      # Health audit report
-│   │   └── health/              # CMS provider health check
-│   └── globals.css
-├── components/
-│   ├── PatternCard.tsx          # Pattern card with image optimization
-│   ├── PatternDetailClient.tsx  # Client-side detail viewer
-│   ├── HomePageClient.tsx       # Client-side home page
-│   └── ...other components
+├── app/                         # Next.js App Router
+│   ├── page.tsx                # Home page with pattern gallery
+│   ├── patterns/[id]/page.tsx  # Pattern detail page
+│   ├── admin/page.tsx          # Content admin dashboard
+│   └── api/                    # JSON API endpoints
+├── components/                 # Reusable React components
+│   ├── PatternCard.tsx         # Pattern card display
+│   ├── PatternDetailClient.tsx # Rich detail viewer
+│   └── HomePageClient.tsx      # Client-side home interactions
 ├── lib/
-│   ├── patterns.ts              # Type definitions (Category, Pattern)
-│   ├── patternRepository.ts     # Unified data access layer
-│   ├── patternValidation.ts     # Content health checks
-│   ├── contentSource.ts         # JSON content import helper
-│   └── cms/                     # CMS adapter system
-│       ├── adapter.ts           # Interface & types
-│       ├── manager.ts           # Provider selection & singleton
-│       ├── localJsonAdapter.ts  # ✓ JSON implementation
-│       └── contentfulAdapter.ts # Template (not yet implemented)
+│   ├── patterns.ts             # Type definitions
+│   ├── patternRepository.ts    # Data access abstraction
+│   ├── patternValidation.ts    # Content health checks
+│   └── cms/                    # CMS adapter system
 ├── content/
-│   └── patterns.json            # File-backed content source
-└── utils/
-    └── patternResolver.ts       # Helper functions for pattern access
+│   └── patterns.json           # Pattern data (file-backed)
+└── utils/                      # Helper functions
 ```
 
-### Documentation
+See [Project Structure](#project-structure) below for detailed breakdown.
+
+## 🔌 Content Management
+
+This project uses a **flexible CMS adapter pattern** for content management. This means you can switch between different content sources without changing any application code.
+
+### Supported Providers
+
+- **Local JSON** (default) ✓ Production-ready
+  - Uses `src/content/patterns.json`
+  - Perfect for static sites and development
+  - No external dependencies
+  - Fast, deterministic builds
+
+- **Contentful** - Ready to implement
+  - Template provided in `src/lib/cms/contentfulAdapter.ts`
+  - Full guide in [docs/CMS_ADAPTER.md](docs/CMS_ADAPTER.md#creating-a-new-adapter)
+  - Connect via environment variables
+
+- **Sanity** - Coming soon
+  - Template placeholder for future implementation
+  - Use same environment-based approach
+
+### Setting a Provider
+
+Configure which content provider to use via environment variables:
+
+```bash
+# Use default local JSON (no config needed)
+npm run dev
+
+# Use Contentful
+export CMS_PROVIDER=contentful
+export CONTENTFUL_SPACE_ID=your_space_id
+export CONTENTFUL_ACCESS_TOKEN=your_read_token
+npm run dev
+```
+
+That's it! No code changes needed. The app automatically uses the configured provider.
+
+### How It Works
+
+- `src/lib/cms/adapter.ts` - Defines the interface all providers must implement
+- `src/lib/cms/manager.ts` - Selects provider based on environment
+- `src/lib/patternRepository.ts` - Unified data access layer (same interface regardless of provider)
+- `src/app/admin/page.tsx` - Shows which provider is currently active
+
+For implementation details, see [docs/CMS_ADAPTER.md](docs/CMS_ADAPTER.md).
+
+## 📡 Admin Dashboard
+
+## 📡 Admin Dashboard
+
+The admin dashboard at `/admin` provides insights into your content:
+
+- **Coverage Metrics** - Total patterns, categories, examples
+- **Content Gaps** - Patterns missing examples, source URLs, or related patterns
+- **Reference Validation** - Spot broken links and orphaned patterns
+- **Provider Info** - See which CMS is currently connected
+- **Data Export** - Export patterns as JSON for integration or migration
+
+## 🗂️ Project Structure
 
 ```
-docs/
-└── CMS_ADAPTER.md       # Complete CMS adapter pattern guide
+src/
+├── app/                         # Next.js App Router
+│   ├── page.tsx                # Home - gallery of all patterns
+│   ├── patterns/[id]/page.tsx  # Detail page for single pattern
+│   ├── admin/page.tsx          # Admin dashboard with health checks
+│   │
+│   └── api/                    # JSON API endpoints
+│       ├── categories/         # GET /api/categories
+│       ├── patterns/           # GET /api/patterns
+│       ├── patterns/[id]/      # GET /api/patterns/[id]
+│       ├── content-report/     # GET /api/content-report
+│       └── health/             # GET /api/health
+│
+├── components/                 # React components
+│   ├── PatternCard.tsx         # Pattern preview card
+│   ├── PatternDetailClient.tsx # Rich detail view (client)
+│   ├── HomePageClient.tsx      # Home page controller (client)
+│   ├── SidebarNav.tsx          # Category sidebar
+│   └── ...other components
+│
+├── lib/                        # Business logic & data layer
+│   ├── patterns.ts             # TypeScript type definitions
+│   ├── patternRepository.ts    # Unified data access (works with any CMS)
+│   ├── patternValidation.ts    # Content health checking
+│   ├── contentSource.ts        # JSON import helper
+│   │
+│   └── cms/                    # CMS adapter system
+│       ├── adapter.ts          # ICMSAdapter interface
+│       ├── manager.ts          # Provider selection
+│       ├── localJsonAdapter.ts # ✓ JSON provider (complete)
+│       └── contentfulAdapter.ts# Contentful template (to implement)
+│
+├── content/
+│   └── patterns.json           # All pattern data
+│
+├── utils/
+│   └── patternResolver.ts      # Helper functions
+│
+├── hooks/                      # React hooks
+│   ├── useIconResolver.ts
+│   ├── useScrollSpy.ts
+│   └── ...
+│
+└── public/                     # Static assets
 ```
 
-### Configuration
+### Key Files
 
+- **`src/lib/cms/`** - CMS adapter system (swap providers here)
+- **`src/content/patterns.json`** - Your content lives here (edit to update patterns)
+- **`src/app/admin/page.tsx`** - Admin dashboard (audit and manage content)
+- **`docs/CMS_ADAPTER.md`** - Complete CMS implementation guide
+
+## 🔌 API Reference
+
+All endpoints return static content (prerendered at build time). Use for integrations, migrations, or external tools.
+
+### GET /api/categories
+Returns all pattern categories.
+
+```json
+{
+  "categories": [
+    { "id": "wayfinders", "name": "Wayfinders", "description": "...", "icon": "..." },
+    ...
+  ],
+  "total": 5
+}
 ```
-.env.local.example      # Environment variable template
-next.config.ts          # Next.js config with image optimization
-next.config.js          # CommonJS config variant
+
+### GET /api/patterns
+Returns all patterns with optional filters.
+
+```bash
+GET /api/patterns                    # All patterns
+GET /api/patterns?category=wayfinders # By category
+GET /api/patterns?include=category   # With category data
+GET /api/patterns?q=search-term      # Search patterns
 ```
 
-To learn more about Next.js, take a look at the following resources:
+### GET /api/patterns/[id]
+Returns single pattern with optional relationships.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+GET /api/patterns/pattern-id                          # Basic
+GET /api/patterns/pattern-id?include=category,related # Full
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+### GET /api/content-report
+Returns comprehensive content health audit.
 
-## Deploy on Vercel
+```json
+{
+  "totalCategories": 5,
+  "totalPatterns": 56,
+  "patternsWithoutExamples": [...],
+  "brokenRelatedPatterns": [...],
+  "categoryHealth": [...],
+  ...
+}
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### GET /api/health
+CMS provider health check.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```json
+{
+  "status": "healthy",
+  "provider": "LocalJsonAdapter",
+  "timestamp": "2026-03-26T..."
+}
+```
+
+## 🎨 Customization
+
+### Typography
+
+This project can use **Noto IKEA Latin** font globally via a stylesheet. To enable:
+
+```bash
+# Set in .env.local
+export NEXT_PUBLIC_SKAPA_FONT_STYLESHEET="http://<your-font-host>/noto-ikea-latin.css"
+# or provide MCP base URL
+export NEXT_PUBLIC_SKAPA_MCP_BASE_URL="http://<your-font-host>"
+```
+
+### Image Optimization
+
+Remote image providers are configured in `next.config.ts`:
+
+```javascript
+images: {
+  remotePatterns: [
+    { hostname: 'cdn.prod.website-files.com' },
+    { hostname: 'images.unsplash.com' },
+  ]
+}
+```
+
+Add more hosts as needed for your pattern images.
+
+### Styling
+
+The project uses **Tailwind CSS** for styling. Modify `tailwind.config.js` to customize colors, spacing, fonts, etc.
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+```bash
+# Push to GitHub
+git push origin main
+
+# Deploy via Vercel UI or CLI
+vercel deploy
+```
+
+### Other Platforms
+
+The app builds to static HTML + prerendered pages. Deploy the `.next` output directory to any CDN or static hosting.
+
+```bash
+npm run build
+# Deploy `.next` folder to your host
+```
+
+## 📖 Learn More
+
+### CMS & Architecture
+- [CMS Adapter Pattern Guide](docs/CMS_ADAPTER.md) - Complete implementation guide
+
+### Framework & Tools
+- [Next.js Documentation](https://nextjs.org/docs)
+- [React Documentation](https://react.dev)
+- [Tailwind CSS Guide](https://tailwindcss.com/docs)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs/)
+
+## 🤝 Contributing
+
+Contributions are welcome! Whether it's new patterns, bug fixes, or improvements to the CMS adapter system.
+
+### Adding a New Pattern
+
+1. Add pattern definition to `src/content/patterns.json`
+2. Run `/admin` dashboard to audit coverage
+3. Test the detail page works correctly
+4. Submit pull request
+
+### Adding a CMS Provider
+
+1. Create a new adapter in `src/lib/cms/`
+2. Implement the `ICMSAdapter` interface
+3. Register in `src/lib/cms/manager.ts`
+4. Add environment variables to `.env.local.example`
+5. See [docs/CMS_ADAPTER.md](docs/CMS_ADAPTER.md#creating-a-new-adapter) for details
+
+### Development Guidelines
+
+- Use TypeScript for type safety
+- Run `npm run lint` before committing
+- Ensure `npm run build` passes
+- Follow existing code style
+
+## 📝 License
+
+This project is open source and available under the MIT License.
+
+## 🙋 Support
+
+- **Issues**: [GitHub Issues](https://github.com/ankush-ik/AI-UX-patterns/issues)
+- **Documentation**: See [docs/CMS_ADAPTER.md](docs/CMS_ADAPTER.md)
+- **Admin Dashboard**: Visit `/admin` for content insights
+
+---
+
+**Built with ❤️ for designing better AI experiences.**
