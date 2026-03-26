@@ -22,13 +22,14 @@ function createAdapter(): ICMSAdapter {
     case "local-json":
       return new LocalJsonAdapter();
 
-    case "contentful":
+    case "contentful": {
       const spaceId = process.env.CONTENTFUL_SPACE_ID;
       const accessToken = process.env.CONTENTFUL_ACCESS_TOKEN;
       if (!spaceId || !accessToken) {
         throw new Error("Missing CONTENTFUL_SPACE_ID or CONTENTFUL_ACCESS_TOKEN environment variables");
       }
       return new ContentfulAdapter(spaceId, accessToken);
+    }
 
     case "sanity":
       throw new Error('Sanity adapter not yet implemented. Use CMS_PROVIDER="local-json" for now.');

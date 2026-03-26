@@ -123,3 +123,10 @@ export async function getPatternReferenceCounts() {
 
   return counts;
 }
+
+export function resetCache() {
+  categoriesCache = null;
+  patternsCache = null;
+  patternIndex = null;
+  categoryIndex = null;
+}

@@ -1,17 +1,6 @@
-import { readFile, writeFile } from "fs/promises";
-import path from "path";
 import type { Pattern } from "@/lib/patterns";
-
-const CONTENT_FILE = path.join(process.cwd(), "src/content/patterns.json");
-
-async function readContent() {
-  const raw = await readFile(CONTENT_FILE, "utf-8");
-  return JSON.parse(raw) as { categories: unknown[]; patterns: Pattern[] };
-}
-
-async function writeContent(data: { categories: unknown[]; patterns: Pattern[] }) {
-  await writeFile(CONTENT_FILE, JSON.stringify(data, null, 2), "utf-8");
-}
+import { readContent, writeContent } from "@/lib/contentWriter";
+import { resetCache } from "@/lib/patternRepository";
 
 /**
  * PATCH /api/patterns/[id]/edit
@@ -49,6 +38,7 @@ export async function PATCH(
 
   data.patterns[index] = updated;
   await writeContent(data);
+  resetCache();
 
   return Response.json({ pattern: updated });
 }
@@ -72,6 +62,7 @@ export async function DELETE(
 
   data.patterns.splice(index, 1);
   await writeContent(data);
+  resetCache();
 
   return Response.json({ deleted: id });
 }

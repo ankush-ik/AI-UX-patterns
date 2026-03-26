@@ -3,7 +3,8 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Plus, Pencil } from "lucide-react";
-import type { Pattern, Category } from "@/lib/patterns";import { PatternEditor } from "@/components/PatternEditor";
+import type { Pattern, Category } from "@/lib/patterns";
+import { PatternEditor } from "@/components/PatternEditor";
 
 interface AdminPatternListProps {
   patterns: Pattern[];
