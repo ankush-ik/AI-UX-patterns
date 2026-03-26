@@ -6,6 +6,7 @@ import { useParams } from "next/navigation";
 import { patterns, categories } from "@/lib/patterns";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { SidebarNav } from "@/components/SidebarNav";
+import { getRelatedPatterns } from "@/utils/patternResolver";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 type TabType = "description" | "design-considerations" | "related-patterns" | "examples";
@@ -197,7 +198,7 @@ export default function PatternDetailPage() {
             <section id="section-related-patterns" className="scroll-mt-24">
               <h2 className="text-2xl font-bold mb-4 text-gray-900">Related Patterns</h2>
               <div className="space-y-4">
-                {pattern.content.relatedPatterns.map((related) => (
+                 {getRelatedPatterns(patternId).map((related) => (
                   <Link key={related.id} href={`/patterns/${related.id}`} className="block border rounded-xl p-6 hover:shadow-lg hover:-translate-y-1 transition-all bg-white">
                     <h3 className="text-xl font-semibold mb-2 text-gray-900 hover:text-blue-600 transition-colors">{related.title}</h3>
                     <p className="text-gray-500">{related.description}</p>
