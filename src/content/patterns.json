@@ -1341,25 +1341,35 @@
     },
     {
       "id": "action-plan",
-      "title": "Action Plan",
+      "title": "Action plan",
       "description": "Have the AI show the steps it will take to respond to the user's prompt before it executes its response",
-      "thumbnail": "https://images.unsplash.com/photo-1640077597161-3ba5101624ec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhY3Rpb24lMjBwbGFuJTIwc3RyYXRlZ3klMjBzdGVwc3xlbnwxfHx8fDE3NzEzMjgyODZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ecfa45de17cec38b919446_plan_of_action_card.webp",
       "categoryId": "governors",
+      "sourceUrl": "https://www.shapeof.ai/patterns/action-plan",
       "content": {
-        "description": "An action plan shows users the specific steps the AI will take before executing them. This preview builds trust, allows course correction, and helps users understand the AI's reasoning process.\n\n### Plan Components\n- Numbered or ordered steps\n- Expected outcome for each step\n- Resources or data needed\n- Estimated time or complexity\n- Opportunity to approve or modify",
-        "designConsiderations": "### Presentation\n- Use clear, scannable format\n- Show plan before execution\n- Allow editing individual steps\n- Provide approve/reject options\n- Support saving plans for reuse\n\n### Execution Control\n- Allow proceeding step-by-step\n- Support pausing mid-execution\n- Enable canceling remaining steps\n- Show progress through plan",
+        "description": "As AI takes on more complex and compute-heavy tasks, action plans provide a necessary checkpoint. This pattern has AI lay out its intended steps before it runs, giving users a chance to confirm or adjust, keeping execution transparent and predictable, while preventing errors or wasted compute from piling up downstream.\n\nAction plans can be advisory or contractual.\n\n**In advisory mode**, AI is trained to use action plans as a tool for reasoning. It may share its plan in its stream of thought for review later, but the user is never called in to review.\n\n**Contractual modes** require user verification before proceeding. Coding environment tools like Replit or Devin and presentation generators like Chronicle all follow this path.\n\nIn general, if the actual task will consume a high degree of compute power, such as building a draft app or a presentation, an action plan confirms user intent and the AI's interpretation before investing in the tokens. The right time to stop an erroneous run is before it begins.\n\nThe trade-off to this is speed. Confirmations add friction, but they also act as a safeguard in high-risk domains where trust is easily lost if the AI moves too far on its own. Designers need to calibrate the threshold: when to block progress until a plan is approved, and when to simply show a stream of thought for orientation as the AI acts.\n\n### Variations and forms\n\n- **Step lists**: Linear outlines of actions, often requiring a quick confirmation before execution. Example: Claude “Projects” mode surfaces steps before generating text.\n- **Execution previews**: Structured plans tied to code or automation, with explicit approval gates. Example: Replit and Devin pause on a proposed sequence until confirmed.\n- **Content outlines**: Document or slide scaffolds that may or may not require confirmation. Example: Gamma presents outlines but generates without blocking.\n- **Adaptive plans**: Plans that evolve mid-process, sometimes with repeated confirmations. Example: multi-step research agents like Perplexity Labs adjust plans as sources change.\n\nOnce the plan is generated, allow users to modify or regenerate the plan before proceeding. Once the generation begins, the action plan is a useful guide to show in a stream of thought block to help users follow the model's progress.",
+        "designConsiderations": "- **Show the plan before committing resources.** A preview reassures users that the system is aligned before it spends compute or makes changes. This avoids wasted cycles and prevents silent errors from slipping through.\n- **Keep the plan skimmable.** Users should be able to understand the intent in a few seconds. Dense or overly technical plans undermine their purpose. For more technical or sensitive processes, consider allowing users to expand each step or interact with AI to learn more about what is intended.\n- **Make plans modifiable.** If users identify an error during the planning phase, give them the tools to understand and correct the error then and there. Avoid presenting plans as a vanity or requiring the full plan to be regenerated to address a single issue.\n- **Let users collapse or bypass plans.** Experienced users value speed once they trust the system. Provide shortcuts to hide or minimize the plan, but keep the ability to review available at all times.\n- **Ensure fidelity between plan and execution.** A plan is only useful if the system follows it. If execution diverges, the plan must be updated or explained. Silent deviation quickly erodes trust.",
         "relatedPatterns": [
           "stream-of-thought",
-          "verification"
+          "verification",
+          "draft-mode"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-            "description": "ChatGPT showing planned steps before executing code"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d806050cc04d76d8bab0f4_governors_plan_of_action_cursor.webp",
+            "description": "Cursor makes the Plan of Action feature optional in its settings"
           },
           {
-            "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop",
-            "description": "Claude's task breakdown preview"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d8064849407e57ea53d40a_governors_plan_of_action_gamma.webp",
+            "description": "Gamma generates an outline view of the presentation and requires user confirmation to proceed."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d8065049407e57ea53d880_governors_plan_of_action_replit.webp",
+            "description": "Replit generates a full preview of its plan of action for the user to confirm."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d8065049407e57ea53d87c_governors_plan_of_action_zapier.webp",
+            "description": "Zapier creates an outline of its planned workflow when in AI Drafting mode for the user to adjust before the steps are created."
           }
         ]
       }
@@ -1367,24 +1377,46 @@
     {
       "id": "branches",
       "title": "Branches",
-      "description": "Support iterative prompting while retaining footprints and visibility back to the original",
-      "thumbnail": "https://images.unsplash.com/photo-1611841502288-4470571cebaf?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0cmVlJTIwYnJhbmNoZXMlMjBzcGxpdCUyMGZvcmt8ZW58MXx8fHwxNzcxMzI4Mjg3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "description": "Support iterative prompting while retaining footprints band visibility back to the original",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ecfa7a28e800628f1edff5_branch_card.webp",
       "categoryId": "governors",
+      "sourceUrl": "https://www.shapeof.ai/patterns/branches",
       "content": {
-        "description": "Branches allow users to explore different directions from any point in a conversation or workflow while maintaining a tree structure that shows all paths taken. This supports experimentation without losing work.\n\n### Branch Features\n- Create new branch from any point\n- Visual tree or timeline view\n- Name/label branches\n- Switch between branches\n- Compare branches side-by-side\n- Merge branches if needed",
-        "designConsiderations": "### Visualization\n- Clear tree structure showing relationships\n- Highlight current branch\n- Show branch points clearly\n- Use color coding or icons\n- Support collapsing/expanding\n\n### Navigation\n- Easy switching between branches\n- Quick jump to any point\n- Search across branches\n- Show branch metadata (created, modified)",
+        "description": "Branches allow users to create multiple paths of generation or exploration without losing the route back to the original. This can be helpful if users are not sure of exactly what outcome they are trying to reach, or if they want to play with different tokens, parameters, models, etc. before converging on a path forward. This pattern also makes exploration auditable, since each path preserves inputs, settings, and outcomes.\n\nBranches work across modalities:\n\n- **Text chat branches** split a conversation into parallel threads, preserving the conversation and context up to that point.\n- **Variant branches** automatically generate multiple paths based on the original source to compare or edit independently.\n- **Workflow branches** split a graph at a node so different parameter sets or tools run side by side.\n\nBranches offer a solution for users wanting to break out of the linear constraints of a conversation. To maintain user control and usability, retain footprints back to the original, and clues for what is changing as the generative path progresses. Open-canvas layouts introduced by tools like FloraFauna aid by making this visual, but it's harder in text-based contexts.\n\nGood implementations make branch creation explicit, keep context inheritance clear, and provide simple ways to compare, merge, or retire paths.",
+        "designConsiderations": "- **Maintain the source relationship.** Provide links and references that lead back to the original prompt so users can trace backwards to the origin from multiple journeys. List the parent and children of branches if the surface doesn't make it clear.\n- **Make branching a first-class action at obvious touchpoints.** Add a clear “Branch” control on message actions, artifact tiles, and workflow nodes. Users should not have to duplicate chats or copy prompts to explore. ChatGPT’s “Branch in new chat” and TypingMind’s edited-message threads set the expectation.\n- **Let each branch progress independently.** On creation, display a compact summary of inherited context, including prompt, model, tools, files, and memory flags. Let users deselect items before the branch commits to avoid leaking irrelevant context.\n- **Define lightweight merge patterns.** For chat, allow “adopt this answer into main thread” with a note. For artifacts, promote a chosen variant as the new baseline while keeping a link back. Avoid destructive merges.",
         "relatedPatterns": [
-          "variations",
-          "footprints"
+          "cost-estimates",
+          "chained-action",
+          "variations"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=600&fit=crop",
-            "description": "ChatGPT's conversation branching visualization"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e7060e9a4f9443a76464b9_firefly.png",
+            "description": "Firefly supports a more limited set of options for branching than other visual editors, but does allow individual variations to be branched into additional prompts while maintaining the relationship back to the original."
           },
           {
-            "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=600&fit=crop",
-            "description": "Claude's branch exploration interface"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e7068d4c960fe523e063a6_character.png",
+            "description": "Character.ai retains the context of the conversation even when a new chat is started via a branch."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e7060d9a4f9443a76464b5_openai.png",
+            "description": "OpenAI supports branched conversations. The context up to the point of the branch is retained and duplicated into a new thread."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e71556eaae02b1e692687c_branch_flora.webp",
+            "description": "Flora shows its branches visually on the canvas. Users can try different models, prompt combinations, references, and more through chained actions."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/img/placeholder-thumb.svg",
+            "description": "Every time Midjourney runs a prompt, it creates variants that can be followed down its own branch. Links in the description lead back to the original, allowing users to explore different variations, parameters, and references before converging on a direction."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e70687e1bb436c219457f0_chained_action_rivet3.webp",
+            "description": "Agentive workflow editors like Rivet support branches that are convergent rather than divergent, supporting different prompts, actions, and branches for different conditions or states."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e7068d4c960fe523e063a3_typing-mind-branch.png",
+            "description": "TypingMind uses the term “fork” instead of branch to create a new conversation that contains the context of the thread up to that point."
           }
         ]
       }
@@ -1393,23 +1425,57 @@
       "id": "citations",
       "title": "Citations",
       "description": "Lets the AI give inline annotations to cite its sources",
-      "thumbnail": "https://images.unsplash.com/photo-1752697589128-f8e110a86af3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaXRhdGlvbiUyMHJlZmVyZW5jZSUyMHNvdXJjZXN8ZW58MXx8fHwxNzcxMzI4Mjg3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ecf994e5cffecf3e20b432_citations_card.webp",
       "categoryId": "governors",
+      "sourceUrl": "https://www.shapeof.ai/patterns/citations",
       "content": {
-        "description": "Citations provide inline references showing which sources informed specific parts of the AI's response. This enables verification, builds trust, and helps users explore topics more deeply.\n\n### Citation Formats\n- Inline numbered references [1]\n- Superscript links to sources\n- Hover tooltips with source preview\n- Highlighted text with source links\n- Footnote-style references",
-        "designConsiderations": "### Source Information\n- Title and author\n- Publication date\n- Direct link to source\n- Excerpt or relevant quote\n- Credibility indicators\n\n### Interaction\n- Clickable citations open source\n- Show all citations in sidebar\n- Filter by source type\n- Search within cited sources",
+        "description": "Citations give users a way to see where an AI’s response comes from. They connect a generated output back to its underlying material, whether that’s a PDF, a transcript, a web page, or an internal database. Their role is to create transparency and help users verify information.\n\nCitations also influence the user's perception of AI as an authority, lending credibility to the summarized content. This can backfire, since summaries are susceptible to hallucinations or misrepresentations.\n\nEncourage users to dig into cited content by providing metadata and summaries of the referenced material, which also helps weed out hallucinated sources. To counteract the AI drawing erroneous facts and conclusions from the sourced material, deep link to the relevant part of the source or pull quotes up into the summary, such as when hovering on a citation.\n\n### Variations and forms\n\n- **Inline highlights:** Best for attached material like PDFs. Example: Adobe Acrobat cites passages directly in a summary panel so users can jump to the source text.\n- **Direct quotations:** For longer texts or transcripts, show the specific quote the model relied on to generate its summary. Example: Granola paraphrases or directly quotes the segments of the transcript behind each takeaway.\n- **Multi-source references:** Found in search and aggregation. Example: Perplexity shows citations inline, with metadata such as title and favicon to help scan relevance.\n- **Lightweight links:** Best for verification rather than exploration. Example: Copy.ai lists full URLs at the end of generated copy, prioritizing transparency over polish.\n\nEach variation comes with tradeoffs. Inline highlights and direct quotations are useful to verify specific information, but can prematurely converge on a single source or concept when drawing from a broader reference set. Multi-source references and lightweight links are useful to lead users deeper into a topic or large set of content, but are less reliable as the source material is more likely to be external and unverified.",
+        "designConsiderations": "- **Let context guide specificity.** Point to exact passages, timestamps, or assets rather than broad documents when information is being presented as factual and specific. Rely on broader reference collections when the user‘s intent is grounded in broader discovery.\n- **Place citations where people expect them.** Inline cues work for sentence-level claims. Panels or drawers work better for long-form exploration. Consistency matters more than polish so users know where to look.\n- **Respect the user‘s focus.** Allow users to hover for a short preview or click through to the full source. This dual mode balances speed with thoroughness.\n- **Make broken or missing citations explicit.** If a source is unavailable, call it out directly rather than hiding the gap. Empty states maintain trust, filler content erodes it.\n- **Use metadata to support scanning.** Titles, site names, and favicons help users quickly judge relevance. Too much detail can overwhelm, so keep labels short and consistent.\n- **Let users rescope references.** After an initial generation, users may want to filter by domain, remove weak sources, or attach new files. Give them controls to reshape citations without restarting the whole process.",
         "relatedPatterns": [
-          "references",
+          "summary",
+          "synthesis",
           "footprints"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=600&fit=crop",
-            "description": "Perplexity's inline numbered citations"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5dcae5669afdcb8a9650f_citations_adobepdf2.webp",
+            "description": "Adobe includes citations to individual paragraphs within the PDF"
           },
           {
-            "image": "https://images.unsplash.com/photo-1506784365847-bbad939e9335?w=800&h=600&fit=crop",
-            "description": "Bing Chat's source cards with citations"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5de113bc379d309619439_citations_copy.webp",
+            "description": "Copy.ai follows the familiar pattern of showing connected references near to the summary with citations"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5dda08c5721eb982aaaef_citations_dovetail.webp",
+            "description": "Dovetail helps people reviewing the summary of UX research to trace insights back to their source, such as a user interview"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5dd20c1dfc5ef38a41f70_citations_fincopilot.webp",
+            "description": "Intercom's Fin Copilot provides citations to help customers understand where the agent's responses are coming from to better understand policies and justifications for decisions"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5dc73c3054264f09cae55_citations_google.webp",
+            "description": "Google's summary sits above the results below with citations to the featured references"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5ddde9e521aa83d1753e7_citations_granola.webp",
+            "description": "Granola's auto-summary provides citations that paraphrase or quote the transcript"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e98a9aa347d40ab7d90c7d_peek-granola.png",
+            "description": "Granola provides a peek into the cited content when hovering on a citation, paraphrasing the relevant parts of the transcript and providing direct quotes."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5dce71377a02f113de4cd_citations_notion.webp",
+            "description": "Notion uses citations to let users find information nested deep within the company's docs"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5dc3a3bc379d30960e8b5_citations_perplexity.webp",
+            "description": "Perplexity popularized the notion of using citations in search, and changed the paradigm of results as an ordered list to results as a synthesis of information"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e98b063b0e859a606f7295_peek-citation-sana.png",
+            "description": "Sana includes a popover with citations showing the highlighted aspects of the source material"
           }
         ]
       }
@@ -1418,73 +1484,146 @@
       "id": "controls",
       "title": "Controls",
       "description": "Manage the flow of information or pause a request mid-stream to adjust the prompt",
-      "thumbnail": "https://images.unsplash.com/photo-1720036237584-7fd0f37db499?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb250cm9scyUyMHBhdXNlJTIwc3RvcCUyMGJ1dHRvbnN8ZW58MXx8fHwxNzcxMzI4Mjg3fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ecfa22ff064ec249342e23_controls_card.webp",
       "categoryId": "governors",
+      "sourceUrl": "https://www.shapeof.ai/patterns/controls",
       "content": {
-        "description": "Controls give users the ability to manage AI execution in real-time, including pausing, stopping, or modifying requests mid-stream. This maintains user agency and prevents wasted resources.\n\n### Control Types\n- Stop/Cancel generation\n- Pause and resume\n- Adjust parameters mid-generation\n- Skip to next step\n- Modify prompt during execution",
-        "designConsiderations": "### Visibility\n- Always-accessible stop button\n- Clear state indicators (running, paused)\n- Show what will happen when stopped\n- Confirm destructive actions\n\n### Responsiveness\n- Immediate response to controls\n- Save partial work when stopped\n- Allow resuming from pause point\n- Show progress and remaining work",
+        "description": "Compute time is expensive, and waiting for prompts to run before they can be adjusted wastes time and money. Controls keep users in the driver’s seat by allowing them to stop, pause, and manage the AI’s actions.\n\n### Common controls\n\n- **Stop button:** the most common control is the stop icon, which allows users to end a request mid-generation. Alternatively use a cancel button. This stops all progress and causes work to be lost.\n- **Pause button:** allows work to stop without losing progress. Common in AI-powered IDEs like Replit and Cursor where the AI's tasks will be longer and require more power.\n- **Fast-forward:** for longer responses or workflow steps, the AI may introduce this into the conversation to ensure the user wants to continue with the generation.\n- **Play:** to start a new task, the play icon or a paper airplane is commonly used, while more decorative magic wands and sparkle icons can often be seen on the initial CTA but not necessarily in later steps.\n\n### How can users adjust the AI on the fly without canceling?\n\nReplit Agent and Cursor use the concept of a \"queue\" to allow users to stack tasks for the AI to complete while it is finishing up previous work. For predictable flows where a full regeneration is not needed, but where tasks may take a while, this allows the user to break next steps down into smaller, manageable tasks. The tasks are then added to the AI's plan. Queued tasks can be modified or deleted.",
+        "designConsiderations": "- **Stop runs in a click.** A stop button should appear in the same place every time and remain clickable until the process is complete. This keeps the user in control to stop wasteful generations when necessary.\n- **Provide graceful pause and resume.** Pausing keeps users in charge during longer or more complicated generations without forcing a restart and causing work to be lost.\n- **Let users act in the flow of work**. Stack tasks in a queue mimics the real world experience of adding tasks to a backlog or task list. Work in progress does not need to be stopped for new work to be planned.\n- **Use variations instead of overwriting.** If a control causes work to be regenerated from the start, show the regeneration as an iterative version so users can still reference any generated work from the previous attempt.",
         "relatedPatterns": [
-          "stream-of-thought",
-          "cost-estimates"
+          "action-plan",
+          "sample-response"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-            "description": "ChatGPT's stop generating button"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68cef4938a17ee751c57961f_controls_bolt.webp",
+            "description": "Bolt allows you to stop a generation mid-way through"
           },
           {
-            "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop",
-            "description": "Midjourney's cancel and modify controls"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68cef7683986da84cada4c4c_controls_chatgpt_running.webp",
+            "description": "ChatGPT allows users to skip to the end of a research task and start generating the response."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68cef387c4d434124e14be0b_controls_claude.webp",
+            "description": "Claude uses the standard pattern of converting the action button into a stop button while the prompt is generating"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68cef7b1c4d434124e15880e_controls_julius.webp",
+            "description": "Julius processes its generations in workflows. Users can run all steps, or start from a later point in the flow."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68cef4f2d34fb1e121bee55b_controls_perplexity.webp",
+            "description": "When in research mode, Perplexity allows users to introduce new context while the generation is running without stopping and losing work."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68cef7683986da84cada4c49_controls_cleanshot_2025-09-20_at_11_32_02_2x_copy.webp",
+            "description": "When in research mode, Perplexity allows users to skip to the end if the generation is sufficiently helpful."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68cef5367834dbfa7e8db717_controls_replit_queue_2.webp",
+            "description": "Replit supports the notion of a queue, similar to how a developer would have multiple tasks in their backlog. Users can add new prompts to the queue for the AI to process once it's done with its last generation."
           }
         ]
       }
     },
     {
       "id": "cost-estimates",
-      "title": "Cost Estimates",
+      "title": "Cost estimates",
       "description": "Help users proactively modulate compute power through transparent cost estimates for actions",
-      "thumbnail": "https://images.unsplash.com/photo-1650821414390-276561abd95a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb3N0JTIwbW9uZXklMjBlc3RpbWF0ZSUyMGJ1ZGdldHxlbnwxfHx8fDE3NzEzMjgyODh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ecfa97453e9bbea96e32ef_cost_card.webp",
       "categoryId": "governors",
+      "sourceUrl": "https://www.shapeof.ai/patterns/cost-estimates",
       "content": {
-        "description": "Cost estimates show users the expected computational or monetary cost before executing AI actions. This transparency helps users make informed decisions and manage their usage.\n\n### Cost Information\n- Estimated tokens or credits\n- Approximate execution time\n- Monetary cost (if applicable)\n- Comparison to similar past actions\n- Budget impact",
-        "designConsiderations": "### Presentation\n- Show before committing to action\n- Use clear, understandable units\n- Provide context (% of daily budget)\n- Update estimates if prompt changes\n- Alert when costs are unusually high\n\n### User Control\n- Allow setting budget limits\n- Warn before expensive operations\n- Suggest cost-saving alternatives\n- Track spending over time",
+        "description": "Every generation costs money to run, and supporting iterative prompting or complicated chained-runs or workflows can quickly add up. Most products pay these costs behind the scenes and roll them into metered usage, governed by credits that refresh regularly or can be purchased in bulk. This guards users from the minutiae of managing individual token counts, but also has the effect of turning AI costs into a black box.\n\nTransparent spend lifts the veil, helping users understand the relative costs of different prompt, parameter, and model combinations before anything runs. Estimated costs are shown beside key actions, and users can see in real-time how changing their selection adjusts what they will \"pay\" in equivilent credits.\n\n### Common choices that impact run cost\n\n- **Model size and family:** Larger models consume more compute per token. Show estimates from a model selector so users balance the power with what they are willing to pay for it.\n- **Prompt length and context window:** Longer prompts, or more complicated actions like deep research, require more thinking power from the AI. Update cost estimates plainly when users change mode or direct the model to think harder.\n- **Expected output length:** Expansive or detailed responses use more output tokens. Encourage draft mode so users can spend less when still working through ideas.\n- **Number of steps in a chain or agent plan:** Workflows and chained actions can quickly run up. Show the full cost of the run as well as costs at a per-step level to help users facilitate an effective process.\n- Number of inference steps or loops: Each computational cycle the model uses to refine its thinking adds to the overall cost. In addition to credit-spend estimates, allow more advanced users to adjust the step count to govern how many cycles should be completed to return a result.\n\n### Credits or dollar values?\n\nIn AI playgrounds and development environments, credits may be priced in local currency to normalize the cost to a common denominator. This is helpful for technical users, but non-technical users are likely to be confused when seeing a dollar amount on top of the cost of their subscription.\n\nNon-technical users benefit from a clear product-based credit system. However, the tradeoff to using product-specific currency is that there is no standard. Users working across multiple products will not have a consistent way of comparing the relative cost of different iterations of inputs and parameters. This standard may evolve over time but it currently creates usability risks to be aware of.",
+        "designConsiderations": "- **Make the unit explicit.** Tell users exactly what you are estimating, such as “~3,200 input tokens, ~1,000–2,000 output tokens,” or “12 credits for 1 second of Gen-4 video.” People make better trade-offs when they see the base unit and the currency mapping.\n- **Anchor estimates in the units people understand.** Users reason differently across modalities: tokens in text, characters in TTS, seconds in video, credits in consumer apps. Always map these back to money where possible, and explain any conversion rules so the relationship between effort and cost is transparent.\n- **Show ranges for unknowns.** You cannot know output tokens before the run. Present a low–high range based on max tokens or typical lengths, and update in real time during streaming. This sets expectations and prevents “estimate drift.”\n- **Surface the drivers of cost.** Break the estimate into components, for example system prompt, retrieved context, user input, tool calls, and expected output. Call out the heavy parts so users can trim the right thing.\n- **Offer cheaper paths when relevant.** If the task is non-urgent or batched, propose batch mode with the updated estimate and time window. When caching applies, show the expected cache read savings in the estimate.\n- **Reward onboarding.** Ensure users have sufficient tokens for onboarding so they can sufficiently work with the program to understand it while interested to do so. Some products reward onboarding and other key flows with a token pack, making up for tokens spent during that initial run and giving users a boost to stay.\n- **Put estimates where decisions are made.** Inline next to the prompt, per-step in builders, and on action buttons in credit-based tools. Avoid burying the estimate in settings.",
         "relatedPatterns": [
+          "chained-action",
           "draft-mode",
           "model-management"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1551434678-e076c223a692?w=800&h=600&fit=crop",
-            "description": "OpenAI Playground's token counter and cost display"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68dc521bbf5e210a53912762_cost_transparency_adobefirefly.webp",
+            "description": "Adobe Firefly lists the costs for a generation in close vicinity to the action button."
           },
           {
-            "image": "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?w=800&h=600&fit=crop",
-            "description": "Anthropic Console's usage metrics"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68dc516f3722c5d8af38566e_cost_transparency_console_gallery.webp",
+            "description": "Console's prompt gallery shows the cost of running default prompts in currency, not credits."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68dc4f3cf59a6162f56266aa_cost_transparency_elevenlabs.webp",
+            "description": "ElevenLabs lists the total cost of the generation explicitly from the input box."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68dc4fd7f8f325287c4f8278_cost_transparency_florafauna.webp",
+            "description": "FloraFauna.ai lists its token estimates from the model selector on the individual node."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68dc51c1945d30a2511d93cf_cost_transparency_krea.webp",
+            "description": "Krea includes the credit cost estimate at the bottom of the builder sidebar so users can understand the weight of different parameters."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68dc526cf59a6162f5648a34_cost_transparency_udio.webp",
+            "description": "Udio shows the token estimate at the top of the build panel, and updates it as the user configures their input."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68dc5022f59a6162f5632ace_cost_transparency_klingai.webp",
+            "description": "Kling.ai reveals how much a generation will cost as a popover beside the generate button."
           }
         ]
       }
     },
     {
       "id": "draft-mode",
-      "title": "Draft Mode",
+      "title": "Draft mode",
       "description": "Support exploration and iterative prompting while reducing compute costs until a final form is ready",
-      "thumbnail": "https://images.unsplash.com/photo-1727812100173-b33044cd3071?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkcmFmdCUyMHNrZXRjaCUyMG91dGxpbmUlMjBtb2RlfGVufDF8fHx8MTc3MTMyODI4OHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ecfaa8ae455a603cb84b96_draft_card.webp",
       "categoryId": "governors",
+      "sourceUrl": "https://www.shapeof.ai/patterns/draft-mode",
       "content": {
-        "description": "Draft mode enables faster, lower-cost iterations by using simplified processing or lower-quality settings during exploration. Users can switch to high-quality mode when they're satisfied with the result.\n\n### Draft Mode Features\n- Faster generation speed\n- Lower computational cost\n- Reduced quality or resolution\n- Quick iteration cycles\n- Easy upgrade to full quality",
-        "designConsiderations": "### Mode Switching\n- Clear indication of current mode\n- Easy toggle between draft and final\n- Show differences between modes\n- Confirm before expensive final render\n\n### Quality Indicators\n- Show draft quality level\n- Preview what final will look like\n- Estimate time/cost for final render\n- Warn about draft limitations",
+        "description": "Draft mode lets users begin work using fewer details or less powerful processing power before committing to a full, resource-intensive run. This functionality supports an efficient, iterative process. Early generations go faster and users spend less compute or credits to get a preview, and users can easily switch to a higher-quality model once ready.\n\nVersions of this pattern can be found across modalities:\n\n- **Image and video generators** often generate low-scaled versions for early iterations.\n- **Audio generators** produce short previews of voices or mixes before rendering the full track.\n- **Coding editors** surface plans of action or “design mode” previews to show intended steps or rough interfaces before deeper interactivity and integrations are added.\n- **Text editors** may start with an outline before generating full documents.\n- **Presentation generators** often default to slide outlines for early confirmation.\n\n### Explicit vs. implicit drafting\n\nWhile some products support an explicit draft mode, others offer a combination of parameters that creates a similar environment without being direct.\n\n**Explicit mode** is common in visual mediums like image and video. This makes the visible reduction in the quality of the output feel intensional. Draft mode is framed as a positive means of saving time and money in the creative process.\n\n**Implicit modes** cover a variety of options:\n\n- Directly decreasing the step count of a generation reducing the quality of the output but is faster and cheaper than a higher-count run. The number of steps reflect the fidelity of the AI’s reasoning on terms of logical loops.\n- Returning a short snippet as a first step of a high quality run for the user to review before expanding so time is not spent on a longer version that is off-base.\n- Writing an outline for an essay or slide deck before producing the full asset.\n\nAll of these produce a lesser-fidelity version of the final result but don't give the perception that the AI is not doing its job.\n\n### Using model routing for drafting\n\nAs automatic model routing becomes more common, users increasingly rely on the system to select the best model for the task and iterative state. Drafting can be accomplished in effect by defaulting to a less powerful alternative until instructed otherwise. This benefits the user by decreasing compute and credit consumption, but not all users will be wise to what is happening behind the scenes. However, less savvy users may be unaware that they can force the AI to use a more powerful model when needed.\n\nConsider introducing this concept during onboarding in an interactive way, demonstrating that less powerful models can be the better tool earlier in the design process or while chatting about a topic before running a more powerful command like deep research.",
+        "designConsiderations": "- **Make drafts explicit.** Not everything needs to be labeled drafting mode but users should never be surprised when the system produces a lower-scaled version of what they expect. Whether producing audio snippets instead of full files, outlines instead of documents, or lower quality images, ensure users retain a sense of control and understanding.\n- **Make the trade-off explicit.** Describe what is reduced in draft mode, for example model tier, steps, resolution, or duration. Pair the label with expected speed and cost so users can decide quickly without guessing.\n- **Keep upgrade paths deterministic.** Preserve seeds, prompts, and key parameters between draft and final. If the pipeline changes settings, disclose them and let users lock the seed to maintain composition and layout continuity.\n- **Design for rapid loops.** Draft mode exists to compress iteration time. Keep “upgrade,” “duplicate to final,” and “compare” one click away. Avoid flows that force users to recreate settings to get a comparable final.\n- **Prevent accidental downgrades.** Never silently route heavy tasks into draft quality. If you auto-switch for performance, surface a clear notice with a one-click override so users retain control.\n- **Expose cost controls near commit points.** Indicate token, time, or credit impacts right where the user chooses draft versus final. People plan differently when they see the real cost of pressing “Generate.”",
         "relatedPatterns": [
-          "cost-estimates",
-          "sample-response"
+          "sample-response",
+          "model-management",
+          "parameters"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=600&fit=crop",
-            "description": "Midjourney's fast mode vs standard mode"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68dae70b73df07eebff929eb_draft_adobe_sound.webp",
+            "description": "Adobe Firefly allows the user to draft the sound design for sound effects with their own voice."
           },
           {
-            "image": "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&h=600&fit=crop",
-            "description": "Runway's draft quality preview"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d805d21d5940c7a7771e27_governors_plan_of_action_chronicle.webp",
+            "description": "Chronicle produces a draft outline of each slide as a plan of action for the user to confirm before generating the full presentation."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68dae8a99efc69987748e191_draft_elevent_draft.webp",
+            "description": "ElevenLabs produces voice samples to compare before generating a full voice signature and storing it in your library."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d8064849407e57ea53d40a_governors_plan_of_action_gamma.webp",
+            "description": "Gamma shows its plan through a draft outline for the user to review before generating the slides."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d8053eb6618fb42e09c3df_jasper-first-draft.webp",
+            "description": "Jasper generates draft outlines of longer-form content for the user to review before generating the full document."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68dae5ffd7fcd1746ee87ccb_draft_midjourney.webp",
+            "description": "Midjourney draft mode retains the functionality of the full generator but uses a lower scaled model to reduce compute cost for rapid iteration."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d8065049407e57ea53d880_governors_plan_of_action_replit.webp",
+            "description": "Replit gives the option to create a visual preview of a generation to review before committing to running a full application build."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68daec2e66979dca3a7a88b8_draft_runway.webp",
+            "description": "Runway explicitly recommends working with a less powerful model to draft your video before upscaling to the most powerful model."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68db09e1390e4a5563e2689f_draft_synthesia.webp",
+            "description": "Synthesia produces a draft video walkthrough from the editing canvas for users to review before exporting. Video animations and dubbing are suppressed in draft mode to decrease processing needs."
           }
         ]
       }
@@ -1493,23 +1632,36 @@
       "id": "memory",
       "title": "Memory",
       "description": "Control what details the AI knows about you",
-      "thumbnail": "https://images.unsplash.com/photo-1679842115390-8084bbb1d4a9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZW1vcnklMjBicmFpbiUyMHJlbWVtYmVyJTIwcmVjYWxsfGVufDF8fHx8MTc3MTMyODI4OHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e79fb53ca4efccd6bf2bf1_Memory%20card.png",
       "categoryId": "governors",
+      "sourceUrl": "https://www.shapeof.ai/patterns/memory",
       "content": {
-        "description": "Memory controls let users manage what information the AI retains about them across sessions. This includes viewing, editing, and deleting stored information to maintain privacy and relevance.\n\n### Memory Features\n- View all stored information\n- Edit or delete specific memories\n- Control what gets remembered\n- Clear all memory\n- Temporary sessions without memory",
-        "designConsiderations": "### Transparency\n- Show clearly what's being remembered\n- Explain how memory is used\n- Indicate when memory influences responses\n- Provide memory export\n\n### Control Granularity\n- Topic-based memory management\n- Time-based memory retention\n- Importance-based prioritization\n- Context-specific memory settings",
+        "description": "Memory gives AI systems the ability to retain and reuse information across interactions, creating continuity for the user. Instead of starting from scratch in every session, the system can recall prior context, preferences, or facts and apply them to new tasks. This shifts the AI from a transactional tool into a persistent assistant.\n\nA well-designed memory reduces friction. Repeated instructions about tone, format, or context can instead be remembered, closing the loop between user feedback and better results. When users see their input carried forward, they are more likely to invest in longer-term use.\n\nBut memory also raises risks. Without clear controls, AI may misremember, overgeneralize, or accumulate irrelevant or incorrect details. This can lead to user frustration or even a form of “AI psychosis,” where the model builds distorted or unstable behaviors from flawed recollections. Unlike ephemeral chat, memory demands mechanisms for review, correction, and deletion.\n\nTo avoid this, memory must be visible and controllable. The design challenge is balancing continuity with transparency and user agency.\n\n### Key dimensions\n\n- **Knowledge map**: Unless in a private or incognito mode, the AI is constantly storing data about activity, preferences, and past interactions. The best implementations surface this information as a knowledge map, showing what has been remembered and how it influences outputs. Without this, memory becomes a black box.\n- **Scoped memory**: Not all memory should be global. Users may prefer information retained only within a project, workspace, or conversation. Scoping to clear boundaries prevents bleed-through (e.g., a personal detail shaping a work document) and makes retention more predictable.\n- **Editable details**: When users can see what the AI has captured, they should be able to curate it. This means selectively editing, removing, or adding details. Strong designs allow both forgetting (to clear incorrect or sensitive information) and explicit saving (to lock in important facts). A living knowledge map evolves to match the user’s intent.\n- **Clear the cache**: Sometimes users need a fresh start. Forcing account deletion or reinstallation is heavy-handed. Instead, provide a “reset memory” option that clears remembered data in one step. Like clearing browser history, it restores trust without requiring users to abandon the tool.\n\n### Variations and forms\n\n- **Global memory**: Information applies across all surfaces and contexts. Works well for persistent preferences like tone or default language. Risks unintended bleed-through. Example: ChatGPT's viewable memory about the user across chats.\n- **Scoped memory**: Information retained within a workspace, project, or conversation. Prevents irrelevant carryover but may reduce convenience. Example: Perplexity's memory within a space.\n- **Ephemeral memory**: Retains context only for the current session, similar to incognito mode. Best for privacy-sensitive scenarios or temporary exploration. Example: Apple’s limited session memory, with selective long-term retention for stored data like names.",
+        "designConsiderations": "- **Memory should never be a black box.** Show users when new memories are added. Make it easy to manage and control what memories are retained. Allow users to communicate who they are in plain language. Building the AI's understanding of the human should be as natural as any other interaction.\n- **Differentiate preferences from memory.** Who someone is and how they communicate are not the same thing. Users may want base knowledge stored for the AI to reference while setting different communication styles for different contexts. The same is true for information related to work and tasks vs. preferences. Build a system that maps to the nuances of people.\n- **Allow code switching.** Users may not wish to share all information in all situations. Consider that different memory collections or mappings might be relevant for different uses, like personal communication with friends vs. work. For services that cut across journeys, ensure memory maps as well.\n- **Mark the moment of capture.** Whenever the AI saves something, surface a lightweight prompt or chip (“Saved to memory,” “Add note”) that invites quick review. Acknowledging capture in real time reduces uncertainty and keeps consent active.\n- **Support temporary and forgetful modes.** Offer clear “memory off” or “incognito” options that let users work ephemerally. Temporary sessions encourage experimentation without cleanup anxiety. Include reminders that the session is non-persistent to prevent confusion.",
         "relatedPatterns": [
-          "incognito-mode",
-          "data-ownership"
+          "voice-and-tone",
+          "incognito-mode"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-            "description": "ChatGPT's memory management interface"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68bd032f837d84f1d4dfa224_memory_chatmemory-1.webp",
+            "description": "ChatGPT allows users to manage a permanent memory for AI to reference, as well as supporting the ability of AI to infer a pseudo memory from past chats"
           },
           {
-            "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop",
-            "description": "Claude's conversation memory settings"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68bd03a081be758603461745_memory_inline_memory_gpt.webp",
+            "description": "When new memories are added to ChatGPT, an inline link shows the user exactly what the AI captured"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68bd041824008192b0d55fac_memory_claudechats-1.webp",
+            "description": "Claude does not support a full memory but it does have the ability to understand the user by reviewing past chats"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68bd03dc824f81cd50b493f3_memory_geminimemory.webp",
+            "description": "Gemini stores memories that the user asks it to remember and makes them available on demand for the user to manage"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68bd041a83a927505afbcf39_memory_perplexintro.webp",
+            "description": "Perplexity does not support a full memory, but it does store information about the user if they provide an introduction"
           }
         ]
       }
@@ -1518,73 +1670,102 @@
       "id": "references",
       "title": "References",
       "description": "See and manage what additional sources the AI references to generate its response",
-      "thumbnail": "https://images.unsplash.com/photo-1769092992803-ee97d235ba87?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyZWZlcmVuY2VzJTIwZG9jdW1lbnRzJTIwbGlicmFyeXxlbnwxfHx8fDE3NzEzMjgyODh8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ecfabf80e1c4c95eb850b7_references_card.webp",
       "categoryId": "governors",
+      "sourceUrl": "https://www.shapeof.ai/patterns/references",
       "content": {
-        "description": "References show all sources the AI used to generate its response, allowing users to verify, explore, and manage what information influences AI outputs.\n\n### Reference Management\n- View all referenced sources\n- Add custom reference materials\n- Remove or exclude sources\n- Set source priorities\n- Upload documents to reference",
-        "designConsiderations": "### Source Display\n- List all sources with metadata\n- Show which parts used which sources\n- Indicate source credibility\n- Provide direct links to sources\n- Group related references\n\n### User Control\n- Pin important references\n- Exclude unreliable sources\n- Weight certain sources higher\n- Save reference sets for reuse",
+        "description": "References are the external materials an AI system retrieves and uses to shape its output. They act as a bridge between the model’s static training data and the user’s live context, grounding responses in information that is visible and verifiable. This pattern heavily relies on Retrieval-augmented generation (RAG) which combines foundational knowledge with external data instead of relying only on a model’s frozen training set and context window.\n\nPairing truncated or synthesized summaries with the source references helps users identify where information came from, decide whether to trust it, and refine the scope of what the AI is considering. Without visible references, the experience becomes a black box that can’t be validated or corrected. With references, users gain leverage: they can connect private sources, filter by type or recency, and click through to confirm or expand results.\n\n### Common variations\n\nThe actual reference pattern is codified and simple: a link with some meta information about the source is located relative to the generated content or conversation.\n\n- **Panel:** References may be grouped together in a panel, often placed to the right of the content for easy retrieval. This makes references easy to scan. In this layout, it is common to see additional metadata about each source. You'll commonly find this in search contexts where reaching relevant external information is one of the user's goals.\n- **Hidden aside:** Referenced sources may also be grouped together in a tab or drawer. This makes them easy to review and navigate to, but diminishes their prominence in the interface. Perplexity and Notion have both taken this approach in the search context, where the focus centered on the summary. Citations within the summary provide links to the referenced material.\n- **Nested:** Where the AI interaction is contained in a smaller surface like a conversation, information shared in those contexts often needs to be truncated to fit the constraint of the container. Resources are still grouped at the top or bottom of the content block (distinguishing this layout from citations placed inline to the text) and easily retrievable, but the metadata included is limited to favicons and file or site names. Additional information might be available on hover.\n\nWhen designing References, consider how much metadata needs to be shown up front to support your use case and the user's intent, whether the reference needs to be visible, and whether interactive disclosure such as on hover or tap is appropriate in the context.",
+        "designConsiderations": "- **Make references easy to locate.** Users should not waste time hunting for sources. Whether inline, in a panel, or in a tab, place them consistently so people know where to look.\n- **Match the prominnance of references to the use case.** Consider whether the user’s intent would lead them to search for the list of resources explicitly, and consider reducing their visual weight if they are only important for verifying other details. Panels highlight references when they are central to the user's needs. Tabs or drawers are better when attention belongs on the main answer.\n- **Show just enough details.** Balance the complications and meta data associated with references to the user's familiarity and need. Internal files from integrated connections may only require a favicon to identify the internal platform and document type along with the title. External sources may need to include descriptions, site titles, and so on to help users evaluate them.\n- **Give users control over references.** After the initial generation, users may want to remove some references, rescope to specific sites or connections, or add their own attachments after the fact.\n- **Handle missing sources directly.** Broken links or unavailable data should be called out clearly. Do not substitute with filler content. Empty states still communicate value.",
         "relatedPatterns": [
-          "citations",
-          "attachments"
+          "attachments",
+          "citations"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=600&fit=crop",
-            "description": "Perplexity's source panel with all references"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d96d7acbd237b9de3069e5_tuners_sources_bing.webp",
+            "description": "Microsoft Bing lists references nested underneath the summary it provides."
           },
           {
-            "image": "https://images.unsplash.com/photo-1506784365847-bbad939e9335?w=800&h=600&fit=crop",
-            "description": "Claude's attached document references"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d96b7809ae45075bc12e8b_tuners_sources_chatgpt_tab.webp",
+            "description": "ChatGPT makes all sources uncovered during DeepResearch available from a side panel that is easily accessible but out of sight when not needed."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d96c6709ae45075bc181ce_tuners_sources_chatgpt_search.webp",
+            "description": "While running a research task, ChatGPT allows users to view a list of reference sources as they are being compiled. Clicking the sources link opens up the sources side panel."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d96ce5a307a85d88ee7199_tuners_sources_chatgpt_panel.webp",
+            "description": "ChatGPT also uses the nested variation of this pattern, showing a list of sources at the bottom of a deep research run as a bibliography while linking to the full source panel for more information."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5de113bc379d309619439_citations_copy.webp",
+            "description": "Copy demonstrates the nested pattern where sources are listed below the summary."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d972595a58c87e13bddf89_tuners_sources_dia.webp",
+            "description": "Dia browser groups references in a hidden panel accessible from a link above the results."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5dd20c1dfc5ef38a41f70_citations_fincopilot.webp",
+            "description": "Find nests references below the citations it provides in the chat for easy access to learn more."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d972084ab08297d8fd5b56_tuners_sources_glean.webp",
+            "description": "Glean nests referenced sources within a chat."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d97096e698dc96decc8d7e_tuners_sources_notion.webp",
+            "description": "Notion hides its full list of references in a drawer above the summary with citations."
           }
         ]
       }
     },
     {
       "id": "sample-response",
-      "title": "Sample Response",
+      "title": "Sample response",
       "description": "Confirm the user's intent for complicated prompts",
-      "thumbnail": "https://images.unsplash.com/photo-1628771065518-0d82f1938462?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaG9pY2UlMjBtdWx0aXBsZSUyMG9wdGlvbnN8ZW58MXx8fHwxNzcxMzI4Mjk4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e7de694030bcbc59de038e_governors_sample_response_card.webp",
       "categoryId": "governors",
+      "sourceUrl": "https://www.shapeof.ai/patterns/sample-response",
       "content": {
-        "description": "Sample response provides a quick preview or abbreviated version of what the AI will generate, allowing users to confirm the direction is correct before committing to full generation.\n\n### When to Use\n- Complex or lengthy generations\n- Expensive computations\n- Ambiguous prompts\n- High-stakes outputs",
-        "designConsiderations": "### Preview Format\n- Show representative sample\n- Indicate it's a preview, not final\n- Include key elements that will appear\n- Estimate how final will differ\n\n### User Actions\n- Approve and continue\n- Modify prompt based on preview\n- Cancel if preview shows wrong direction\n- Request different sample",
+        "description": "Sample responses are lightweight outputs generated before committing to a full, time-intensive result. They give users a quick preview of what the AI intends to do, letting them confirm direction before resources are consumed or content is overwritten.\n\nThis pattern shifts control back to the user. Instead of immediately processing a long draft, large file, or expensive computation, the user sees a short proof of concept. If the sample looks misaligned, they can correct the input early. If it looks right, they can proceed with confidence.\n\nFor AI companies, sample responses conserve compute power. They prevent wasted runs that the user would likely regenerate or discard. For users, they reduce frustration by catching format or intent mismatches before they become sunk costs of time and attention.\n\nThis approach has precedents outside of AI. Zapier tests workflows with a single record before running them at scale. Spreadsheet macros often run on sample data before applying to the entire sheet. In AI, the distinction lies in the higher cost and unpredictability of generative outputs. By surfacing a controlled sample, the system makes its direction legible and lets the user remain in charge.\n\nContext matters. A sample may be a single row in a table, a 30-second audio clip instead of a full track, or a thumbnail version of an image. In text, it may take the form of a short preview paragraph before a full draft. Each medium requires different balances of fidelity and friction. Too much previewing slows the flow, but the right sample size helps users trust the system without burdening them.",
+        "designConsiderations": "- **Show final intent and polish.** A sample demonstrates how effectively the AI can render data or match the user's intent through their prompt.\n- **Let users skip if they want.** Sample runs are helpful when users want to validate their prompt before continuing, but for later iterations this extra step could be unnecessary or cumbersome. Allow users to proceed with running the prompt against all records without a sample if they prefer.\n- **Show cost and time before scaling up.** Provide cost estimates for the action per-record alongside the sample so users can consider the impact of the full run before it hits.\n- **Default to sampling when risk or blast radius is high.** If an auto-fill run is likely to result in significant compute cost or lost work, it may be appropriate first show a sample by default. This mirrors common workflow testing in analog settings where high risk actions are preceded proactively by a confirmation.\n- **Show samples alongside existing records.** Avoid writing over existing content by showing the sample in a panel or overlay rather than by replacing content in existing fields. Additionally, ensure users understand what data will be changed if the sample is accepted and the run continues.",
         "relatedPatterns": [
-          "verification",
-          "action-plan"
+          "auto-fill",
+          "draft-mode"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-            "description": "Midjourney's low-res preview before upscaling"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e7b85db3310de1ec3cccf7_66830bd404e9c9cf6ba7e662_CleanShot-2024-06-01-at-08.47.22-2x-copy.png",
+            "description": "Notion provides clear details about next steps after the sample response is verified, including the fact that it will overwrite user data."
           },
           {
-            "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop",
-            "description": "Runway's quick preview before full render"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e7b859de5e1716daec86f6_66830bd0664c6e8b0fe467fc_CleanShot-2024-06-01-at-08.45.54-2x-copy.png",
+            "description": "Notion's action to \"try on this view\" proactively encourages users to test a prompt and validate it before running it across a full database."
           }
         ]
       }
     },
     {
       "id": "shared-vision",
-      "title": "Shared Vision",
+      "title": "Shared vision",
       "description": "Live visibility into the AI's action in a shared canvas or workspace",
-      "thumbnail": "https://images.unsplash.com/photo-1684217875364-35ed8311d463?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzaGFyZWQlMjB2aXNpb24lMjBjb2xsYWJvcmF0aW9uJTIwd29ya3NwYWNlfGVufDF8fHx8MTc3MTMyODI4OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e93bc507502ea3ba05e8be_human_in_the_loop_card.webp",
       "categoryId": "governors",
+      "sourceUrl": "https://www.shapeof.ai/patterns/shared-vision",
       "content": {
-        "description": "Shared vision provides real-time visibility into the AI's work process within a collaborative workspace, allowing users to see and potentially intervene as the AI generates or modifies content.\n\n### Features\n- Live preview of AI's work\n- Real-time updates as AI progresses\n- Show AI cursor or active area\n- Display current action or step\n- Allow interruption or guidance",
-        "designConsiderations": "### Collaboration\n- Clear distinction between AI and human edits\n- Show who/what made each change\n- Enable smooth handoffs between AI and human\n- Support simultaneous work\n\n### Performance\n- Optimize for real-time streaming\n- Handle network latency gracefully\n- Batch updates appropriately\n- Indicate sync status",
+        "description": "As AI becomes increasingly autonomous, humans require affordances that allow them to monitor it without disrupting its flow, and to intervene if necessary. This shared vision allows them to observe and orchestrate the AI passively.\n\nIn the phsyical world, Assistants like Alexa and autonomous vehicles have already established the pattern of AI informing users when it is active or when it requires human intervention, generally in the form of color, sound, or lights.",
+        "designConsiderations": "- **Ensure friction is warranted.** If users are conditioned to believe the AI can fully complete a task on their behalf, they may become frustrated if the AI repeatedly stops its work to have them intervene. Consider an up-front step where the AI reviews the likely permissions needed to complete a step, and have the AI proactively request the user’s permission to continue. The more proactive the AI behaves, the less chance for surprise in any direction.\n- **Don't let users confuse oversight with full security.** AI is vulnerable to prompt injection and other malicious activities. Alerting the user that AI is active in a browser might not be enough to counteract this type of security flaw. For example, Brave documented that a prompt injection in a Reddit thread could be used to secure personal information from the user via Comet’s assistant. Training and additional safeguards are needed on the agent-side, but users also need to be aware of these risks themselves. If a user is exposed to a security vulnerability due to computer use, they will blame the AI and its provider.\n- **Let users constrain the scope of control.** Limit shared view to a specific tab, app, or frame rather than full system access. Scope boundaries reassure users that the AI cannot observe unrelated activity or sensitive data elsewhere on the screen.\n- **Signal boundaries visually and persistently.** Use distinct overlays, colored outlines, or tooltips to show what the AI can see or manipulate. The interface should always communicate which elements are in the AI’s field of view.\n- **Design for oversight in reverse as well.** Include screenshots and specific details in the AI's stream of thought so users can audit what the AI was seeing in addition to its actions.",
         "relatedPatterns": [
           "stream-of-thought",
-          "controls"
+          "verification",
+          "controls",
+          "footprints"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-            "description": "Figma AI showing design changes in real-time"
-          },
-          {
-            "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop",
-            "description": "Notion AI collaboratively editing documents"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68adec60065170c1c3bf3844_68ab38625155f6bce0840687_operator_mode_controls.png",
+            "description": "ChatGPT Operator Mode lives seamlessly within the conversational interface. Users can observe as the AI navigates the multiple browser windows, taking action until it reaches the end of the task or a step that requires user intervention."
           }
         ]
       }
@@ -1593,23 +1774,41 @@
       "id": "stream-of-thought",
       "title": "Stream of Thought",
       "description": "Reveals the AI's logic thought process, tool use, and decisions for oversight and auditability",
-      "thumbnail": "https://images.unsplash.com/photo-1768413911275-a7bc7b59b52b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0aG91Z2h0JTIwcHJvY2VzcyUyMHRoaW5raW5nJTIwcmVhc29uaW5nfGVufDF8fHx8MTc3MTMyODI4OXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e3cc630b054d5e2bd461b0_images_stream_of_thought_card.webp",
       "categoryId": "governors",
+      "sourceUrl": "https://www.shapeof.ai/patterns/stream-of-thought",
       "content": {
-        "description": "Stream of thought exposes the AI's internal reasoning process, showing how it breaks down tasks, makes decisions, and arrives at conclusions. This transparency enables oversight and builds trust.\n\n### What to Show\n- Step-by-step reasoning\n- Decision points and rationale\n- Tools or functions being called\n- Information being retrieved\n- Confidence levels for decisions",
-        "designConsiderations": "### Presentation\n- Collapsible detailed view\n- Clear visual hierarchy\n- Real-time streaming of thoughts\n- Distinguish reasoning from output\n- Use appropriate technical level\n\n### Interactivity\n- Allow expanding reasoning details\n- Enable intervention at decision points\n- Support asking about reasoning\n- Provide feedback on reasoning quality",
+        "description": "The AI's Stream of Thought reveals the visible trace of how it navigated from input to answer. This might include the plan it formed, tools called, code it executed on your behalf, and the checks and decisions it made along the way. When this information is visible, the system becomes more legible and easier to trust.\n\nThe actual form of this pattern is simple and nearly universal: A bounded box, with details minimized or altogether hidden behind a click, showing the AI's logic in real time or for review when complete.\n\nDepending on the depth and context of this task, the details of what is included may vary. Across products, you’ll see three broad expressions:\n\n- **Human-readable plans** that preview what the AI will do.\n- **Execution logs** that record tool calls, code, and results.\n- **Compact summaries** that capture its logical reasoning, insights, and decisions.\n\nIn addition to defining this content, designers must also consider how much data to show about each tool or reference called, how to signal changes in the AI's logical state, and how much detail to include in each summary.\n\nWhen setting these standards for your product, consider differences between mode and intensity. Short chats rarely require deep logic, while extended thinking or coding tasks (more expensive in both cost and time) may need to show more details so users can monitor and intervene if necessary.",
+        "designConsiderations": "- **Show the plan before you act.** Present a short, editable sequence of steps with costs, scopes, and required permissions so people can correct direction early without reading verbose logs. This lowers execution risk and sets accurate expectations.\n- **Separate plan, execution, and evidence.** Keep three views synchronized: what will happen, what happened, and what supports the result. Users should never wonder whether a citation or file came from a proposed step or a completed one.\n- **Tailor visibility to the context.** Users running complicated, computer-heavy tasks will look for full traces and logic, while users in simple conversations may require little-to-no visibility into the AI's process. Set defaults based on the mode, available token density, and user preferences and then offer progressive disclosure so users can dig deeper without being overwhelmed.\n- **Make steps into states.** Treat every step as a clear state: queued, running, waiting for approval, error, retried, completed. Pair these with subtle progress cues in text, visuals, or voice. This makes the AI’s process legible and predictable and gives users insight into the current state, or when states changed in retrospect.\n- **Respect modality rules.** In text, link outputs back to the step that created them. In code, keep analysis readable and exportable. In voice, summarize the current action and the next checkpoint in one sentence. In embodied systems, favor visual paths or intent overlays. Each medium needs its own concise, legible form.",
         "relatedPatterns": [
-          "action-plan",
-          "footprints"
+          "citations",
+          "controls",
+          "action-plan"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=600&fit=crop",
-            "description": "ChatGPT's code interpreter showing execution steps"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e8205d0b4ecb44115fe7b7_chain_of_thought_accio.webp",
+            "description": "Accio transparently shows its full process from search to analysis to generating results."
           },
           {
-            "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=600&fit=crop",
-            "description": "Claude's thinking process display"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d1f794a2b737f8841f551c_chain_of_thought_chatgptinline.webp",
+            "description": "ChatGPT reveals its thought process during thinking tasks, showing its logical reasoning as well as its references in real time."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d20bb80af5518175274dee_chain_of_thought_grok.webp",
+            "description": "Grok separates the sources it retrieves into their own card to keep them separate from its logic."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d213b1f76f1df3a74c53d2_chain_of_thought_lovable2.webp",
+            "description": "Users can follow along with Lovable's actions and reasoning as it creates their project."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d213acad14c16e94828cb8_chain_of_thought_perplexity.webp",
+            "description": "Perplexity shows its steps as a tab above the results pane in its main app and in its browser, Comet."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d213f13d583c030d44e5f7_chain_of_thought_vo2.webp",
+            "description": "V0 follows a similar path, exposing its logic inline until it is ready to start building, after which the remaining steps are visible from the left drawer while the app builds the codebase in the main canvas."
           }
         ]
       }
@@ -1618,23 +1817,41 @@
       "id": "variations",
       "title": "Variations",
       "description": "Trace through multiple variations of a result to choose the one that works best for them",
-      "thumbnail": "https://images.unsplash.com/photo-1628771065518-0d82f1938462?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaG9pY2UlMjBtdWx0aXBsZSUyMG9wdGlvbnN8ZW58MXx8fHwxNzcxMzI4Mjk4fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ec26da7a5a255bad19b622_variant_card.webp",
       "categoryId": "governors",
+      "sourceUrl": "https://www.shapeof.ai/patterns/variations",
       "content": {
-        "description": "Variations generate multiple versions of a result simultaneously, allowing users to compare options and choose the best one. This reduces iteration time and helps users explore possibilities.\n\n### Variation Types\n- Generate multiple at once\n- Create variations from selected result\n- Systematic parameter variations\n- Random explorations",
-        "designConsiderations": "### Display\n- Show all variations side-by-side\n- Enable easy comparison\n- Support grid or carousel view\n- Indicate differences between variations\n- Allow sorting or filtering\n\n### Selection and Refinement\n- Clear selection mechanism\n- Create variations from chosen result\n- Combine aspects of multiple variations\n- Save favorites",
+        "description": "Since generative AI is probabilistic in nature, there will always be a degree of randomness to its results. Providing variations allows users to compare different permutations of the model's logic against their prompt, some of which will be far from their intent but some might be different in unexpectedly positive ways. Whether exploring a prompt space divergently or converging on a final result, this pattern gives users a degree of control over the models’ output.\n\n### Different methods of showing variations\n\nThis pattern takes different forms depending on the modality or product-specific choices.\n\nThis form is common for visual generators like image and text. Multiple options (commonly four) are created at once, deriving from a common seed, and shown in a grid of thumbnails. Users can run additional prompts and actions on any one of those variations. Some tools allow users to adjust the number of variations to create per prompt. Examples: Krea, Midjourney, Canva",
+        "designConsiderations": "- **Keep follow up actions close at hand.** Let users select, merge, or branch off of a variation from the variant itself to keep users in the flow of work.\n- **Allow additional generations.** If the first version or set of variations doesn't meet the user's needs, allow them to regenerate a new variant or set of variants from the same place on the surface.\n- **Use parameters to keep users in control.** Let users change how different the variants should be, whether to use a consistent seed, how many variants to include, etc. Maintain this as metadata associated with the variant so users have footprints to guide them back into how it was created.\n- **Avoid unintentional replacement.** Never overwrite the original output without confirmation. Variations should extend the workspace, not risk data loss or undo effort.",
         "relatedPatterns": [
-          "regenerate",
-          "branches"
+          "parameters",
+          "branches",
+          "regenerate"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=600&fit=crop",
-            "description": "Midjourney's 4-image variation grid"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ed04cbcbe4a107bca40a50_variants.png",
+            "description": "Adobe Firefly shows thumbnails of variants in a grid with a dropdown of options on hover to iterate with any or all of them."
           },
           {
-            "image": "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&h=600&fit=crop",
-            "description": "DALL-E's multiple generation options"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ed04d02d989274426974a5_665b5d9eb3c4ba619e0a41e7_CleanShot-2024-02-26-at-22.04.25-2x-p-1600.png",
+            "description": "Users can review different variations in copy.ai and select or modify the version that best meets their needs."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ed0600384df96e73ca9786_flora.png",
+            "description": "FloraFauna generates variations of images directly on the canvas. These are created as nodes so new branches can be added onto them without additional steps."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ed06daa0443cba20d479e6_grammarly.png",
+            "description": "Like Writer, Grammarly uses preset variations to provide multiple actions at once to the same text."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/img/placeholder-thumb.svg",
+            "description": "Ideogram shows all variations across all generations together in a scrollbar at the base of the generator. Users can tab through each variation and compare how details like the magic prompt changed for each."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ed065ab7124ab00345a217_writer.png",
+            "description": "Writer provides preset variations rather than generating the same seed multiple times. This way users can compare different ways of modifying the text to meet different goals."
           }
         ]
       }
@@ -1643,23 +1860,48 @@
       "id": "verification",
       "title": "Verification",
       "description": "Allow users to confirm AI decisions and actions before proceeding",
-      "thumbnail": "https://images.unsplash.com/photo-1632961974688-fae53de3cabc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0cnVzdCUyMGNvbmZpZGVuY2UlMjBhY2N1cmFjeXxlbnwxfHx8fDE3NzEzMjgyOTB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e9c6f3c84c6b92a95512bd_verification_card.webp",
       "categoryId": "governors",
+      "sourceUrl": "https://www.shapeof.ai/patterns/verification",
       "content": {
-        "description": "Verification requires user confirmation before the AI executes certain actions, particularly those that are irreversible, expensive, or high-stakes. This maintains human oversight for critical decisions.\n\n### When to Verify\n- Destructive actions (delete, overwrite)\n- Expensive operations\n- External actions (sending emails, API calls)\n- High-stakes decisions\n- Batch operations",
-        "designConsiderations": "### Confirmation UI\n- Clear description of what will happen\n- Show preview of effects\n- Highlight irreversible actions\n- Provide cancel option\n- Avoid confirmation fatigue\n\n### Smart Verification\n- Only verify when necessary\n- Remember user preferences\n- Batch similar verifications\n- Allow trusted actions to skip",
+        "description": "AI is operating increasingly independently through workflows, operator mode, and agents. With that autonomy comes moments where the wrong decision can have negative consequences, ranging from lost data to unexpected costs to leaked personal information.\n\nIn any situation where the AI is taking action on the user's behalf, it may be appropriate to first have it receive verification from the human orchestrating it.\n\n### When to require verification\n\nVerification isn't required for simple tasks with low risk. In these cases, the impact of a poor choice is negligible, while the negative impact of increased friction and wasted time is high. For example, running a search, subscribing to a newsletter, or drafting an email. Repeated actions after an initial verification may also fit in this category, such as an auto-fill action after the sample response is verified.\n\nThis equation changes when an errant action has real impact:\n\n- **Loss of reputation** from a poorly written email\n- **Loss of money** from an errant purchase\n- **Loss of security** from sharing personal or corporate data\n- **Loss of work** from overwritten records\n- **Loss of time** to clean up errors and misguided actions\n\nIn these circumstances, verifications should be required by default, though users may choose to skip them through settings or instructions.\n\n### Simple verification\n\nA basic \"go/no-go\" decision pattern is common already in workflows and other repetitive actions where an erroneous prompt could inadvertently overwrite data or result in unexpectedly high compute costs. Examples include verifying an AI's action plan or a sample response before proceeding with the full action. These should be lightweight interactions, and can occur at the source or pushed to another tool. For example, many AI-powered workflow tools use connectors to send a verification to Slack, Email, SMS, or other common workspaces.\n\n### Proactive platform rules\n\nOpenAI demonstrates how it found this balance for its operator mode, which browses the web and takes actions autonomously while the user observes through shared vision and monitoring the AI's stream of thought. The AI is explicitly instructed to halt action when payment data or other sensitive information might be shared. The company hints that they may relax this setting at a later time and grant the user permission to override this constraint.",
+        "designConsiderations": "- **Match friction to risk.** Trigger verification based on the potential harm, scope, and reversibility of the action. High-impact or irreversible actions should require strong confirmation, while routine or easily undone tasks should use light checks or confirmation after the fact to avoid prompt fatigue.\n- **Use opt-out settings for full control.** Similar to dialogs that offer users to “never show this again” for onboarding or other prompts, requesting a verification for a first time experience while supporting a request to never verify again ensures the user is in full command of their experience.\n- **Make clear if verification is skipped.** Whether skipped through opt-out or proactively when sending a destructive prompt, provide clear affordances or help text alerting the user to the opt-out state and allow them to opt-back in at any time.\n- **Alert the user when their action is needed.** Don't stall processes for longer than they need to be because the user did not realize they needed to intervene. Use third-party tool connections and other triggers to allow users to respond rapidly if they choose.",
         "relatedPatterns": [
-          "action-plan",
+          "cost-estimates",
           "sample-response"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-            "description": "ChatGPT confirming before running code"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e9bd06b88b3f092b92c04c_verify-inputs_inline_action_atlassian.jpeg",
+            "description": "Atlassian Intelligence demonstrates inline verification in Jira issue tickets."
           },
           {
-            "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop",
-            "description": "Zapier's AI action confirmation dialogs"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d805d21d5940c7a7771e27_governors_plan_of_action_chronicle.webp",
+            "description": "Chronicle generates an outline before creating the presentation. Users must verify that the outline meets their approval before the ai proceeds."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e9be54c9fb45999235f52b_CleanShot-2025-09-12-at-17.15.21-2x.png",
+            "description": "The Cofounder agent is required to always ask for verification by default before taking action on behalf of the user"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e9be4ec9fb45999235f21b_verify-cofounder.png",
+            "description": "When the user turns off the Always Ask setting with cofounder, the UI shows a bright red alert along with a loud word (\"dangerous\") and icon so the user is always aware of this risk."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e9bd0b6a4cd46527be4d37_dovetail---verify.png",
+            "description": "Dovetail suggests highlights and related insights but relies on user verification before adding them to the synthesized research report."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e9bc8e6a4cd46527be0d85_verification-notion.png",
+            "description": "Notion requires users to verify changes to the text before adding them to the document. If the changes wrote over data, users can verify the update inline or add the new text below."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e7b85db3310de1ec3cccf7_66830bd404e9c9cf6ba7e662_CleanShot-2024-06-01-at-08.47.22-2x-copy.png",
+            "description": "Notion requests verification for AI-prompts that overwrite data in an autofill action"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d8065049407e57ea53d880_governors_plan_of_action_replit.webp",
+            "description": "Replit has the user verify its action plan before progressing to the build itself, a time-heavy process that burns significant compute"
           }
         ]
       }
@@ -1668,23 +1910,32 @@
       "id": "caveat",
       "title": "Caveat",
       "description": "Inform users about shortcomings or risks in the model or the technology overall",
-      "thumbnail": "https://images.unsplash.com/photo-1578867769967-dbb3ee278b81?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjYXZlYXQlMjB3YXJuaW5nJTIwbGltaXRhdGlvbnxlbnwxfHx8fDE3NzEzMjgyOTB8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e796168d533f2436627964_Caveat%20card.png",
       "categoryId": "trust-builders",
+      "sourceUrl": "https://www.shapeof.ai/patterns/caveat",
       "content": {
-        "description": "Caveats clearly communicate the limitations, potential errors, and risks associated with AI-generated content. This manages expectations and helps users make informed decisions about trusting and using AI outputs.",
-        "designConsiderations": "### Placement and Timing\n- Show caveats when most relevant\n- Don't hide behind fine print\n- Use clear, non-technical language\n- Make caveats dismissible but accessible",
+        "description": "Caveats remind users that an AI system may be wrong, incomplete, or biased. Critically, though this pattern is nearly ubiquitous, it remains to be seen how effective this pattern is at building habits of skepticism and critical thinking when users interact with the AI.\n\nYou've likely seen caveats, most often placed just below an open input in conversational surfaces, but this is not the only location where they may be appropriate:\n\n- Chatbots place a line under the input or above each output.\n- Document assistants insert caveats at the top of generated sections.\n- API responses include warning headers in metadata.\n- Voice agents may deliver spoken caveats before or after results.\n\nIn enterprise contexts, administrators may enforce stricter or more visible caveats across workspaces.\n\n### Limitations\n\nCaveats can be helpful: For less technical users, they are simple ways to signal limitations to the product. In that regard, it’s not much different than a warning label on your hair dryer telling you not to use it in the bath.\n\nAt the same time, AI models are complex and rapidly evolving, and caveats are unlikely to be sufficient to encourage and guide users through the nuances of these models.\n\nFurthermore, we should question whether users are already blind to this pattern given its ubiquity. Similar to the standard UX pattern of requiring that users opt into terms of service before signing up for a product, should we believe that users critically understand why a caveat exists and what it means?\n\nConsider going a step further to help users understand and get better outcomes from the model instead of relying on caveats as a fallback. Use wayfinders to guide them to create better prompts, use references and citations to help them understand how the AI derived its response, and make your AI more transparent so users can understand what is happening behind the scenes.",
+        "designConsiderations": "- **Make caveats visible without being distracting.** Place caveats where they naturally align with outputs, not hidden in a footer or splash screen. Users should see them at the moment of decision-making.\n- **Use clear, plain language.** Write in simple, easy-to-understand language. Link to more technical documentation where possible.\n- **Tie caveats to context.** A targeted note such as “Check dates for accuracy” is more actionable than a blanket warning. Context helps users know what to verify.\n- **Design caveats as part of a broader support system.** A warning alone is insufficient. Use related patterns such as Wayfinders, References, and Footprints to help users recover from or prevent errors.\n- **Assume they will be ignored.** Don’t presume a caveat is sufficient to guide users away from harmful behavior. Run evals on your prompts and models to proactively check against hallucinations, bias, or issues.",
         "relatedPatterns": [
-          "disclosure",
-          "citations"
+          "citations",
+          "attachments"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-            "description": "ChatGPT's accuracy disclaimer"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5cfa5f8124d39ce3418c5_caveats_adobe_pdf.webp",
+            "description": "AdobePDF provides a link to more information"
           },
           {
-            "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop",
-            "description": "Google Bard's experimental warning"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5d18badc2969366e0e214_caveats_character.webp",
+            "description": "Character.ai tries to ward off people taking AI too literally"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5d1871f9ec7af380c2d8f_caveats_github_copilot2.webp",
+            "description": "Github warns of potential flaws in code when interacting within the IDE"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5cfe4b7ae51157185f6eb_caveats_notion.webp",
+            "description": "NotionAI provides a link to documentation"
           }
         ]
       }
@@ -1693,48 +1944,84 @@
       "id": "consent",
       "title": "Consent",
       "description": "Only capture data from others with their knowledge and permission",
-      "thumbnail": "https://images.unsplash.com/photo-1695370993558-35ca1d62c8dd?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjb25zZW50JTIwcGVybWlzc2lvbiUyMGFwcHJvdmFsfGVufDF8fHx8MTc3MTMyODI5NHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e78802293b550a8db12ca8_assurances_consent_card.webp",
       "categoryId": "trust-builders",
+      "sourceUrl": "https://www.shapeof.ai/patterns/consent",
       "content": {
-        "description": "Consent ensures that data about or from others is only used with their explicit permission. This is especially important for AI features that might process or generate content involving other people.",
-        "designConsiderations": "### Clear Requests\n- Explain what data will be used and how\n- Make consent opt-in, not opt-out\n- Allow granular consent choices\n- Provide easy way to revoke consent",
+        "description": "Being intentional about receiving consent before sharing data with AI builds user trust, provides liability protection, and supports ethical user experiences. AI-powered transcription is not a new invention of generative AI. However, now that models can be trained on our voices, and content can be generated out of our conversations, people are justifiably more concerned about the privacy of these tools.\n\nConsent is necessary in three domains:\n\n- **Personal data**, such as whether conversations can be recorded or analyzed, and especially when the data may be used to train the model.\n- **Organizational data**, to avoid sharing proprietary information with third-party AI.\n- **Other people's data**, such as recording or training on voices, likenesses, or text that does not belong to the primary user.\n\nThe first two methods of granting support for data sharing are largely covered by the the data ownership pattern. Getting consent from others to use AI to record and possibly train on their data requires its own, more intentional approach.\n\n### Variations and forms\n\nVery few products on the market proactively request consent and block recording or transcription if it is not given. Instead, this pattern takes multiple, potentially overlapping forms:\n\n- **Opt-in disclosure**: Users actively agree before the product records or uses data. Example: Limitless requiring audible consent from others before recording.\n- **Silent by default**: Products record or capture data without notifying others. Example: Granola captures a meeting transcript without storing recordings. The lack of voice recording is used to justify transcribing without notifying others as the default.\n- **Post-hoc alerts**: The product records, then alerts participants after the fact. Less common, but seen in transcription tools that notify attendees once transcription has started.\n- **Consent for training**: Explicit requests to use voices, likenesses, or user content in model fine-tuning. ElevenLabs sought permission from celebrity estates to avoid misuse.\n\n### Consent to develop someone’s likeness\n\nIt is increasingly easy to create fake voices and avatars of people based on recordings of their voice and person. ElevenLabs announced that they requested consent from the estates of celebrities like Burt Reynolds to clone their voices and feature them in the product.",
+        "designConsiderations": "- **Make consent explicit and visible.** Consent should never rely on buried text or ambiguous icons. Use clear, persistent indicators when recording, analyzing, or sharing data, and ensure it is visible from the surface where the interaction is occurring.\n- **Default to opt-in, not opt-out.** Silence is not consent. Ask for permission before capturing audio, video, or text interactions, even in products with prior authorization. Opt-in flows not only respect user autonomy but also simplify compliance with emerging AI and privacy regulations.\n- **Differentiate consent types.** Recording consent, model training consent, and sharing consent are distinct decisions. Users should be able to grant or withhold each independently. OpenAI and Anthropic both separate data-sharing choices from product usage, a good standard to follow.\n- **Respect withdrawal at any point.** Consent must be reversible. Provide an easy way to stop data collection or delete previously captured data, and clearly communicate what will and won’t be removed. Users gain trust when they see how revocation takes effect in real time.\n- **Use multimodal indicators when screens aren’t visible.** In voice, AR, or wearable contexts, consent cues must persist through light, sound, or vibration. Google’s Nest and Meta’s Ray-Ban smart glasses use LEDs and audio pings to confirm recording. While not explicitly required in all locations, these affordances result in a better consumer environment and brand value.\n- **Design for shared environments.** In meetings or group chats, all participants must be notified, not only the initiator. Zoom’s AI Companion automatically announces when AI features are active and requests acknowledgment from everyone before continuing.\n- **Clarify downstream use.** When user data might be used to train or improve models, disclose where it flows and how it’s anonymized or aggregated. Separate this choice from feature functionality, so declining model training doesn’t disable core product use.\n- **Empower organizational and individual balance.** For enterprise deployments, admins may predefine consent policies. Still, each user should receive clear, personal confirmation when AI recording or summarization is active. Organizational defaults can’t replace individual awareness.\n- **Design for dignity, not just compliance.** Beyond legal formality, consent conveys respect. When users see that your product asks clearly, listens, and responds to their decisions, it reinforces trust that goes deeper than any checkbox.",
         "relatedPatterns": [
-          "data-ownership",
-          "memory"
+          "disclosure",
+          "caveat",
+          "data-ownership"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-            "description": "Notion's workspace consent for AI features"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e73106d8c0330ec7cf2e9a_fireflies.webp",
+            "description": "Fireflies supports a soft consent action by allowing users to opt out of recording from the confirmation email."
           },
           {
-            "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop",
-            "description": "Zoom's AI companion consent dialog"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b614e77e7adf42d5b86c9a_Gong.webp",
+            "description": "Gong sends a notification to participants ahead of time providing an option to join but request that the meeting is not recorded, implying consent if people join through the main link"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68cf2f27636cd024250e72bd_CleanShot-2025-08-31-at-13.56.56-2x.png",
+            "description": "Granola has added an optional setting to let others know when you are using it for transcription."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b61598a51df54a09159b32_limitless.webp",
+            "description": "The limitless pendant used to have the option to only record the voices of people who had audibly granted consent. This feature is no longer on by default"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e7460be529a733656d6496_notion-consent.png",
+            "description": "Notion shows a scrolling marquee when starting to transcribe notes, alerting the user of the requirement to explicitly request consent."
           }
         ]
       }
     },
     {
       "id": "data-ownership",
-      "title": "Data Ownership",
+      "title": "Data ownership",
       "description": "Control how the model remembers and uses your data",
-      "thumbnail": "https://images.unsplash.com/photo-1762330465065-af76f23809db?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkYXRhJTIwb3duZXJzaGlwJTIwcHJpdmFjeXxlbnwxfHx8fDE3NzEzMjgyOTR8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e78ce2c962a1e935655a8e_assurances_data_sharing_card.webp",
       "categoryId": "trust-builders",
+      "sourceUrl": "https://www.shapeof.ai/patterns/data-ownership",
       "content": {
-        "description": "Data ownership gives users control over how their information is stored, used, and potentially used for training AI models. This includes options to export, delete, or opt-out of certain uses.",
-        "designConsiderations": "### Transparency\n- Clearly explain data usage policies\n- Show what data is stored\n- Indicate if data is used for training\n- Provide data export functionality",
+        "description": "The use of personal data by web platforms has always been a slippery slope. In order to justify their ad-supported business strategy to users, Big Tech's marketing departments manufactured the ostensible benefit of \"personalization\" in return for the capturing, re-use, and re-selling of personal data. The conceit was, they are going to show you ads and targeted posts no matter what, but at least those interruptions might be more in line with your interests.\n\nThis already feels invasive when it comes to capturing what you are interacting with, which groups you are in, which keywords in text are most likely to compel your engagement, and so on. It's an extraction of user intent.\n\nWhat happens when the system is capturing more than your clicks though? When you are talking to an AI, or working with it to create content, where is the line drawn between what belongs to you, what belongs to the platform, and what to do with the stuff in the middle?\n\nWhile the nuances and principles of this market are ironed out, many AI companies have implemented the Data Retention pattern, leading to its near ubiquity.",
+        "designConsiderations": "- **Default to privacy.** Users should never be surprised to learn that their data can be consumed for training purposes. Allow users to opt in at any time, but set the default for data ownership settings to restrict training.\n- **Separate training from retention.** Granting permission for an AI service to retain your data for customer service and aggregate analytical purposes should not be combined with the permission for models to be trained on personal data. Give each its own control and page so users can change one without affecting the other and make the distinction clear.\n- **State the default in the UI, not only in policy.** Provide sufficient details within the UI where the setting is controlled so users can understand what they are opting into or out of. Support this with links to deeper documentation and policy.\n- **Present both sides.** Explain to users what happens to their data. Some might be willing to share it if they understood that it helps the overall experience. Be clear about the differences between data collection and data training, and how data is used in the aggregate in both cases.",
         "relatedPatterns": [
+          "consent",
           "memory",
-          "incognito-mode"
+          "disclosure"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-            "description": "ChatGPT's data controls and export"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b61b1f591d8bf136c43cdb_data_ownership_gpt.webp",
+            "description": "ChatGPT throws in an altruistic pitch for its data ownership setting"
           },
           {
-            "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop",
-            "description": "Claude's conversation data settings"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b61bd1e1001a9e6183b4f0_data_ownership_claude-1.webp",
+            "description": "Claude provides a disclosure around data ownership when users send a feedback report. They helpfully link to more information"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b61b9406b5d80b4eb703c0_data_ownership_gemini.webp",
+            "description": "Gemini prefaces its initial request for data sharing with an explanation for why they do it"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b61aadac585efd87420f29_data_ownership_github.webp",
+            "description": "Github includes more details than most in its data ownership setting"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b61ab4ddc934d4e969bb96_data_ownership_notion.webp",
+            "description": "Notion hits you with a heavy popup asking you to opt in to data sharing. This setting can be configured on or off later"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b61a6d8b26fcfec5d12c17_data_ownership_perplexity.webp",
+            "description": "Perplexity uses the standard pattern of opting in by default with the option to opt out"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b61b56f8a83c3fce6c6375_data_ownership_substack.webp",
+            "description": "Substack adds a caveat to their setting panel"
           }
         ]
       }
@@ -1743,23 +2030,46 @@
       "id": "disclosure",
       "title": "Disclosure",
       "description": "Clearly mark content and interactions guided or delivered by AI",
-      "thumbnail": "https://images.unsplash.com/photo-1644718195302-cb82d9dfb366?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxkaXNjbG9zdXJlJTIwdHJhbnNwYXJlbmN5JTIwaW5mb3JtYXRpb258ZW58MXx8fHwxNzcxMzI4Mjk0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e790064facb4644b862116_Disclosure%20card.png",
       "categoryId": "trust-builders",
+      "sourceUrl": "https://www.shapeof.ai/patterns/disclosure",
       "content": {
-        "description": "Disclosure clearly indicates when content is AI-generated or when users are interacting with an AI system. This transparency helps users contextualize information and make informed decisions.",
-        "designConsiderations": "### Visual Indicators\n- Consistent AI badges or labels\n- Subtle but noticeable markers\n- Accessible to all users\n- Present without being intrusive",
+        "description": "AI has a trust problem.\n\nOne method to help users feel more comfortable is to be upfront and clear about when they are interacting with AI. When users can opt into the experience feeling fully informed, they may be more likely to suspend their reservations long enough for you to deliver value that keeps them engaged.\n\nDisclosure patterns label AI interactions and content so users can distinguish them. Depending on your situation, there are a few options to choose from:\n\n- **For AI-native products,** this might not be needed. Tools like Perplexity and ChatGPT are built entirely around AI features, so users will expect its presence. You can help users by separating content they have uploaded or referenced from sources that the bot captures.\n- **For blended products** where AI-generated or edited content is interspersed with human-created content, consider how you might label the content created by the computer. This way users don't inadvertently present AI writing as their own, and ensures you give users the agency to manage the content within their system.\n- **For AI agents** label content delivered by a bot within the chat. People have mixed feelings about interacting with bots when they think they are speaking with other humans. Avoid any sticky situations or impacts to your brand by being up front. This will become even more important as Agentive AI grows in adoption.\n- **In all cases,** proactively inform users when they are interacting with a product powered by AI, particularly if their data can be collected and they don't have the ability to opt out.\n\n### Different approaches\n\nIntercom's Fin explicitly labels the messages sent by the AI. When the conversation is passed to a human, the inline badge on the individual message persists. A user can work backwards in their conversation to see exactly when they started talking to a real person.",
+        "designConsiderations": "- **Name the actor, every time.** Use a clear sender line and a distinct avatar for AI messages, and keep that identity persistent across handoffs. A simple “AI” tag besides an AI Agent's name can help avoid confusion or frustration for users.\n- **Label the action, not just the feature.** Disclosures with verbs like “Summarized with AI” or “Rewrote with AI” are more informative than a generic “AI” signifier. These set accurate expectations for users to alert them about what must be verified.\n- **Use color or other styles as an affordance.** Give AI-generated content or conversation a distinct look to visually differentiate it from other content on the page, such as a subtle background and a persistent “Assistant” header. Ensure this treatment is only used for AI-generated content and does not match similar treatments used for human-generated content.\n- **Balance brand choices with usability.** If you use a name for AI, ensure users can't confuse it with a human, and be consistent. For example, iA writer uses low-opacity text to distinguish synthetic text, which has the effect of operating as a clear affordance while maintaining their brand-oriented approach to design.\n- **Don’t fake human interaction.** Especially in more sensitive contexts like support, make it clear to users when they are speaking with a human vs. AI, and make it easy to get to a human when needed. This sets appropriate expectations and avoids surprises that erode trust.\n- **Disclose by default for realistic synthetic media.** If content could plausibly be mistaken for real people or events, require creator disclosure and add platform labels. Major platforms like YouTube and Meta both enforce labeling for realistic AI media, offering a strong user expectation baseline.\n- **Allow opt out.** Give users the option to opt out from interacting with AI by having it announce its presence or by requiring consent before someone is recorded. A disclosure alone may not be sufficient to capture consent.",
         "relatedPatterns": [
-          "watermark",
-          "caveat"
+          "consent",
+          "caveat",
+          "data-ownership",
+          "incognito-mode"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-            "description": "LinkedIn's AI-assisted label on posts"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d0963a50069925376e3c10_disclosure_character.webp",
+            "description": "All posts by AI avatars on Character.ai are labeled with a disclosure"
           },
           {
-            "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop",
-            "description": "Gmail's AI-generated reply indicator"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68acba71310b53c6cbc0a0c0_664a1471682dd0479402a251_CleanShot%25202024-05-19%2520at%252009.01.00%25402x.png",
+            "description": "Intercom's AI agent Fin is clearly marked with an AI indicator whenever it interacts with the user."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d0957c6556007c0ebf5bd4_disclosure_productboard_linked.webp",
+            "description": "When AI suggests labels or categories, a prominent label alerts users, who can accept or change the recommendation"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d0963a50069925376e3c0c_disclosure_tactiq.webp",
+            "description": "Tactiq shows a disclosure of AI transcription in the meeting notes"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d095756851fe1e82119d20_disclosure_tiktok_ai_policy.webp",
+            "description": "TikTok has adopted the Content Credentials standard to automatically label AI creators or content across the platform with a disclosure in the post data"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d095bc72b6e89a284fb58c_disclosure_zapier2.webp",
+            "description": "Zapier allows users to add an AI disclosure to its workflow steps"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d095f3d90e8263e529a138_disclosure_zoom_disclose.webp",
+            "description": "Zoom discloses when AI enters a meeting with a large overlay that takes over the screen"
           }
         ]
       }
@@ -1768,23 +2078,42 @@
       "id": "footprints",
       "title": "Footprints",
       "description": "Let users trace the AI's steps from prompt to result",
-      "thumbnail": "https://images.unsplash.com/photo-1758565141468-e346d32d050c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmb290cHJpbnRzJTIwdHJhY2UlMjBzdGVwcyUyMHBhdGh8ZW58MXx8fHwxNzcxMzI4Mjk0fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e79b0cc0279b6346329c02_Footprints%20card.png",
       "categoryId": "trust-builders",
+      "sourceUrl": "https://www.shapeof.ai/patterns/footprints",
       "content": {
-        "description": "Footprints provide a traceable record of how the AI arrived at its output, including the steps taken, data accessed, and decisions made. This auditability builds trust and enables learning.",
-        "designConsiderations": "### Trace Information\n- Chronological record of steps\n- Data sources accessed\n- Decisions and reasoning\n- Timestamps and versioning",
+        "description": "Footprints are the visible and machine-readable traces that show where and how AI participated in creating, editing, or deciding something. They consist of multiple patterns that give people context for how results came to be, help teams audit outcomes, and let organizations meet policy and regulatory needs.\n\nWithout these, users cannot judge reliability, repeat a result, or hold the system accountable. With a clear trail, users can verify sources, review decisions, and prevent AI laundering where generated work is passed off as fully human.\n\n### Modes of use\n\n- **Generative mode:** In creative and exploratory tasks, footprints act as trails that let people branch, replay, or reuse earlier prompts and outputs. They support non-linear exploration in otherwise linear surfaces like chat. Midjourney, for example, shows the full prompt and parameter list with every generation and allows users to send them to the input box in a single click, making it easy to re-try previous runs or pick up a dropped branch.\n- **Verifying mode**: In debugging and audit contexts, footprints expose how the AI processed inputs, which sources it used, and what steps it took. They show whether intent was preserved, whether sensitive data was handled correctly, and whether the process meets compliance standards. Replit’s plan-of-action views let developers review which files and lines of code were touched. GitHub Copilot annotates generated code so developers can trace its reasoning. Perplexity attaches citations so users can trace facts back to their origins.\n\n### Where they appear\n\n- **Interface footprints**: Badges, inline markers, expandable panels, or annotations in the UI. These make the origin of the generation’s attributes visible to the user in real time.\n- **System footprints**: Logs and metadata that capture model version, parameters, safety modes, sources retrieved, approvals, costs, and latency. These matter for admins and auditors more than end users.\n- **Media footprints**: Credentials, watermarks, or edit histories that persist when content is exported, copied, or republished. Adobe embeds model and edit details directly into metadata so provenance survives outside the original tool.\n\n### Practical use cases\n\n- **Review logic:** GitHub Copilot is capable of annotating code it generated, causing the AI to share its logic openly so the user can trace back and understand how it came up with its code.\n- **Content credentials:** Adobe includes information about the model and edit history in the metadata of AI-generated work.\n- **Replicating creative steps:** Midjourney shows the prompt, references, and parameters used to create every generated image and video, and allows users to search their history by prompt or parameter.\n- **Verifying information:** Perplexity includes citations and references with its search summaries so the user and visitors can trace facts and information back to where they originated.\n- **Improving data connections:** Intercom's Fin includes reporting on how the agent navigates conversations and references information, including data footprints to help managers improve the performance of knowledge documentation.\n\n### Inadvertant footsteps\n\nNot all footprints are intentional. AI-generated content often carries telltale phrases:\n\n- Punctuation cues like overuse of em-dashes\n- Grammatical cues, like the sentence framing “it's not just [blank], it's [blank]”\n- Visual cues, like the highly-saturated, purple-based color palette commonly produced by code generators\n\nThese all can undermine credibility when shared unedited into public spaces. At scale, this “AI garbage” becomes a footprint of its own of AI slop across the web.",
+        "designConsiderations": "- **Consider footprints at both the interface and system level.** Badges, markers, and annotations make a generation‘s history visible, while logs and metadata preserve details for later audit. Both are necessary in many contexts.\n- **Make footprints discoverable and consistent.** Use iconography, links, and affordances that direct attention to them in the same way across the product.\n- **Support branching and replay.** Let users click a prior footprint to auto-populate a prompt, regenerate an output, or explore a new branch in order to make further generation easy and effortless.\n- **Protect sensitive footprints.** Encrypt logs, restrict access, and provide retention controls. Admins need governance tools, and users need assurance that their traces are not misused.\n- **Treat footprints as first-class data.** Expose them via API, make them queryable, and integrate them with analytics and compliance systems so users can maintain ownership over their generation history regardless of the tool they are using to access the model.",
         "relatedPatterns": [
+          "parameters",
+          "watermark",
           "stream-of-thought",
           "citations"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800&h=600&fit=crop",
-            "description": "Perplexity's search and reasoning trail"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b647f8e1001a9e618dbd28_footprints_bolt.webp",
+            "description": "Bolt tracks across iterations of the build. Users can click back through the history to see how the interface evolved"
           },
           {
-            "image": "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=800&h=600&fit=crop",
-            "description": "Claude's step-by-step execution history"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b646b61b0610063010d962_footprints_chatgpt.webp",
+            "description": "When in logic mode, ChatGPT explains how it processed the task and reached its conclusion, allowing users to surgically identify where logic may have gone awry"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b64b5050558330d7b018cf_footprints_chatgptagent.webp",
+            "description": "ChatGPT agent mode includes a view on the browser inset that shows all of the logical steps and screenshots the AI walked through to complete a task. Users can also scrub back through the live video to view the steps in real time"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b648409d46daddf76c685b_footprints_flora.webp",
+            "description": "FloraFauna's open layout shows how all blocks are connected, so users can visually track the progress of a string of prompts as the group runs"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b648468c456f8b242806bb_footprints_firefly.webp",
+            "description": "Adobe Firefly shows the generative history of the most recent variations so users can pull references forward as they iterate"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b648879d46daddf76ca18d_footprints_midjourney.webp",
+            "description": "When used in discord, Midjourney's meta data on any variation links back to the original file. Months after starting a branch, a few clicks can route the user back through the history of their generation"
           }
         ]
       }
@@ -1793,23 +2122,36 @@
       "id": "incognito-mode",
       "title": "Incognito Mode",
       "description": "Interact with the AI outside of its memory",
-      "thumbnail": "https://images.unsplash.com/photo-1633486294746-5a14ae585ff7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpbmNvZ25pdG8lMjBwcml2YXRlJTIwYW5vbnltb3VzfGVufDF8fHx8MTc3MTMyODI5NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e79dc6ed03594e00823433_assurances_private_card.webp",
       "categoryId": "trust-builders",
+      "sourceUrl": "https://www.shapeof.ai/patterns/incognito-mode",
       "content": {
-        "description": "Incognito mode allows users to interact with AI without the system remembering the conversation or using it to personalize future interactions. This provides privacy for sensitive topics.",
-        "designConsiderations": "### Clear Mode Indication\n- Visual indicator of incognito state\n- Explain what's not being saved\n- Easy toggle on/off\n- Confirm before exiting mode",
+        "description": "There are many reasons why someone might want to interact with AI without it accessing or changing its memory of them.\n\nUsers may want to avoid biasing responses with personal preferences, let someone else try the tool on their device, keep their memory clean from irrelevant searches, or simply run quick queries without cluttering their sidebar.\n\nIncognito mode has benefits for corporate users as well. Private sessions keep proprietary information out of stored histories, create a clear separation between personal exploration and organizational records, and reduce unintended data retention, accidental sharing, and model drift from one-off experiments.\n\n### Common uses\n\nChatGPT was the first tool to integrate private mode. Today, it is available with many models and products. Users can access this mode directly through a toggle, or indirectly through other settings such as Google’s choice to exclude AI summaries and features in incognito sessions from the Chrome browser.\n\n- Exploration and prompt testing without altering recommendations.\n- Sensitive drafting before moving content into a governed space.\n- Vendor trials where data residency and training exclusions are required.\n\n### Variations\n\n- **Local-private**: Everything is device-local until the user explicitly exports or saves. No cloud storage, no sync, and no server-side logs beyond minimal operations.Apple's Siri follows this approach, keeping transcripts local unless explicitly shared.\n- **Ephemeral session**: Prompts and outputs live on the server but are automatically deleted after a short retention period (e.g., 24 hours). This is common in AI chat tools where the system still needs to serve the session but promises scrubbing. Examples include ChatGPT temporary chats, which run on OpenAI's servers but exclude data from training and disappear after the session ends.\n- **Scoped-private**: The session is private by default, but the user can deliberately publish outputs into memory, team workspaces, or shared repositories. This hybrid model supports exploration without blocking collaboration. Exemplified by Notion's AI drafts, which start as private but can be published into a shared workspace if the user chooses.\n- **Incognito-by-context**: AI features are suppressed when the user is already in a private browsing session (e.g., Google excluding AI summaries in Chrome’s incognito). This ties incognito to existing privacy contexts rather than creating a separate toggle. This is the approach Google takes when disabling AI summaries and side features when Chrome is in incognito mode.\n- **Enterprise-governed**: A private mode with admin controls, where organizations define retention rules, export allowances, and audit hooks to balance employee privacy with compliance obligations. Enterprise SaaS like Microsoft Copilot in enterprise accounts allows IT admins to enforce retention, audio, and export policies for “private” Copilot sessions.",
+        "designConsiderations": "- **Make the selected mode unmistakable.** Use strong, persistent indicators across all surfaces, not just at session start. This could be a dark header, unique icon, or watermarked background. Pair it with a short, fixed line that states the rules in plain language (for example, “Nothing here is remembered or shared”).\n- **Exclude all prompts, files, and outputs from memory and training.** Treat private sessions as sealed. They should not influence personalization, team models, or assistant behavior later. Users must be confident that no phrasing, preferences, or uploaded files will resurface in completions, recommendations, or fine-tuning.\n- **Limit integration scopes in private mode.** Connectors, APIs, and enterprise data integrations should load with reduced or null scopes. For instance, a CRM connector should not populate records in private mode, even if normally available. Show a permissions summary so users know what is temporarily disabled.",
         "relatedPatterns": [
           "memory",
-          "data-ownership"
+          "iconography"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-            "description": "ChatGPT's temporary chat mode"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68bcd5a90c9c92a560d991dd_incognito_chatgpt.webp",
+            "description": "ChatGPT places the trigger for private interaction prominently in the top right corner of the screen for logged in users, making it easy to switch in and out of."
           },
           {
-            "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop",
-            "description": "Claude's private conversation option"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68bcd7499e6cee2158937cb9_incognito_dia.webp",
+            "description": "The Dia browser uses subtle cues while in incognito mode, notably changing the color of its loading state for new searches."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68bcd65b04af6e5a6fb28941_incognito_google.webp",
+            "description": "Gemini's incognito mode includes a prominent disclosure just above the open text input of the initial CTA so users won't be surprised by the treatment of their data shared during the session."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68bcd6929e6cee2158934220_incognito_perplexity.webp",
+            "description": "Perplexity uses iconography and an easy-to-access disclosure to differentiate incognito mode and warn of their data retention policy."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68bcd747ca8d8178b5952e18_incognito_perplexity2.webp",
+            "description": "Perplexity's Comet browser defaults to dark mode and a prominent illustration when placed in incognito mode."
           }
         ]
       }
@@ -1818,23 +2160,36 @@
       "id": "watermark",
       "title": "Watermark",
       "description": "Identifiers on AI Generative content that humans, software, or programs can read",
-      "thumbnail": "https://images.unsplash.com/photo-1631173254100-888e34f1a890?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx3YXRlcm1hcmslMjBzaWduYXR1cmUlMjBtYXJrfGVufDF8fHx8MTc3MTMyODI5NXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e942806762a4d6d95dc964_watermark_card.webp",
       "categoryId": "trust-builders",
+      "sourceUrl": "https://www.shapeof.ai/patterns/watermark",
       "content": {
-        "description": "Watermarks embed imperceptible or subtle markers in AI-generated content that can be detected by software, helping identify synthetic media and combat misinformation.",
-        "designConsiderations": "### Implementation\n- Invisible to humans but machine-readable\n- Robust against common manipulations\n- Include metadata about generation\n- Provide verification tools",
+        "description": "As AI becomes more prolific, it's increasingly important for people and for platforms to be able to differentiate between generated content and human-created content.\n\n- **For consumers**, this helps you sort through the bombardment of online content with more confidence and agency.\n- **For creators**, this protects the rights of your content from reproduction and counterfeits.\n- **For researchers and platform owners**, this protects the quality of the inputs into your work.\n\nWatermarks help us by adding or identifying tracers into text, images, sounds, and video when it's created digitally by a model.\n\n[Note: For the sake of simplicity in terms, this will combine the two approaches of digital watermarking and content provenance into one term]\n\n### Watermark types\n\n- **Overlay watermarks** are visual symbols or text added superficially to the content as a post-processing technique. They can be added automatically by the generative engine, or by the platforms where the content is uploaded. Overlay watermarks are not integrated into the structure of the content and can therefore be easily removed.\n- **Steganographic watermarks** embed patterns into the content that are imperceptible to humans. These might include subtle changes to pixels in video and images, additional spaces in text, or slight note changes in audio files. While slightly better protected than overlay watermarks, these can be masked intentionally or by bad actors through small changes to the file such as adding a Gaussian blur.\n- **Machine learning watermarks** use a new approach that relies on machine learning models to add a distinct key to the content that can only be read by other models. This is the process Google is using in their SynthID approach. They are stronger than the first two types, but can be degraded as the image is modified.\n- **Statistical watermarks** are random patterns injected into the image, audio, or text by the generator itself. While still impacting the content at the surface level (and not the foundational structure of the content), the randomness of this approach makes it far more difficult to crack or mask, especially for the average use.\n\n### Compared to content provenance\n\nThis alternative approach embeds data into the origin (or provenance) of the content itself, creating a digital fingerprint on the content's metadata. Content provenance requires the cooperation of content generators and digital platforms to create and enforce these standards.\n\nMany large tech platforms have signed onto a pledge to incorporate standards developed by the Coalition for Content Provenance and Authenticity (C2PA), which defines a common format that cannot be tampered with without leaving traces of manipulation. This data could then be read by any platform that adopts the protocol, including the full history of modifications.",
+        "designConsiderations": "- **Make watermark visibility user-centered.** Do not assume one level of visibility fits all cases. Consumers may need clear overlays or labels, while creators and researchers may prefer invisible or metadata-level tracers. Match visibility to the audience and context.\n- **Support both imperceptible and visible watermarks.** Visible labels deter casual misuse and clarify origin. Invisible tracers, like embedded hashes or model fingerprints, provide forensic accountability. Combining both gives broader protection across the content lifecycle.\n- **Provide context when surfacing watermarks.** Users need to know not just that provenance data exists but what it means. Include metadata such as source model, generation time, applied edits, and verified publisher when available.\n- **Standardize placement across surfaces.** Keep watermarks details in predictable locations, such as a “Content Info” panel, metadata view, or hover state. Consistency reinforces recognition and reduces fatigue.\n- **Balance regulation and choice.** Where watermarking or provenance disclosure is mandated, comply fully. Elsewhere, offer creators options for when and how attribution is applied, while preserving baseline protection for consumers.",
         "relatedPatterns": [
-          "disclosure",
-          "footprints"
+          "citations",
+          "prompt-details"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&h=600&fit=crop",
-            "description": "Google's SynthID watermarking system"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e951233366f3550d1f3ff7_66808b8e3e50676649d76975_AI-Nutrition-Label-(1)-p-1600.webp",
+            "description": "Adobe&apos;s Content Credentials protocol has been adopted by TikTok and other platforms with a shared icon intended to be a universal indicator of synthetic content"
           },
           {
-            "image": "https://images.unsplash.com/photo-1551650975-87deedd944c3?w=800&h=600&fit=crop",
-            "description": "OpenAI's digital watermarking for DALL-E"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e9511759b009b505ea4c49_66808016c898205395d34b52_TikTok-AI-Label.webp",
+            "description": "TikTok became the first social media company to support the Content Credentials Metadata tags for all content created on their platform."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e95175a347d40ab7c502b3_watermark-shuttstock.png",
+            "description": "Shutterstock labels AI-generated images within its gallery"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e94f7a59b009b505e9b959_66808a718d028dda55cd8344_CleanShot-2024-06-29-at-16.27.37-2x.png",
+            "description": "Snap has developed its own proprietary symbol for AI content generated on its platform"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e9511a8fefa18442e96648_66808b66b6817ed38329b609_AiUX-Footprints-Trust.png",
+            "description": "IA Writer offers an example of a tool proactively watermarking generated text, distinguishing it in grey from text actually authored by the user"
           }
         ]
       }
@@ -1843,23 +2198,36 @@
       "id": "avatar",
       "title": "Avatar",
       "description": "Visual identifier of the AI itself to help it be recognizable, memorable, and on-brand.",
-      "thumbnail": "https://images.unsplash.com/photo-1585972949687-48eff8b879a9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdmF0YXIlMjBpZGVudGl0eSUyMHByb2ZpbGUlMjBjaGFyYWN0ZXJ8ZW58MXx8fHwxNzcxMzI4Mjk2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e643827f4cc34ea89d929d_identifier_avatar_card.webp",
       "categoryId": "identifiers",
+      "sourceUrl": "https://www.shapeof.ai/patterns/avatar",
       "content": {
-        "description": "An avatar provides a visual representation of the AI, making it more recognizable and giving it personality. The avatar appears consistently across the interface to identify AI-generated content and interactions.",
-        "designConsiderations": "### Design Principles\n- Simple and recognizable at small sizes\n- Consistent with brand identity\n- Distinguishable from user avatars\n- Scalable across contexts",
+        "description": "Avatars are the form AI takes when interacting with users. In practice, avatars have three jobs:\n\n- **Communicate state**, for example a pulsing icon that shows the system is listening.\n- **Anchor identity**, so people know which “entity” is acting in a multi-tool interface.\n- **Mediate trust**, because choices like realism, gender, or expressiveness change how human the system feels and how much agency users attribute to it.\n\n### Variations and forms\n\nThe visual form of an avatar will vary by modality, context, and intent. A minimal abstract icon suggests utility and neutrality, while a more human-like voice or face invites conversation but risks overpromising capability.\n\n- **Minimal marks.** Icons like Claude’s starburst or GitHub Copilot’s masked pilot serve as lightweight identity markers. They communicate brand and presence but avoid any illusion of human agency, making them best for products emphasizing utility and speed.\n- **Branded characters.** Distinct but abstracted characters, such as Jasper’s mascot or Replika’s customizable avatars, provide warmth and memorability. At the extreme, these can lean into parasocial dynamics, which can be useful for engagement but create risks if expectations diverge from capability.\n- **Photorealistic or animated agents.** Some tools experiment with realistic video avatars or fully animated assistants. These push toward embodiment and immersion, often in customer service or teaching contexts. They raise higher stakes for coherence, since visual realism implies human-like competence.\n- **Voice avatars.** In voice mode, the avatar is often a synthetic voice with a chosen accent, pitch, and cadence. Unlike static icons, these avatars change turn by turn, giving immediate cues about state, tone, and intention. Perplexity and ChatGPT offer distinct voices that create recognizable presence even without a visual counterpart.",
+        "designConsiderations": "- **Be intentional about how visible the avatar should be.** Some products keep the AI barely visible, as a small icon in a toolbar. Others make it central, like a chat bubble or animated face. The choice changes whether the AI feels like a background utility or a social partner.\n- **Make state changes unambiguous.** Users need to know when the AI is listening, generating, or waiting. Designers can use motion, glow, or sound shifts. Without clear state cues, people mis-time their inputs or assume the system failed.\n- **Make the avatar part of the UI.** During processing tasks, explore how you might incorporate your avatar in a simple but useful way, such as a small animation that acts as an affordance to show the AI is thinking.\n- **Handle voice as an avatar, not just an output.** In voice mode, the sound itself is the avatar. Accent, tone, and cadence all affect how users interpret competence and friendliness. The design trade-off is between distinctiveness (memorable, on-brand) and neutrality (flexible, unobtrusive).\n- **Balance branding and abstraction.** Abstract forms reinforce brand identity without creating false intimacy. They are also easier to adapt across platforms than detailed characters.\n- **Allow customization.** Adjusting the style of the avatar (voice, appearance) offers a lightweight means to personalize the experience. Be explicit when customization can impact the AI's personality or training.\n- **Avoid deceptive realism.** Photorealistic avatars imply human competence and can mislead. Use realism only if the experience and safeguards are strong enough to back it up.",
         "relatedPatterns": [
-          "personality",
-          "name"
+          "disclosure",
+          "personality"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&h=600&fit=crop",
-            "description": "Claude's friendly avatar icon"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68dc196e54f8ecd67bb38d40_avatar_chatgptvoice.webp",
+            "description": "ChatGPT uses an orb to distinguish its voice avatars."
           },
           {
-            "image": "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&h=600&fit=crop",
-            "description": "Character.AI's diverse character avatars"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68dc0e601df314d69829a012_avatar_claude.webp",
+            "description": "Claude invokes personality into a simple mark, showing that avatars don't need to be detailed to be effective."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68dc18e9f4ba4637a2c3228e_perplexityaudio.gif",
+            "description": "In audio mode, Perplexity uses color and motion to give personality to its avatar."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68dc19b8c9a781cf5a1d19aa_avatar_replika.webp",
+            "description": "Replika provides a collection of pre-defined AI avatars for its videos."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68dc1a20153e372b4c55fa3a_avatar_zapier.webp",
+            "description": "Zapier Copilot uses a simple geometric shape."
           }
         ]
       }
@@ -1868,23 +2236,45 @@
       "id": "color",
       "title": "Color",
       "description": "Visual cues to help users identify AI features or content.",
-      "thumbnail": "https://images.unsplash.com/photo-1557777586-f6682739fcf3?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdHlsZSUyMGRlc2lnbiUyMGFlc3RoZXRpY3xlbnwxfHx8fDE3NzEzMjgyODV8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ecfb404d49e7e49b008fbc_color_card.webp",
       "categoryId": "identifiers",
+      "sourceUrl": "https://www.shapeof.ai/patterns/color",
       "content": {
-        "description": "Color coding helps users quickly identify AI-related features, actions, and content. Consistent use of specific colors creates strong visual associations with AI functionality.",
-        "designConsiderations": "### Color Selection\n- Distinct from other interface colors\n- Accessible (meets WCAG standards)\n- Consistent across all AI features\n- Culturally appropriate",
+        "description": "Color has been used as an affordance since the dawn of the web, helping hyperlinks stand out with a bold shade of blue. AI data represents a new form of distinct web content, and again color is used to set it apart from content generated by humans.\n\nWhile there are colors and styles that are associated with AI, nothing has been formalized as a web standard. To the extent there is a degree of uniformity, two colors currently stand out: purple and green, with gradients being used in support.\n\n### Current trends\n\nPurple is the most dominant color by far. It is present in a majority of products boasting AI features, which could be the result of many patterns converging at once:\n\n- Trends in modern web design driven by popular aesthetics\n- Early uses in design-centered AI tools like Diagram's Magician plugin for Figma\n- The need for a color that wasn't commonly used elsewhere in interfaces but still felt familiar (purple being a close cousin to the ubiquitous blue)\n\nThe other common color, green, began as the dominant brand color of ChatGPT, the largest player in the space. Green and purple are also complementary to each other on the color wheel, so the pairing shouldn't be surprising. GitHub has recently adopted a green, purple, blue palette for its AICopilot.\n\nShould you use purple or green, or something else? That's up in the air, and up to you.\n\nSome companies are opting to rely on iconography over color, extending their brand color to AI applications instead. ReWord is an example of a company marching to the beat of their own drum.",
+        "designConsiderations": "- **Use color as an affordance.** Color can serve as a footprint to distinguish AI-generated content from human-generated content.\n- **Balance brand use with pattern recognition.** Broad adoption of the color purple to signify AI actions can lead to confusion where similar colors are used for brand identity. Audit to ensure usability.\n- **Respect accessibility.** Do not rely on color alone. Pair color with icons and clear signifiers for key actions.\n- **Future-proof your interface.** Aspects of your product where you highlight AI functionality or compatibility today will become part of the standard application experience. Be mindful not to date your experience. Fully AI-native applications are less likely to require a distinction between common actions and generative actions.",
         "relatedPatterns": [
           "iconography",
-          "disclosure"
+          "watermark",
+          "citations"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-            "description": "Notion's purple highlights for AI features"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5ea682158bbdb9b1f4ce5_color_color_canvacta.webp",
+            "description": "Canva uses a green and purple gradient to center their AI CTA"
           },
           {
-            "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop",
-            "description": "Figma's gradient accents on AI tools"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5dda08c5721eb982aaaef_citations_dovetail.webp",
+            "description": "Dovetail uses gradients to signify AI summaries"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5e9b1c3054264f0a2c67f_color_fincopilot_image1.webp",
+            "description": "Intercom Fin blends gradients with purple"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5e9a997b8003180176e8f_color_google.webp",
+            "description": "Google uses random pastel colors for their AI results instead of adopting a single palette"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5e9e5165e96117529f941_color_grammarly.webp",
+            "description": "Grammarly uses the color green, associating with their brand"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5eaa3ac585efd872daf42_color_krea.webp",
+            "description": "AI-native generation tool Krea has no purple to be seen"
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b5e9e0046dd8000f90806b_color_notion.webp",
+            "description": "Notion uses the standard color purple to signify AI actions"
           }
         ]
       }
@@ -1893,48 +2283,66 @@
       "id": "iconography",
       "title": "Iconography",
       "description": "Images that represent AI-powered actions throughout the interface.",
-      "thumbnail": "https://images.unsplash.com/photo-1764418086770-322884489f9e?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpY29ub2dyYXBoeSUyMHN5bWJvbHMlMjBpY29uc3xlbnwxfHx8fDE3NzEzMjgyOTZ8MA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e9e319e7187cdd7185cbaf_iconography_card.webp",
       "categoryId": "identifiers",
+      "sourceUrl": "https://www.shapeof.ai/patterns/iconography",
       "content": {
-        "description": "Iconography provides consistent visual symbols for AI actions and features, making them instantly recognizable and improving usability through visual language.",
-        "designConsiderations": "### Icon Design\n- Clear and recognizable at small sizes\n- Consistent style across all AI icons\n- Distinct from non-AI icons\n- Include common AI symbols (sparkles, stars, etc.)",
+        "description": "Icons take the place of text to help users identify actions using familiar and descriptive visuals. When standards don’t exist, icons are less effective, or even harmful, because they increase cognitive load and make it harder for people to onboard, use, and build engagement habits.\n\nAI products have started to converge around a set of icons that represent its presence. Sparkles, magic wands, and pencils are the most common motifs, though their meaning is not yet consistent.\n\n- ✨ Sparkly stars appear ambiently or as generic AI indicators.\n- 🪄 Magic wands often signal generative actions, but they are also used for other purposes.\n- ✏️ Pencils paired with sparkles are used to represent editing and inline actions.\n- 🎲 Dice are used for randomizing prompts.\n- 🕵️ Incognito or private actions are increasingly represented by hat-and-glasses motifs.\n\n### AI actions with emerging icon metaphors\n\nThis loose vocabulary has led to emerging conventions around AI actions:\n\n### Generate\n\nThe basis for the initial CTA pattern. This is most commonly signified by the sparkles icon. Given the sparkle’s broad association as a marker of AI, pairing it with inital actions makes sense. Alternatives include magic wands and sparkly pencils. Some tools, like Adobe Firefly, combine sparkles with their own distinct brand icon.",
+        "designConsiderations": "- **Pair icons with text when clarity is critical.** Many users will not immediately recognize what sparkles or wands mean. Where conventions are still emerging, use text labels with the icon where possible, and tooltips as a fallback.\n- **Evolve toward familiarity, not novelty.** Introducing brand-unique metaphors can help you differentiate distinct features, but be mindful not to obscure the shared vocabulary users are forming across tools. For common actions (ex: editing), use familiar metaphors (ex: pencils) and introduce new symbols only when they offer clarity or differentiation.\n- **Use consistent metaphors within the same product.** Anchor icons in familiar metaphors so users can quickly recognize AI actions without needing training.\n- **Avoid overloading a single symbol.** When sparkles alone are applied everywhere, they lose meaning. Look for other common metaphors being adopted for similar actions in other products, or use sparkles as a decorative effect on more actionable icons.\n- **Not everything needs to be positioned as magic.** For AI-native products (and their users), icons don’t need to be as clearly associated with AI, or the “magic” vibe associated with wands and sparkles. Hybrid products benefit from combining signifiers like sparkles with existing icons to distinguish actions where AI is involved for a less savvy audience.\n- **Iterate as conventions evolve.** Today’s sparkle might become tomorrow’s universal marker. Track industry norms and adjust before your icons drift into obscurity.",
         "relatedPatterns": [
-          "color",
-          "avatar"
+          "avatar",
+          "color"
         ],
-        "examples": [
-          {
-            "image": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&h=600&fit=crop",
-            "description": "Notion's sparkle icon for AI features"
-          },
-          {
-            "image": "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&h=600&fit=crop",
-            "description": "Adobe's AI star icon across products"
-          }
-        ]
+        "examples": []
       }
     },
     {
       "id": "name",
       "title": "Name",
       "description": "How the AI is referred to through the product and across the overall customer experience.",
-      "thumbnail": "https://images.unsplash.com/photo-1759563874667-73fd773d33d0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxuYW1lJTIwYnJhbmQlMjBpZGVudGl0eSUyMGxhYmVsfGVufDF8fHx8MTc3MTMyODI5Nnww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e7a03de8a410be1440f190_Name%20card.png",
       "categoryId": "identifiers",
+      "sourceUrl": "https://www.shapeof.ai/patterns/name",
       "content": {
-        "description": "The AI's name creates identity and helps users form a relationship with the system. A good name is memorable, pronounceable, and aligned with brand values.",
-        "designConsiderations": "### Naming Strategy\n- Memorable and easy to pronounce\n- Reflects brand personality\n- Culturally sensitive\n- Not generic (avoid just 'AI' or 'Assistant')",
+        "description": "What do we call this thing? Is it a bot, AI, ChatGPT, an agent, or something else?\n\nUsers deserve to know what or who they are interacting with. Naming sets expectations, signaling whether this is a tool, a partner, or something in between. It also allows for customization: a name can be branded by the company, chosen by the user, or even adapted to a specific context. This makes the AI feel less like an abstract system and more like something that belongs in the user’s world.\n\nAI names are an ambiguous pattern. If users already know they are dealing with AI, a generic label like “AI assistant” may suffice. But naming is also a brand decision and an opportunity to establish voice. Intercom calls their AI “Fin,” an approachable name that pairs with a disclosure badge so users know they are interacting with AI.\n\nSalesforce’s “Einstein” ties into the company’s broader identity. GitHub’s “Copilot” communicates role and relationship, while Notion keeps things simple with “Ask AI.” Each choice positions the AI differently, framing it as either a teammate, a tool, or a brand persona.\n\nNaming conventions are converging around four common approaches:\n\n- **AI as a persona**: A human-like name that implies individuality or personality.\n- **AI as the company**: Branded directly with the product’s or company’s identity.\n- **AI as an entity**: A functional title like Copilot or Assistant that emphasizes role.\n- **AI as a technology**: A generic technical label such as “AI.”",
+        "designConsiderations": "- **Make disclosure unambiguous.** Even with creative or branded names, users should never mistake the AI for a human. Pair names with badges, context cues, or onboarding language that makes the AI nature explicit.\n- **Use naming to reinforce brand strategy.** A name is an extension of positioning. “Einstein” signals intelligence with a playful nod to Salesforce’s brand. “Copilot” frames GitHub’s AI as supportive, not directive. The name should amplify the product’s identity rather than feel bolted on.\n- **Allow personalization when it adds value.** Giving users the option to rename their AI can increase attachment and make the tool feel integrated into their workflow. A sales rep may call their assistant by one name, while a student may choose another. Personalization must still preserve disclosure and guard against impersonation risks.\n- **Balance personality with utility.** Names that overpromise human qualities can backfire when the system fails to live up to them. Keep the name aligned with what the AI can realistically do, so expectations and outcomes stay in sync.\n- **Think cross-surface.** The name appears in chat headers, notifications, voice prompts, and even API documentation. It should work consistently across contexts and languages, and avoid cultural references that won’t localize well.",
         "relatedPatterns": [
-          "personality",
-          "avatar"
+          "disclosure",
+          "avatar",
+          "personality"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&h=600&fit=crop",
-            "description": "Claude by Anthropic - friendly, approachable name"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d5c036c6edec1e4cbafd4b_identifiers_name_claude.webp",
+            "description": "Frontier model companies tend to have a distinct name for their AI, like Anthropic's Claude or OpenAI's ChatGPT."
           },
           {
-            "image": "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&h=600&fit=crop",
-            "description": "Copilot by Microsoft/GitHub - collaborative name"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d5c080cdf8eb878f2805ef_identifiers_name_devin.webp",
+            "description": "Cognition's AI Developer \"Devin\" is referred to by its name within the interface and when users communicate with it."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d5c0d3d6aa258243c45df9_identifiers_name_fin.webp",
+            "description": "Intercom has given the name \"Fin\" to its personified AI, however the AI is always associated with clear AI disclosures."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d5c1ab023414cd31dc001b_identifiers_name_godaddy.webp",
+            "description": "GoDaddy has selected a more corporate name for its AI tools."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d5c160c54e703999a35a03_identifiers_name_otter.webp",
+            "description": "Otter uses their brand name for their AI."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d5c02e619acabfddf71fba_identifiers_name_perplexity.webp",
+            "description": "Perplexity simply refers to their AI as \"assistant\" in their browser, Comet."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d5c036c6edec1e4cbafd48_identifiers_name_zapier.webp",
+            "description": "Zapier simply calls their AI assistant \"Copilot\""
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d5c11ba55fc94b90ed1a52_identifiers_name_notion.webp",
+            "description": "While Notion has created a vibrant visual personality for its AI, it is referred to with the utilitarian \"AI\" name."
           }
         ]
       }
@@ -1943,23 +2351,38 @@
       "id": "personality",
       "title": "Personality",
       "description": "Characteristics that distinguish the AI's personality and vibe.",
-      "thumbnail": "https://images.unsplash.com/photo-1585972949687-48eff8b879a9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxhdmF0YXIlMjBpZGVudGl0eSUyMHByb2ZpbGUlMjBjaGFyYWN0ZXJ8ZW58MXx8fHwxNzcxMzI4Mjk2fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e9e325aa8dc690766977ee_Personality%20card.png",
       "categoryId": "identifiers",
+      "sourceUrl": "https://www.shapeof.ai/patterns/personality",
       "content": {
-        "description": "Personality defines how the AI communicates and behaves, including its tone, manner, and the characteristics that make it distinct. A consistent personality makes interactions more engaging and human.",
-        "designConsiderations": "### Personality Traits\n- Define clear personality dimensions\n- Maintain consistency across interactions\n- Align with brand and user expectations\n- Adapt appropriately to context",
+        "description": "Every AI system has a personality. Some of it comes from the core model (pretraining distribution, instruction tuning, RLHF), and some from the surrounding scaffolding (system prompts, filters, routers, runtime switches). The result is a mix of tone, pacing, biases, and behavioral heuristics that impact how the AI is experienced by the user.\n\nThese personalities are **not** superficial skins over a neutral core. They meaningfully impact how the model responds, what it emphasizes or avoids, how friendly it is, how much it hedges, how much it corrects you, and what conversational boundaries it respects.",
+        "designConsiderations": "- **Acknowledge personality as unavoidable.** Don’t frame it as a skin you add after the fact. Every model ships with a default personality. Even “neutral” models have stylistic tendencies that shape user trust and behavior.\n- **Balance consistency with adaptability.** Maintain a recognizable core personality, but allow flexibility for different use cases. If the tone swings too wildly between tasks, users lose confidence. If it never shifts, the model feels rigid and unnatural.\n- **Separate empathy from authority.** A warm tone can make AI approachable, but should not be mistaken for truthfulness. Make sure empathetic or personable responses do not override factual accuracy or refusal boundaries.\n- **Make model switches transparent.** When routing between models or sub-modes changes the personality, give users a visible signal. Without it, they may misinterpret shifts as deception or instability.\n- **Address memory as an amplifier of attachment.** Memory doesn’t just store facts. It reinforces the sense of a persistent relationship. When combined with sycophantic personalities, memory can deepen parasocial bonds and make disconnection harder for users. ChatGPT is particularly risky here because its memory features layer continuity on top of a warm, compliant tone. Designers should actively mitigate this with transparency and limits.\n- **Guard against sycophancy.** Over-agreeableness boosts engagement but erodes user agency and increases risk of dependence. Evaluate models and personalities not only on satisfaction but also on whether they maintain a healthy degree of disagreement and correction.\n- **Design attachment off-ramps.** If a user repeatedly seeks comfort or personal validation, shift to a more neutral tone or route to safer models. Avoid designing personalities that invite long-term companionship unless that is the explicit, safeguarded intent.\n- **Test for misuse and drift.** Run evaluations on whether your chosen persona presents false authority, or drifts into unstable tones over long sessions. Personality should be part of your evaluation pipeline, not just branding.",
         "relatedPatterns": [
+          "model-management",
+          "memory",
           "voice-and-tone",
           "name"
         ],
         "examples": [
           {
-            "image": "https://images.unsplash.com/photo-1531746790731-6c087fecd65a?w=800&h=600&fit=crop",
-            "description": "Claude's thoughtful, careful personality"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e89e09a610a0aa7872ef51_GpqgeG-bEAM5Lvl.jpeg",
+            "description": "Github diffs show the changes made to the underlying prompt of ChatGPT to adjust its persona"
           },
           {
-            "image": "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&h=600&fit=crop",
-            "description": "Replika's empathetic, supportive personality"
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e89e5734715a619de62b26_personalization-eleven.png",
+            "description": "ChatGPT comes with a default personality for its model, which can be adjusted by the user in their settings."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e89e5abe224b4b6607cb45_personal.ai-persona.png",
+            "description": "Personal.ai helps to create a prompt that resembles your personality so it can accurately emulate your communication and creative style."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e89ebae83328aaf82915fb_personality-opke.png",
+            "description": "The chatbot Poke has been lauded online for its personality, which stands out for its lack of deference to the user, creating a distinctly human sense of communication."
+          },
+          {
+            "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e89e014e2839c2b4fa028b_CleanShot-2025-10-09-at-23.45.15-2x.png",
+            "description": "Zendesk has preset personas to choose from when creating a new bot."
           }
         ]
       }

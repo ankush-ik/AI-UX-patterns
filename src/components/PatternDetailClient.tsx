@@ -20,6 +20,9 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
   const [activeTab, setActiveTab] = useState<TabType>("description");
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
 
+  const selectedExample =
+    selectedImageIndex !== null ? pattern.content.examples[selectedImageIndex] : null;
+
   // Build tabs array
   const tabs: { id: TabType; label: string }[] = [
     { id: "description", label: "Description" },
@@ -40,16 +43,32 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
     }
   }, [pattern.content.examples.length, selectedImageIndex]);
 
+  const handleCloseLightbox = useCallback(() => {
+    setSelectedImageIndex(null);
+  }, []);
+
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (selectedImageIndex === null) return;
       if (e.key === "ArrowLeft") handlePrevious();
       else if (e.key === "ArrowRight") handleNext();
-      else if (e.key === "Escape") setSelectedImageIndex(null);
+      else if (e.key === "Escape") handleCloseLightbox();
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedImageIndex, handlePrevious, handleNext]);
+  }, [selectedImageIndex, handleCloseLightbox, handlePrevious, handleNext]);
+
+  useEffect(() => {
+    if (selectedImageIndex === null) return;
+
+    const { body } = document;
+    const previousOverflow = body.style.overflow;
+    body.style.overflow = "hidden";
+
+    return () => {
+      body.style.overflow = previousOverflow;
+    };
+  }, [selectedImageIndex]);
 
   // Use scroll spy hook for tab highlighting
   useScrollSpy(activeTab, (tab) => setActiveTab(tab as TabType), tabs);
@@ -99,7 +118,9 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
             {currentList.map((item, i) => (
               <li key={i} className="flex gap-3 text-gray-700">
                 <span className="text-gray-400 mt-1">•</span>
-                <span className="flex-1">{item}</span>
+                <span className="flex-1">
+                  {typeof item === "string" ? renderInlineMarkdown(item) : item}
+                </span>
               </li>
             ))}
           </ul>
@@ -239,59 +260,123 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
         </div>
       </div>
 
-      {/* Image Modal */}
-      {selectedImageIndex !== null && pattern.content.examples[selectedImageIndex] && (
+      {/* Example Lightbox */}
+      {selectedExample && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/80"
-          onClick={() => setSelectedImageIndex(null)}
+          className="fixed inset-0 z-50 bg-black/75 backdrop-blur-sm"
+          onClick={handleCloseLightbox}
         >
-          <div className="relative w-full max-w-4xl max-h-[90vh] mx-4">
-            <button
-              onClick={() => setSelectedImageIndex(null)}
-              className="absolute -top-10 right-0 p-2 text-white hover:bg-white/20 rounded-lg transition"
+          <div className="absolute inset-0 overflow-y-auto px-4 py-6 md:px-8 md:py-10">
+            <div
+              role="dialog"
+              aria-modal="true"
+              aria-label={`${pattern.title} example viewer`}
+              className="relative mx-auto flex min-h-full w-full max-w-6xl items-center justify-center"
+              onClick={(e) => e.stopPropagation()}
             >
-              <X size={24} />
-            </button>
+              <button
+                onClick={handleCloseLightbox}
+                className="absolute right-2 top-2 z-20 rounded-full bg-black/55 p-2 text-white transition hover:bg-black/70 md:right-4 md:top-4"
+                aria-label="Close example viewer"
+              >
+                <X size={22} />
+              </button>
 
-            <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
-              <Image
-                src={pattern.content.examples[selectedImageIndex].image}
-                alt={pattern.content.examples[selectedImageIndex].description}
-                fill
-                className="object-contain"
-              />
-            </div>
+              <div className="w-full overflow-hidden rounded-[28px] bg-white shadow-2xl">
+                <div className="flex items-center justify-between border-b border-gray-200 px-5 py-4 md:px-7">
+                  <div>
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-400">
+                      Example
+                    </p>
+                    <h2 className="mt-1 text-xl font-semibold text-gray-900 md:text-2xl">
+                      {pattern.title}
+                    </h2>
+                  </div>
 
-            <p className="text-white text-center mt-4 font-semibold">
-              {pattern.content.examples[selectedImageIndex].description}
-            </p>
+                  <span className="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-600">
+                    {selectedImageIndex + 1} / {pattern.content.examples.length}
+                  </span>
+                </div>
 
-            {/* Navigation */}
-            {pattern.content.examples.length > 1 && (
-              <div className="flex items-center justify-between mt-4">
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handlePrevious();
-                  }}
-                  className="p-2 text-white hover:bg-white/20 rounded-lg transition"
-                >
-                  <ChevronLeft size={24} />
-                </button>
-                <span className="text-white text-sm">
-                  {selectedImageIndex + 1} / {pattern.content.examples.length}
-                </span>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handleNext();
-                  }}
-                  className="p-2 text-white hover:bg-white/20 rounded-lg transition"
-                >
-                  <ChevronRight size={24} />
-                </button>
+                <div className="relative bg-[#f5f3ee] px-3 py-3 md:px-5 md:py-5">
+                  {pattern.content.examples.length > 1 && (
+                    <>
+                      <button
+                        onClick={handlePrevious}
+                        className="absolute left-5 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-3 text-gray-900 shadow-lg transition hover:bg-white"
+                        aria-label="Previous example"
+                      >
+                        <ChevronLeft size={22} />
+                      </button>
+
+                      <button
+                        onClick={handleNext}
+                        className="absolute right-5 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-3 text-gray-900 shadow-lg transition hover:bg-white"
+                        aria-label="Next example"
+                      >
+                        <ChevronRight size={22} />
+                      </button>
+                    </>
+                  )}
+
+                  <div className="relative mx-auto overflow-hidden rounded-[22px] bg-white shadow-sm">
+                    <div className="relative aspect-[4/3] w-full md:aspect-[16/10]">
+                      <Image
+                        src={selectedExample.image}
+                        alt={selectedExample.description}
+                        fill
+                        sizes="(min-width: 1280px) 1100px, (min-width: 768px) 90vw, 100vw"
+                        className="object-contain"
+                        priority
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="border-t border-gray-200 px-5 py-4 md:px-7 md:py-5">
+                  <p className="text-base leading-relaxed text-gray-700 md:text-lg">
+                    {selectedExample.description}
+                  </p>
+
+                  {pattern.content.examples.length > 1 && (
+                    <div className="mt-5 overflow-x-auto pb-1">
+                      <div className="flex min-w-max gap-3">
+                        {pattern.content.examples.map((example, index) => {
+                          const isActive = index === selectedImageIndex;
+
+                          return (
+                            <button
+                              key={`${example.image}-${index}`}
+                              onClick={() => setSelectedImageIndex(index)}
+                              className={`group relative h-20 w-28 flex-none overflow-hidden rounded-xl border transition md:h-24 md:w-36 ${
+                                isActive
+                                  ? "border-gray-900 ring-2 ring-gray-900/10"
+                                  : "border-gray-200 hover:border-gray-400"
+                              }`}
+                              aria-label={`View example ${index + 1}`}
+                              aria-pressed={isActive}
+                            >
+                              <Image
+                                src={example.image}
+                                alt={example.description}
+                                fill
+                                sizes="144px"
+                                className="object-cover transition group-hover:scale-105"
+                              />
+                              <div
+                                className={`absolute inset-0 transition ${
+                                  isActive ? "bg-black/0" : "bg-black/10 group-hover:bg-black/0"
+                                }`}
+                              />
+                            </button>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  )}
+                </div>
               </div>
-            )}
+            </div>
           </div>
         </div>
       )}
