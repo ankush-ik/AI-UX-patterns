@@ -34,27 +34,125 @@ If `NEXT_PUBLIC_SKAPA_FONT_STYLESHEET` is not set, the app will automatically us
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
-## Content Admin
+## Content Admin & CMS Architecture
 
-Phase 3 adds a local content-management surface at `/admin`.
+Phase 3 adds a local content-management surface at `/admin` with a production-ready CMS adapter pattern.
+
+### Admin Dashboard
 
 Use it to:
 
 - Audit pattern coverage by category
 - Spot patterns missing examples or source URLs
 - Validate related-pattern references
-- Export the current dataset as JSON for future CMS migration
+- See which CMS provider is currently connected
+- Export the current dataset as JSON
 
-The app now also exposes static JSON endpoints:
+### CMS Adapter Pattern
 
-- `/api/categories`
-- `/api/patterns`
-- `/api/patterns?include=category`
-- `/api/patterns/[id]`
-- `/api/patterns/[id]?include=category,related`
-- `/api/content-report`
+The app uses a flexible **CMS adapter pattern** to abstract content sources. This enables seamless switching between providers without changing application code.
 
-## Learn More
+#### Supported Providers
+
+- **Local JSON** (default) ✓ Fully implemented
+  - Uses `src/content/patterns.json`
+  - Perfect for static sites and development
+  - No external dependencies
+
+- **Contentful** (template provided)
+  - Template in `src/lib/cms/contentfulAdapter.ts`
+  - Follow the implementation guide to activate
+
+- **Sanity** (coming soon)
+  - Template placeholder for future implementation
+
+#### Switching Providers
+
+To use Contentful instead of local JSON:
+
+```bash
+# Set environment variables in .env.local
+export CMS_PROVIDER=contentful
+export CONTENTFUL_SPACE_ID=your_space_id
+export CONTENTFUL_ACCESS_TOKEN=your_api_token
+```
+
+That's it! The app automatically uses the configured provider. No code changes needed.
+
+#### Architecture
+
+See [docs/CMS_ADAPTER.md](docs/CMS_ADAPTER.md) for:
+
+- Complete architecture explanation
+- How to implement a new adapter
+- Migration guide for adding new CMS providers
+- Performance considerations
+- Debugging and health checks
+
+### API Endpoints
+
+The app exposes static JSON endpoints:
+
+- `/api/categories` - All categories
+- `/api/patterns` - All patterns (with optional category inclusion)
+- `/api/patterns?include=category` - Patterns with enriched category data
+- `/api/patterns/[id]` - Single pattern details
+- `/api/patterns/[id]?include=category,related` - Pattern with related patterns
+- `/api/content-report` - Content health audit report
+- `/api/health` - CMS provider health check
+
+## Project Structure
+
+### Core Application
+
+```
+src/
+├── app/
+│   ├── page.tsx                 # Home page (SSR with async content)
+│   ├── patterns/[id]/page.tsx  # Pattern detail page (SSR)
+│   ├── admin/page.tsx           # Content admin dashboard
+│   ├── api/
+│   │   ├── categories/          # Category list endpoint
+│   │   ├── patterns/            # Patterns endpoint (supports filtering)
+│   │   ├── patterns/[id]/       # Single pattern endpoint
+│   │   ├── content-report/      # Health audit report
+│   │   └── health/              # CMS provider health check
+│   └── globals.css
+├── components/
+│   ├── PatternCard.tsx          # Pattern card with image optimization
+│   ├── PatternDetailClient.tsx  # Client-side detail viewer
+│   ├── HomePageClient.tsx       # Client-side home page
+│   └── ...other components
+├── lib/
+│   ├── patterns.ts              # Type definitions (Category, Pattern)
+│   ├── patternRepository.ts     # Unified data access layer
+│   ├── patternValidation.ts     # Content health checks
+│   ├── contentSource.ts         # JSON content import helper
+│   └── cms/                     # CMS adapter system
+│       ├── adapter.ts           # Interface & types
+│       ├── manager.ts           # Provider selection & singleton
+│       ├── localJsonAdapter.ts  # ✓ JSON implementation
+│       └── contentfulAdapter.ts # Template (not yet implemented)
+├── content/
+│   └── patterns.json            # File-backed content source
+└── utils/
+    └── patternResolver.ts       # Helper functions for pattern access
+```
+
+### Documentation
+
+```
+docs/
+└── CMS_ADAPTER.md       # Complete CMS adapter pattern guide
+```
+
+### Configuration
+
+```
+.env.local.example      # Environment variable template
+next.config.ts          # Next.js config with image optimization
+next.config.js          # CommonJS config variant
+```
 
 To learn more about Next.js, take a look at the following resources:
 
