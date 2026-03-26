@@ -35,6 +35,7 @@ export default function PatternDetailPage() {
   };
 
   useEffect(() => {
+    if (!pattern) return;
     const handleKeyDown = (e: KeyboardEvent) => {
       if (selectedImageIndex === null) return;
       if (e.key === "ArrowLeft") handlePrevious();
@@ -43,36 +44,17 @@ export default function PatternDetailPage() {
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [selectedImageIndex, pattern]);
-
-  if (!pattern || !category) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold mb-2">Pattern not found</h1>
-          <Link href="/" className="text-blue-600 hover:underline">Return to home</Link>
-        </div>
-      </div>
-    );
-  }
-
-  const tabs: { id: TabType; label: string }[] = [
-    { id: "description", label: "Description" },
-    { id: "design-considerations", label: "Design Considerations" },
-    { id: "related-patterns", label: "Related Patterns" },
-    ...(pattern.content.examples.length > 0 ? [{ id: "examples" as TabType, label: "Examples" }] : []),
-  ];
-
-  const scrollToSection = (tabId: TabType) => {
-    setActiveTab(tabId);
-    const element = document.getElementById(`section-${tabId}`);
-    if (element) {
-      const offsetPosition = element.getBoundingClientRect().top + window.pageYOffset - 100;
-      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
-    }
-  };
+  }, [selectedImageIndex, pattern, handlePrevious, handleNext]);
 
   useEffect(() => {
+    if (!pattern) return;
+    const tabs: { id: TabType; label: string }[] = [
+      { id: "description", label: "Description" },
+      { id: "design-considerations", label: "Design Considerations" },
+      { id: "related-patterns", label: "Related Patterns" },
+      ...(pattern.content.examples.length > 0 ? [{ id: "examples" as TabType, label: "Examples" }] : []),
+    ];
+
     const observerOptions = {
       root: null,
       rootMargin: '-100px 0px -66% 0px',
@@ -102,7 +84,34 @@ export default function PatternDetailPage() {
     });
 
     return () => { observer.disconnect(); intersectingSections.clear(); };
-  }, []);
+  }, [pattern]);
+
+  if (!pattern || !category) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold mb-2">Pattern not found</h1>
+          <Link href="/" className="text-blue-600 hover:underline">Return to home</Link>
+        </div>
+      </div>
+    );
+  }
+
+  const tabs: { id: TabType; label: string }[] = [
+    { id: "description", label: "Description" },
+    { id: "design-considerations", label: "Design Considerations" },
+    { id: "related-patterns", label: "Related Patterns" },
+    ...(pattern.content.examples.length > 0 ? [{ id: "examples" as TabType, label: "Examples" }] : []),
+  ];
+
+  const scrollToSection = (tabId: TabType) => {
+    setActiveTab(tabId);
+    const element = document.getElementById(`section-${tabId}`);
+    if (element) {
+      const offsetPosition = element.getBoundingClientRect().top + window.pageYOffset - 100;
+      window.scrollTo({ top: offsetPosition, behavior: "smooth" });
+    }
+  };
 
   const renderMarkdownContent = (content: string) => {
     const lines = content.split("\n");
