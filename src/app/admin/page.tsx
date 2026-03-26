@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { getContentReport } from "@/lib/patternValidation";
 import { getCurrentProvider } from "@/lib/cms/manager";
+import { getCategories, getPatterns } from "@/lib/patternRepository";
+import { AdminPatternList } from "@/components/AdminPatternList";
 
 function StatCard({ label, value, tone = "default" }: { label: string; value: number; tone?: "default" | "warn" | "danger" }) {
   const toneClasses = {
@@ -18,8 +20,12 @@ function StatCard({ label, value, tone = "default" }: { label: string; value: nu
 }
 
 export default async function AdminPage() {
-  const report = await getContentReport();
-  const cmsProvider = getCurrentProvider();
+  const [report, categories, patterns, cmsProvider] = await Promise.all([
+    getContentReport(),
+    getCategories(),
+    getPatterns(),
+    Promise.resolve(getCurrentProvider()),
+  ]);
 
   return (
     <main className="min-h-screen bg-[linear-gradient(180deg,#faf7f2_0%,#ffffff_22%,#ffffff_100%)] text-gray-900">
@@ -183,6 +189,9 @@ export default async function AdminPage() {
             </div>
           </div>
         </section>
+
+        <AdminPatternList patterns={patterns} categories={categories} />
+
       </div>
     </main>
   );
