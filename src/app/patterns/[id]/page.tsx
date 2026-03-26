@@ -4,14 +4,11 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { patterns, categories } from "@/lib/patterns";
+import { useScrollSpy } from "@/hooks/useScrollSpy";
+import { SidebarNav } from "@/components/SidebarNav";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 type TabType = "description" | "design-considerations" | "related-patterns" | "examples";
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function cn(...classes: any[]): string {
-  return classes.filter(Boolean).join(" ");
-}
 
 export default function PatternDetailPage() {
   const params = useParams();
@@ -21,6 +18,16 @@ export default function PatternDetailPage() {
 
   const pattern = patterns.find((p) => p.id === patternId);
   const category = pattern ? categories.find((c) => c.id === pattern.categoryId) : null;
+
+  // Build tabs array early for use in hooks
+  const tabs: { id: TabType; label: string }[] = pattern
+    ? [
+        { id: "description", label: "Description" },
+        { id: "design-considerations", label: "Design Considerations" },
+        { id: "related-patterns", label: "Related Patterns" },
+        ...(pattern.content.examples.length > 0 ? [{ id: "examples" as TabType, label: "Examples" }] : []),
+      ]
+    : [];
 
   const handlePrevious = () => {
     if (selectedImageIndex !== null && pattern) {
@@ -46,45 +53,8 @@ export default function PatternDetailPage() {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [selectedImageIndex, pattern, handlePrevious, handleNext]);
 
-  useEffect(() => {
-    if (!pattern) return;
-    const tabs: { id: TabType; label: string }[] = [
-      { id: "description", label: "Description" },
-      { id: "design-considerations", label: "Design Considerations" },
-      { id: "related-patterns", label: "Related Patterns" },
-      ...(pattern.content.examples.length > 0 ? [{ id: "examples" as TabType, label: "Examples" }] : []),
-    ];
-
-    const observerOptions = {
-      root: null,
-      rootMargin: '-100px 0px -66% 0px',
-      threshold: [0, 0.25, 0.5, 0.75, 1]
-    };
-    const intersectingSections = new Map<string, number>();
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        const sectionId = entry.target.id.replace('section-', '');
-        if (entry.isIntersecting) intersectingSections.set(sectionId, entry.intersectionRatio);
-        else intersectingSections.delete(sectionId);
-      });
-      if (intersectingSections.size > 0) {
-        let maxRatio = 0;
-        let topSection = '';
-        intersectingSections.forEach((ratio, sectionId) => {
-          if (ratio > maxRatio) { maxRatio = ratio; topSection = sectionId; }
-        });
-        if (topSection) setActiveTab(topSection as TabType);
-      }
-    }, observerOptions);
-
-    tabs.forEach((tab) => {
-      const element = document.getElementById(`section-${tab.id}`);
-      if (element) observer.observe(element);
-    });
-
-    return () => { observer.disconnect(); intersectingSections.clear(); };
-  }, [pattern]);
+  // Use scroll spy hook for tab highlighting
+  useScrollSpy(activeTab, (tab) => setActiveTab(tab as TabType), tabs);
 
   if (!pattern || !category) {
     return (
@@ -96,13 +66,6 @@ export default function PatternDetailPage() {
       </div>
     );
   }
-
-  const tabs: { id: TabType; label: string }[] = [
-    { id: "description", label: "Description" },
-    { id: "design-considerations", label: "Design Considerations" },
-    { id: "related-patterns", label: "Related Patterns" },
-    ...(pattern.content.examples.length > 0 ? [{ id: "examples" as TabType, label: "Examples" }] : []),
-  ];
 
   const scrollToSection = (tabId: TabType) => {
     setActiveTab(tabId);
@@ -203,25 +166,11 @@ export default function PatternDetailPage() {
       <div className="container mx-auto px-4 py-8">
         <div className="flex gap-8">
 
-          {/* Sticky Sidebar */}
-          <aside className="w-64 flex-shrink-0">
-            <nav className="sticky top-4 space-y-1">
-              {tabs.map((tab) => (
-                <button
-                  key={tab.id}
-                  onClick={() => scrollToSection(tab.id)}
-                  className={cn(
-                    "w-full text-left px-4 py-3 rounded-lg transition-colors text-sm",
-                    activeTab === tab.id
-                      ? "bg-gray-900 text-white"
-                      : "text-gray-700 hover:bg-gray-100"
-                  )}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </nav>
-          </aside>
+          <SidebarNav
+            items={tabs}
+            activeItem={activeTab}
+            onItemClick={scrollToSection}
+          />
 
           {/* Main Content */}
           <main className="flex-1 space-y-8">

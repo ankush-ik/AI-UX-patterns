@@ -1,26 +1,13 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { categories, patterns } from "@/lib/patterns";
-import * as Icons from "lucide-react";
-
-const iconMap: Record<string, string> = {
-  compass: "Compass",
-  zap: "Zap",
-  settings: "Settings",
-  layout: "Layout",
-  edit: "Edit3",
-  shield: "Shield",
-  "check-circle": "CheckCircle",
-  tag: "Tag",
-};
-
-function cn(...classes: (string | boolean | undefined)[]): string {
-  return classes.filter(Boolean).join(" ");
-}
+import { useIconResolver } from "@/hooks/useIconResolver";
+import { SidebarNav } from "@/components/SidebarNav";
+import { PatternCard } from "@/components/PatternCard";
 
 export default function HomePage() {
+  const { resolveIcon } = useIconResolver();
   const [activeCategory, setActiveCategory] = useState<string>("");
 
   useEffect(() => {
@@ -63,6 +50,12 @@ export default function HomePage() {
     }
   };
 
+  const sidebarItems = categories.map((category) => ({
+    id: category.id,
+    label: category.name,
+    icon: resolveIcon(category.icon),
+  }));
+
   return (
     <div className="min-h-screen bg-white">
       <header className="border-b">
@@ -77,32 +70,11 @@ export default function HomePage() {
       <div className="container mx-auto px-4 py-8">
         <div className="flex gap-8">
 
-          {/* Sticky Sidebar */}
-          <aside className="w-64 flex-shrink-0">
-            <nav className="sticky top-4 space-y-1">
-              {categories.map((category) => {
-                const iconName = iconMap[category.icon];
-                // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const IconComponent = iconName ? (Icons as any)[iconName] : null;
-
-                return (
-                  <button
-                    key={category.id}
-                    onClick={() => scrollToCategory(category.id)}
-                    className={cn(
-                      "w-full flex items-center gap-3 px-4 py-3 text-left transition-colors rounded-lg text-sm",
-                      activeCategory === category.id
-                        ? "bg-gray-900 text-white"
-                        : "text-gray-700 hover:bg-gray-100"
-                    )}
-                  >
-                    {IconComponent && <IconComponent className="w-5 h-5 flex-shrink-0" />}
-                    <span className="font-medium">{category.name}</span>
-                  </button>
-                );
-              })}
-            </nav>
-          </aside>
+          <SidebarNav
+            items={sidebarItems}
+            activeItem={activeCategory}
+            onItemClick={scrollToCategory}
+          />
 
           {/* Main Content */}
           <main className="flex-1">
@@ -120,24 +92,13 @@ const IconComponent = iconName ? (Icons as any)[iconName] : null;
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                     {categoryPatterns.map((pattern) => (
-                      <Link key={pattern.id} href={`/patterns/${pattern.id}`} className="group block">
-                        <div className="h-full border border-gray-200 rounded-xl overflow-hidden shadow-sm transition-all hover:shadow-lg hover:-translate-y-1 bg-white">
-                          <div className="aspect-video w-full overflow-hidden bg-gray-100">
-                            <img
-                              src={pattern.thumbnail}
-                              alt={pattern.title}
-                              className="w-full h-full object-cover transition-transform group-hover:scale-105"
-                              loading="lazy"
-                            />
-                          </div>
-                          <div className="p-5">
-                            <h3 className="text-lg font-semibold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
-                              {pattern.title}
-                            </h3>
-                            <p className="text-sm text-gray-500">{pattern.description}</p>
-                          </div>
-                        </div>
-                      </Link>
+                      <PatternCard
+                        key={pattern.id}
+                        id={pattern.id}
+                        title={pattern.title}
+                        description={pattern.description}
+                        thumbnail={pattern.thumbnail}
+                      />
                     ))}
                   </div>
                 </section>
