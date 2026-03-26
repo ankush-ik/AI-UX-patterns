@@ -26,8 +26,8 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
   // Build tabs array
   const tabs: { id: TabType; label: string }[] = [
     { id: "description", label: "Description" },
-    { id: "design-considerations", label: "Design considerations" },
-    { id: "related-patterns", label: "Related patterns" },
+    { id: "design-considerations", label: "Design Considerations" },
+    { id: "related-patterns", label: "Related Patterns" },
     ...(pattern.content.examples.length > 0 ? [{ id: "examples" as TabType, label: "Examples" }] : []),
   ];
 
@@ -286,14 +286,12 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
                       <h3 className="text-lg font-semibold text-gray-900">
                         <Link
                           href={`/patterns/${relPattern.id}`}
-                          className="transition hover:underline"
+                          className="underline decoration-gray-300 underline-offset-4 transition hover:decoration-gray-900"
                         >
-                          {pattern.content.relatedPatternDetails?.[relPattern.id]?.title ?? relPattern.title}
+                          {relPattern.title}
                         </Link>
                       </h3>
-                      <p className="mt-2 ml-6 leading-relaxed text-gray-600">
-                        {pattern.content.relatedPatternDetails?.[relPattern.id]?.description ?? relPattern.description}
-                      </p>
+                      <p className="mt-2 ml-6 leading-relaxed text-gray-600">{relPattern.description}</p>
                     </li>
                   ))}
                 </ul>
@@ -303,25 +301,28 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
             {pattern.content.examples.length > 0 && (
               <div id="section-examples" className="scroll-mt-20">
                 <h2 className="text-2xl font-bold mb-6 text-gray-900">Examples</h2>
-                <ul className="space-y-4">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {pattern.content.examples.map((example, index) => (
-                    <li key={index} className="list-none">
-                      <button
-                        onClick={() => setSelectedImageIndex(index)}
-                        className="group -mx-2 w-[calc(100%+1rem)] rounded-lg px-2 py-2 text-left transition hover:bg-gray-50"
-                      >
-                        <div className="flex items-start gap-3">
-                          <span className="shrink-0 text-sm text-gray-500 underline decoration-gray-300 underline-offset-4 transition group-hover:text-gray-700 group-hover:decoration-gray-900">
-                            Open lightbox
-                          </span>
-                          <p className="leading-relaxed text-gray-700 transition group-hover:text-gray-900">
-                            {example.description}
-                          </p>
-                        </div>
-                      </button>
-                    </li>
+                    <button
+                      key={index}
+                      onClick={() => setSelectedImageIndex(index)}
+                      className="group overflow-hidden rounded-lg border border-gray-200 text-left transition hover:border-gray-900"
+                    >
+                      <div className="relative aspect-video overflow-hidden bg-gray-50">
+                        <Image
+                          src={example.image}
+                          alt={example.description}
+                          fill
+                          sizes="(min-width: 768px) 50vw, 100vw"
+                          className="object-cover transition-transform group-hover:scale-105"
+                        />
+                      </div>
+                      <div className="border-t border-gray-200 px-4 py-3">
+                        <p className="leading-relaxed text-gray-700">{example.description}</p>
+                      </div>
+                    </button>
                   ))}
-                </ul>
+                </div>
               </div>
             )}
           </main>
