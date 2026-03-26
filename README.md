@@ -16,9 +16,23 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Typography Source
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project is configured to use **Noto IKEA Latin** globally via a stylesheet served by your Skapa MCP server.
+
+Set either the full stylesheet URL, or just the MCP base URL:
+
+```bash
+export NEXT_PUBLIC_SKAPA_FONT_STYLESHEET="http://<your-skapa-mcp-host>/fonts/noto-ikea-latin.css"
+# or
+export NEXT_PUBLIC_SKAPA_MCP_BASE_URL="http://<your-skapa-mcp-host>"
+```
+
+If `NEXT_PUBLIC_SKAPA_FONT_STYLESHEET` is not set, the app will automatically use:
+
+`$NEXT_PUBLIC_SKAPA_MCP_BASE_URL/fonts/noto-ikea-latin.css`
+
+You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 ## Learn More
 
