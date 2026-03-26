@@ -1,4 +1,8 @@
-import { patterns } from "../lib/patterns";
+import {
+  getPatternById as getPatternByIdFromRepository,
+  getPatterns,
+  getRelatedPatterns as getRelatedPatternsFromRepository,
+} from "@/lib/patternRepository";
 
 /**
  * Fetch a pattern by its ID
@@ -6,7 +10,7 @@ import { patterns } from "../lib/patterns";
  * @returns The full pattern object or undefined if not found
  */
 export function getPatternById(patternId: string) {
-  return patterns.find((pattern) => pattern.id === patternId);
+  return getPatternByIdFromRepository(patternId);
 }
 
 /**
@@ -14,9 +18,11 @@ export function getPatternById(patternId: string) {
  * @param patternIds Array of pattern IDs
  * @returns Array of full pattern objects (skips missing ones)
  */
-export function getPatternsByIds(patternIds: string[]) {
+export async function getPatternsByIds(patternIds: string[]) {
+  const patterns = await getPatterns();
+
   return patternIds
-    .map((id) => getPatternById(id))
+    .map((id) => patterns.find((pattern) => pattern.id === id))
     .filter((pattern) => pattern !== undefined);
 }
 
@@ -27,26 +33,7 @@ export function getPatternsByIds(patternIds: string[]) {
  * @returns Array of related pattern objects
  */
 export function getRelatedPatterns(patternId: string) {
-  const pattern = getPatternById(patternId);
-  if (!pattern || !pattern.content.relatedPatterns) {
-    return [];
-  }
-
-  // Handle both old format (objects) and new format (IDs)
-  const relPatterns = pattern.content.relatedPatterns;
-  const isNewFormat = relPatterns.length === 0 || typeof relPatterns[0] === "string";
-
-  if (isNewFormat) {
-    // New format: array of IDs
-     return getPatternsByIds(relPatterns as unknown as string[]);
-  } else {
-    // Old format: array of objects - just return as-is for backward compatibility
-    return (relPatterns as unknown as Array<{
-      id: string;
-      title: string;
-      description: string;
-    }>);
-  }
+  return getRelatedPatternsFromRepository(patternId);
 }
 
 /**
@@ -55,10 +42,10 @@ export function getRelatedPatterns(patternId: string) {
  * @param patternId2 Second pattern ID
  * @returns true if pattern2 is listed as related to pattern1
  */
-export function arePatternRelated(
+export async function arePatternRelated(
   patternId1: string,
   patternId2: string
-): boolean {
-  const relatedPatterns = getRelatedPatterns(patternId1);
+): Promise<boolean> {
+  const relatedPatterns = await getRelatedPatterns(patternId1);
   return relatedPatterns.some((p) => p.id === patternId2);
 }

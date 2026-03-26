@@ -34,6 +34,26 @@ If `NEXT_PUBLIC_SKAPA_FONT_STYLESHEET` is not set, the app will automatically us
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
+## Content Admin
+
+Phase 3 adds a local content-management surface at `/admin`.
+
+Use it to:
+
+- Audit pattern coverage by category
+- Spot patterns missing examples or source URLs
+- Validate related-pattern references
+- Export the current dataset as JSON for future CMS migration
+
+The app now also exposes static JSON endpoints:
+
+- `/api/categories`
+- `/api/patterns`
+- `/api/patterns?include=category`
+- `/api/patterns/[id]`
+- `/api/patterns/[id]?include=category,related`
+- `/api/content-report`
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:
