@@ -7,6 +7,12 @@
       "icon": "compass"
     },
     {
+      "id": "input-modalities",
+      "name": "Input Modalities",
+      "description": "Different modes and media types users can employ to direct AI",
+      "icon": "mic"
+    },
+    {
       "id": "prompt-actions",
       "name": "Prompt Actions",
       "description": "Different actions that users can direct AI to complete",
@@ -160,10 +166,9 @@
       "description": "Alert users to actions they can take to use AI, especially if they are just getting started.",
       "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e8c30b8fe9a7fece15ec66_nudges_card.webp",
       "categoryId": "wayfinders",
-      "sourceUrl": "https://www.shapeof.ai/patterns/nudges",
       "content": {
         "description": "Nudges are contextual prompts or notifications that guide users toward AI features they might not have discovered. They're especially useful for onboarding new users or highlighting recently added capabilities.\n\n### Types of Nudges\n- Feature discovery tooltips\n- Contextual suggestions\n- Tutorial prompts\n- New feature announcements",
-        "designConsiderations": "### Timing and Frequency\n- Show at relevant moments, not randomly\n- Limit frequency to avoid annoyance\n- Allow users to dismiss or disable\n- Track which nudges have been seen\n\n### Visual Treatment\n- Use subtle but noticeable styling\n- Include clear dismiss option\n- Provide \"Learn more\" and \"Try it\" actions\n- Consider using animation to draw attention",
+        "designConsiderations": "### Timing and Frequency\n- Show at relevant moments, not randomly\n- Limit frequency to avoid annoyance\n- Allow users to dismiss or disable\n- Track which nudges have been seen\n\n### Visual Treatment\n- Use subtle but noticeable styling\n- Include clear dismiss option\n- Provide \"Learn more\" and \"Try it\" actions\n- Consider using animation to draw attention\n\n### From aiuxpatterns.com\n\nA passive approach to providing users guidance on authoring a prompt. While the simple guidance can point users in the right direction, consider adding a link to further resources that provide deeper detail. Keep content succinct but detailed enough to be helpful on its own. Consider what is critical information for your users in a particular context.",
         "relatedPatterns": [
           "suggestions",
           "modes",
@@ -182,8 +187,19 @@
             "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68adec68f57031d5d9876816_68ab68cc9d68fd1441d8bc6f_65de360b481a2699dfb3eea9_CleanShot-2024-02-27-at-12.04.40-2x.png",
             "description": "Grammarly makes it easy to perform basic tasks from your existing content, such as generating a reference."
           }
-        ]
-      }
+        ],
+        "userArchetype": "Best suited for users unfamiliar with AI or unsure of the requirements. Not applicable for all users as this succinct guidance does not lead users through a process like a tutorial would."
+      },
+      "sources": [
+        {
+          "name": "shapeof.ai",
+          "url": "https://www.shapeof.ai/patterns/nudges"
+        },
+        {
+          "name": "aiuxpatterns.com",
+          "url": "https://www.aiuxpatterns.com/pattern-inline-help.html"
+        }
+      ]
     },
     {
       "id": "prompt-details",
@@ -244,10 +260,9 @@
       "description": "Solves the blank canvas dilemma with clues for how to prompt.",
       "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e8c333ab62c9a68525be3c_suggestions_card.webp",
       "categoryId": "wayfinders",
-      "sourceUrl": "https://www.shapeof.ai/patterns/suggestions",
       "content": {
         "description": "Suggestions provide contextual prompt ideas that help users overcome the blank canvas problem. Unlike random options, suggestions are tailored to the context, user history, or common use cases.\n\n### Types of Suggestions\n- Starter prompts for new users\n- Contextual suggestions based on current work\n- Follow-up suggestions after a generation\n- Category-specific templates",
-        "designConsiderations": "### Relevance\n- Personalize based on user behavior and history\n- Update based on current context\n- Show a diverse range of suggestions\n- Refresh periodically\n\n### Interaction\n- Make suggestions clickable to auto-fill\n- Allow editing before submission\n- Show preview of what the suggestion will do\n- Track which suggestions are most used",
+        "designConsiderations": "### Relevance\n- Personalize based on user behavior and history\n- Update based on current context\n- Show a diverse range of suggestions\n- Refresh periodically\n\n### Interaction\n- Make suggestions clickable to auto-fill\n- Allow editing before submission\n- Show preview of what the suggestion will do\n- Track which suggestions are most used\n\n### From aiuxpatterns.com\n\nThis pattern analyses the user's current incomplete input and uses AI to provide suggestions for prompt completions — similar to grammar suggestions but also directing users toward quality prompt authoring. Tuning these suggestions is key to ensuring their relevance. While suggestions are useful, if a user does not want them, they can become annoying quickly. Consider how many suggestions should be provided and whether this pattern benefits your particular workflow and UI.",
         "relatedPatterns": [
           "inline-action",
           "follow-up"
@@ -277,8 +292,19 @@
             "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e8326879dc877403aeb996_CleanShot-2024-03-20-at-07.16.02-2x.png",
             "description": "Typeform's AI suggestions are provided before the user has given any context about their intended form, so they are likely to be irrelevant to the user."
           }
-        ]
-      }
+        ],
+        "userArchetype": "As a passive pattern, many user types can benefit from quality suggestions. Being that you can accept or ignore these suggestions, novice users can benefit from quality examples, while advanced users can save time when authoring."
+      },
+      "sources": [
+        {
+          "name": "shapeof.ai",
+          "url": "https://www.shapeof.ai/patterns/suggestions"
+        },
+        {
+          "name": "aiuxpatterns.com",
+          "url": "https://www.aiuxpatterns.com/pattern-dynamic-suggestions.html"
+        }
+      ]
     },
     {
       "id": "templates",
@@ -286,10 +312,9 @@
       "description": "Structured templates that can be filled by the user or pre-filled by the AI.",
       "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e8c346c3728899c96c0d22_templates_card.webp",
       "categoryId": "wayfinders",
-      "sourceUrl": "https://www.shapeof.ai/patterns/templates",
       "content": {
         "description": "Templates provide structured prompt frameworks with fillable fields. They help users craft effective prompts by breaking down the task into specific components and ensuring all necessary information is included.\n\n### Template Components\n- Labeled input fields\n- Dropdown selections for common options\n- Optional vs required fields\n- Preview of final prompt\n- Option to customize template structure",
-        "designConsiderations": "### Template Library\n- Organize by use case or category\n- Allow users to save custom templates\n- Provide both simple and advanced templates\n- Show example outputs for each template\n\n### Flexibility\n- Let users modify templates\n- Allow switching between template and freeform\n- Support progressive complexity\n- Enable template sharing",
+        "designConsiderations": "### Template Library\n- Organize by use case or category\n- Allow users to save custom templates\n- Provide both simple and advanced templates\n- Show example outputs for each template\n\n### Flexibility\n- Let users modify templates\n- Allow switching between template and freeform\n- Support progressive complexity\n- Enable template sharing\n\n### From aiuxpatterns.com\n\nA well-crafted prompt can take time and experimentation, so allowing users to save and access a library of pre-written prompts boosts effectiveness. Saving templates can be a simple feature; however, consider how it can best support your users' workflow. Are they able to update an existing template? A library of pre-written prompts is only effective if the prompts align with your users' goals.",
         "relatedPatterns": [
           "madlibs",
           "example-gallery"
@@ -311,8 +336,19 @@
             "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68adec60065170c1c3bf385f_65df92ff6958e4148dbb6217_CleanShot-2024-02-28-at-13.09.01-2x.png",
             "description": "Zapier offers several sample templates to build on the front side of Zaps. Here, a user is prompted to give specific parameters that will feed into the image generator."
           }
-        ]
-      }
+        ],
+        "userArchetype": "For novice users, a library of pre-written prompts can be highly effective, helping avoid the arresting barrier of a blank page and providing immediately effective results for them to build confidence. Advanced users benefit from saving and re-using their own prompts, leveraging their previous hard work and making experimentation easier."
+      },
+      "sources": [
+        {
+          "name": "shapeof.ai",
+          "url": "https://www.shapeof.ai/patterns/templates"
+        },
+        {
+          "name": "aiuxpatterns.com",
+          "url": "https://www.aiuxpatterns.com/pattern-prompt-templates.html"
+        }
+      ]
     },
     {
       "id": "auto-fill",
@@ -514,11 +550,10 @@
       "title": "Inpainting",
       "description": "Target specific areas of the AI's result to regenerate or remix.",
       "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ecf945e87c1ea19ee6dd9c_inpainting_card.webp",
-      "categoryId": "prompt-actions",
-      "sourceUrl": "https://www.shapeof.ai/patterns/inpainting",
+      "categoryId": "editing",
       "content": {
         "description": "Inpainting gives users the ability to let AI adjust parts of a piece of content without regenerating or impacting the whole. This makes collaboration with AI more predictable and controllable, reduces rework, and speeds iteration.\n\nThis pattern applies across all types of content, and can be used for interacting with existing content or remixing AI-generated content during a session.\n\nFor example,\n\n**When writing an essay:** I may ask AI to adjust the tone of a paragraph that I feel I am not getting quite right to see how it would reflect back my overall tone to me.\n\n**When AI generates text:** I can direct it to make changes in situ to the conversation itself.\n\n**When generating creative assets** like visuals or audio, I can isolate a part of the interface and have the AI apply new tokens only to that area.\n\nAdobe Firefly and Notion are two examples of tools that use inpainting effectively. The action is clearly identifiable from the interface with suggested prompts and nudges to help the user iterate on their generation\n\nThe discoverability and usability of this pattern depends on part on the existing paradigms of the underlying medium.\n\nImage editors already come with an eraser brush to make spot edits, and associating the erased area with options to prompt for what should replace it may feel familiar.\n\nText editors don't have a similar paradigm of erasing content in situ to a highlight, so inline actions are used as an affordance to take action on the highlighted text.\n\nIn any case, you can maintain user agency over their experience by allowing them to verify generations before overwriting the original, making undo easy, and giving people the option to replace the original or add the new generation into the text inline.",
-        "designConsiderations": "**Make it easy to find and view the area to be edited.**\n\nGive users precision tools to select the precise area they wish to adjust. This might include a brush size slider in image tools, or a time-based selector in audio tools that goes down to the tenth of a second. Provide both quick, rough tools (brush, auto-select) and precision options (lasso, feathering) so users can choose the right level of control.\n\n**Anchor edits in surrounding context.**\n\nBlend seamlessly with adjacent areas, but give users the option to widen or narrow the context window so they can prioritize realism or control.\n\n**Allow users to adjust the prompt.**\n\nGive users full control to change the core prompt, parameters, model, references, and so on to get their intended result out of the action.\n\n**Provide variations.**\n\nWhile subsequent prompts benefit from the surrounding context and generative history, the model still might not get it perfectly right. Providing variants speeds up the iterative process by letting users choose the option closest to their intent and move forward from there.\n\n**Verify to commit.**\n\nFor inpainting that occurs inline, such as a change to text or code, ensure the user verifies the change before overwriting their work.",
+        "designConsiderations": "**Make it easy to find and view the area to be edited.**\n\nGive users precision tools to select the precise area they wish to adjust. This might include a brush size slider in image tools, or a time-based selector in audio tools that goes down to the tenth of a second. Provide both quick, rough tools (brush, auto-select) and precision options (lasso, feathering) so users can choose the right level of control.\n\n**Anchor edits in surrounding context.**\n\nBlend seamlessly with adjacent areas, but give users the option to widen or narrow the context window so they can prioritize realism or control.\n\n**Allow users to adjust the prompt.**\n\nGive users full control to change the core prompt, parameters, model, references, and so on to get their intended result out of the action.\n\n**Provide variations.**\n\nWhile subsequent prompts benefit from the surrounding context and generative history, the model still might not get it perfectly right. Providing variants speeds up the iterative process by letting users choose the option closest to their intent and move forward from there.\n\n**Verify to commit.**\n\nFor inpainting that occurs inline, such as a change to text or code, ensure the user verifies the change before overwriting their work.\n\n### From aiuxpatterns.com\n\nWith AI capable of generating long, multi-paragraph results, this pattern allows for granular editing control over specific selected text. The key consideration is how granular your users need to edit their results. Is selection down to the individual letter, word, or whole paragraph? For example, limiting selection resolution to whole paragraphs is a balanced trade-off between a simple user experience and a meaningful amount of content for the AI to regenerate.",
         "relatedPatterns": [
           "watermark",
           "inline-action",
@@ -549,8 +584,19 @@
             "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b49e7ab229ca22caf2e780_tuners_inpainting_midjourney.avif",
             "description": "Midjourney set the convention for image editors to follow by allowing inpainting directly on the canvas"
           }
-        ]
-      }
+        ],
+        "userArchetype": "While intuitively this pattern may appear more suited to technically proficient users, it is broadly applicable because of how commonplace it is to review and edit text. Selecting only the third paragraph or the second half of a sentence is an intuitive action for most users."
+      },
+      "sources": [
+        {
+          "name": "shapeof.ai",
+          "url": "https://www.shapeof.ai/patterns/inpainting"
+        },
+        {
+          "name": "aiuxpatterns.com",
+          "url": "https://www.aiuxpatterns.com/pattern-partial-regeneration.html"
+        }
+      ]
     },
     {
       "id": "madlibs",
@@ -558,10 +604,9 @@
       "description": "Repeatedly run generative tasks without compromising on the format or accuracy.",
       "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e91bef82d5b7f1a7e954a7_madlibs_card.webp",
       "categoryId": "prompt-actions",
-      "sourceUrl": "https://www.shapeof.ai/patterns/madlibs",
       "content": {
         "description": "Madlibs make prompt-writing easier by breaking a task into structured input fields. Instead of composing a full instruction from scratch, users fill in variables such as names, product details, or tone. This reduces errors and keeps outputs consistent across a team.\n\nFor example, an AI might draft an email using a template where the recipient's name and context are supplied directly, avoiding mistakes like misaddressed messages.\n\nThis pattern works best when the task is known, the inputs are predictable, and the process repeats often. Creating a product requirements document, drafting release notes, or writing standard outreach emails all fit this mold. The underlying structure is fixed, but specific values shift each time.\n\nBy shaping the input up front, madlibs shift the work from correcting outputs to guiding inputs. This makes runs more reliable, and gives teams a shared library of prompts that match their brand and workflows.\n\n### Setting them up\n\nMadlibs are formatted as a collection of inputs and variables. Users specify their prompt but leave some inputs open-ended that the user will fill out. For example, a PRD template may include a link to a collection of insights by customers about a specific product area. They can be as simple as including a single reference link, or they can use multiple sources built via integration.\n\n### Putting them to work\n\nMadlibs are commonly seen in workflows. The user may enter a trigger (or it may be automated), and the rest of the workflow fires off seamlessly. Examples could include syncing notes from a meeting captured in Gong into Salesforce notes.\n\nWorkflows are set up to run off of information integrated from other sources as well as AI-generated information\n\nThese are used in templates to unblock users getting started with content generation. Writer.com and Copy.ai are good examples of how this can be used to build a prompt library within your company. Details like tone of voice, audience, and so on only need to be captured once and put into the prompt template.",
-        "designConsiderations": "**Let the context determine the flexibility.**\n\nA Madlib can feel like a form that forces exact inputs or like a suggestive scaffold. Rigid inputs drive consistency, but they can frustrate when the task requires nuance. Flexible fields invite creativity, but risk sloppy outputs. Pick the balance based on whether the pattern is used for repeatable workflows or for creative drafting.\n\n**Clarify which inputs are critical and which are optional.**\n\nIf everything looks equal, users may waste time filling in unnecessary fields. Make critical variables prominent and give clear signals about what can be skipped. This keeps the experience fast and reduces cognitive load.\n\n**Show the underlying prompt structure.**\n\nHiding the \"bones\" of the template makes madlibs feel magical but opaque. Exposing the structure helps users learn and adjust. Consider whether your audience values transparency (teams building prompt libraries) or simplicity (casual users who just want results).\n\n**Plan for multi-step reuse.**\n\nA single madlib can carry information forward into later outputs (brief → outline → draft). Designers should think about what gets locked at each step versus what can be revised or carried forward.\n\n**Treat Madlibs as a teaching tool.**\n\nThey aren't just time-savers. Well-structured Madlibs show novices how to phrase strong prompts and give experts reusable scaffolds. Decide how much you want the madlib to \"train\" the user versus simply produce outputs.",
+        "designConsiderations": "**Let the context determine the flexibility.**\n\nA Madlib can feel like a form that forces exact inputs or like a suggestive scaffold. Rigid inputs drive consistency, but they can frustrate when the task requires nuance. Flexible fields invite creativity, but risk sloppy outputs. Pick the balance based on whether the pattern is used for repeatable workflows or for creative drafting.\n\n**Clarify which inputs are critical and which are optional.**\n\nIf everything looks equal, users may waste time filling in unnecessary fields. Make critical variables prominent and give clear signals about what can be skipped. This keeps the experience fast and reduces cognitive load.\n\n**Show the underlying prompt structure.**\n\nHiding the \"bones\" of the template makes madlibs feel magical but opaque. Exposing the structure helps users learn and adjust. Consider whether your audience values transparency (teams building prompt libraries) or simplicity (casual users who just want results).\n\n**Plan for multi-step reuse.**\n\nA single madlib can carry information forward into later outputs (brief → outline → draft). Designers should think about what gets locked at each step versus what can be revised or carried forward.\n\n**Treat Madlibs as a teaching tool.**\n\nThey aren't just time-savers. Well-structured Madlibs show novices how to phrase strong prompts and give experts reusable scaffolds. Decide how much you want the madlib to \"train\" the user versus simply produce outputs.\n\n### From aiuxpatterns.com\n\nFor a structured prompt to be effective, the overall prompt structure must be well defined and required for every submission. Potentially some sections could be marked optional, but this should be limited as this pattern optimises users' focus on content over prompt structure. For paginated variants, consider carefully the content required for a quality prompt and whether it can be compartmentalised reliably — while paginated workflows focus users, they can also take longer to complete. For cloze-passage variants, keep the total number of answers low (in the 3–6 range) and think carefully about the volume of available answers per question to keep the interaction intuitive.",
         "relatedPatterns": [
           "chained-action",
           "templates"
@@ -591,8 +636,19 @@
             "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b3d05164ca6366bfda45c8_inputs_madlibs_writer.avif",
             "description": "Writer shows another example of making it easy for any user to benefit from a strong prompt without knowing how to construct it by focusing only on the variables using madlibs"
           }
-        ]
-      }
+        ],
+        "userArchetype": "A great pattern for novice users — this highly scaffolded approach provides strong guidance because all prompt sections are required before submission. Equally, it works well for users who frequently author prompts in tightly defined contexts. A paginated variant focuses attention on one section at a time and is optimised for first-time or onboarding users. A two-user variant (placeholder values) also exists: user A composes a complex prompt and parameterises key values; user B fills out only those key values and submits the full prompt."
+      },
+      "sources": [
+        {
+          "name": "shapeof.ai",
+          "url": "https://www.shapeof.ai/patterns/madlibs"
+        },
+        {
+          "name": "aiuxpatterns.com",
+          "url": "https://www.aiuxpatterns.com/pattern-structured-prompt.html"
+        }
+      ]
     },
     {
       "id": "open-input",
@@ -600,10 +656,20 @@
       "description": "Open ended prompt inputs that can be used in AI conversations and other natural language prompting",
       "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e91c0634999bad82eb61cd_direct_input_card.webp",
       "categoryId": "prompt-actions",
-      "sourceUrl": "https://www.shapeof.ai/patterns/open-input",
+      "sources": [
+        {
+          "name": "shapeof.ai",
+          "url": "https://www.shapeof.ai/patterns/open-input"
+        },
+        {
+          "name": "aiuxpatterns.com",
+          "url": "https://www.aiuxpatterns.com/pattern-raw-text-input.html"
+        }
+      ],
       "content": {
+        "userArchetype": "The open text input is suitable for all user types. It is the most familiar and accessible way to author a prompt, giving users the most direct control over their input. It is most effective for users who understand how to write an effective prompt, though it can feel limiting for novices encountering the blank canvas effect.",
         "description": "Open input has become the cornerstone of interactive AI design, fostering a dialogue between users and AI systems. This pattern is characterized by its simple interface that feels familiar, inviting the user to converse with the model underneath.\n\nBy using natural language, it doesn't take long for someone to get comfortable with the general interactivity. Where the pattern's limitations show is after the first few interactions, when someone doesn't know what to say next.\n\n### Variations and forms\n\nThis action is versatile and appears in multiple contexts across AI experiences. Some parameters and other selectors may not be appropriate in all contexts so ensure you design each case thoughtfully.\n\n**Chat box:** A persistent input at the bottom of a conversation. Best for back-and-forth tasks, discovery, and follow-ups.\n\n**Inline composer:** A prompt that operates on a selection or cursor position inside an editor, such as when text is highlighted. Good for precise edits like Generative Fill and inpainting.\n\n**Command-style prompt with parameters:** Single line prompt plus structured flags or controls, common in image models like Midjourney. Good for experts who want precision.\n\n**Side panel composer:** A prompt in a panel that can pull in files, tools, and settings, used for longer tasks and multi-source grounding. Common in Workspace side panels and IDEs.\n\n### Supporting features\n\nThere's a false perception that simple means easy. When someone knows what they are looking for then this way of interacting with the model makes sense. This could apply to use cases like a search portal, or customer support.\n\nHowever, when someone reaches an open chat bar and doesn't know what they are looking for (content generation sites, ChatGPT, etc), it can lead them to feel crippled by the choices (the blank canvas effect).\n\nOn top of that, prompting skills are not widespread. Most users will not understand how to craft a prompt to get the result they have in their head.\n\nHelp users get the most out of open inputs to the AI through wayfinders that get them started and tuners that help them easily build their prompt.\n\n**Templates** can help users craft better prompts without having the full skill set\n\n**Nudges** to improve your prompt can show users what \"better\" looks like\n\nPutting **filters and parameters** at the users' fingertips can make this more complicated feature feel accessible",
-        "designConsiderations": "**Set a clear default scope, and make scope switching a single-step action.**\n\nFor open inputs after the initial prompt, make the target of the action clear. This prevents accidental whole-document edits and allows users to precisely communicate their intent.\n\n**Handle limits and gaps with constructive guidance.**\n\nLike inline errors in more analog experiences, avoid generic errors or silent fail states. For example, if the input is too long or underspecified, say what is missing and offer a fix.\n\n**Support novice prompters.**\n\nDo not rely on users to be expert prompt or context engineers. Provide wayfinding tools to help users get started, like example galleries, and continue to support the flow of work with automated suggestions, follow ups to maintain an understanding of the user's intent, and templates for more complicated inputs.\n\n**Retain user control at all stages.**\n\nContinue to offer parameters, model selection, modes, and other precision controls when open inputs continue in the flow of work or conversation. Do not limit these powerful features to the initial prompt alone.",
+        "designConsiderations": "**Set a clear default scope, and make scope switching a single-step action.**\n\nFor open inputs after the initial prompt, make the target of the action clear. This prevents accidental whole-document edits and allows users to precisely communicate their intent.\n\n**Handle limits and gaps with constructive guidance.**\n\nLike inline errors in more analog experiences, avoid generic errors or silent fail states. For example, if the input is too long or underspecified, say what is missing and offer a fix.\n\n**Support novice prompters.**\n\nDo not rely on users to be expert prompt or context engineers. Provide wayfinding tools to help users get started, like example galleries, and continue to support the flow of work with automated suggestions, follow ups to maintain an understanding of the user's intent, and templates for more complicated inputs.\n\n**Retain user control at all stages.**\n\nContinue to offer parameters, model selection, modes, and other precision controls when open inputs continue in the flow of work or conversation. Do not limit these powerful features to the initial prompt alone.\n\n### From aiuxpatterns.com\n\nThe key consideration here is whether your user needs direct control, or whether they could benefit from abstraction of UI input controls. Consider if users need assistance with prompting from an educational standpoint, feedback on prompt quality, or would benefit from highly abstracted UI inputs to craft complex prompts.",
         "relatedPatterns": [
           "controls",
           "inline-action",
@@ -630,11 +696,10 @@
       "title": "Regenerate",
       "description": "Have the AI reproduce its response to the prompt without additional input",
       "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e91c786a04865d268318d2_regenerate_card.webp",
-      "categoryId": "prompt-actions",
-      "sourceUrl": "https://www.shapeof.ai/patterns/regenerate",
+      "categoryId": "editing",
       "content": {
         "description": "When AI doesn't meet your needs with its initial generation, you can instruct it to regenerate the output while keeping the same prompt and context. Common labels for this action include \"Regenerate,\" \"Rerun,\" or \"Try again.\"\n\nBy default, the system reruns your request through the model's internal process, which is designed to allow variation. That's why a new draft may use different words, reasoning, or details even though you didn't change anything.\n\nSome tools offer a \"seed\" setting that locks in part of this process. Using the same seed makes the model more likely to produce consistent results across regenerations. Changing or omitting the seed lets the system explore other possibilities, which can be useful for brainstorming or creative work, but can frustrate users expecting consistent results.\n\nUnlike more intentional controls such as \"Edit prompt\" or \"Refine,\" regeneration is a blunt tool. It sacrifices precision for speed. Its design must be carefully balanced against adjacent patterns like branching, inline edits, or parameter controls, so that it remains helpful rather than overwhelming or destructive.\n\n### Regenerative modes\n\nProduct designers must decide how to support the relationship between the original generation and additional versions:\n\n**Overwrite:** The new output replaces the old one. This is common in chat tools where only the latest answer remains visible in-line. If inline-variants are supported, users can cycle through past variations.\n\n**Branching:** Each retry creates a separate version. This mode is common in video and text editors, and recently has had some adoption in conversational tools like ChatGPT. This mode supports comparison and exploration but can quickly fill up a workspace if not well organized.\n\nDesigners also must determine how much control users will have over the form of regenerations as they iterate:\n\n**Guided:** Instead of blindly rerunning, the user can adjust a parameter or style first. Tools like Jasper's \"Rephrase\" or Notion AI's \"Try again with…\" fall here. It gives users more precision without needing a full new prompt.\n\n**Random seed:** Users may also be allowed to regenerate without specifying changes to the prompt. This is common when the thing being regenerated is incidental, like a list of suggestions. However, this lack of control can lead to frustration and a lack of agency.\n\nFinally, systems may be prompted to regenerate automatically after an error or timeout. This is common in coding tools, where the assistant silently retries a completion that fails. It reduces friction but must be transparent so users know what happened.",
-        "designConsiderations": "**Set clear expectations for what will change.**\n\nUsers should know whether regeneration will overwrite the old output or create a new branch. Hiding this choice can cause confusion or accidental data loss.\n\n**Make past results easy to recover.**\n\nIf regeneration writes over the existing content when accepted, make it easy to cycle through previous iterations and retrieve, view, and copy them. This preserves exploration while keeping the interface uncluttered.\n\n**Balance speed with control.**\n\nA one-click regenerate should be fast, but allow users to first adjust the prompt, attachments, or parameters when extra control is needed.\n\n**Use seeds to control randomness.**\n\nMake it clear that regenerations may differ even with the same prompt. If consistency is important, support the use of seeds through direct input or UI controls to maintain predictable outcomes.\n\n**Be opinionated over iterative support.**\n\nFor creative or exploratory work, users are more likely to value multiple regenerations to that allow them to iterate through different options. In more convergent work, quick regenerations can help users reach their intended need quickly and efficiently. Know which makes the most sense for your use case and support it in all touchpoints.",
+        "designConsiderations": "**Set clear expectations for what will change.**\n\nUsers should know whether regeneration will overwrite the old output or create a new branch. Hiding this choice can cause confusion or accidental data loss.\n\n**Make past results easy to recover.**\n\nIf regeneration writes over the existing content when accepted, make it easy to cycle through previous iterations and retrieve, view, and copy them. This preserves exploration while keeping the interface uncluttered.\n\n**Balance speed with control.**\n\nA one-click regenerate should be fast, but allow users to first adjust the prompt, attachments, or parameters when extra control is needed.\n\n**Use seeds to control randomness.**\n\nMake it clear that regenerations may differ even with the same prompt. If consistency is important, support the use of seeds through direct input or UI controls to maintain predictable outcomes.\n\n**Be opinionated over iterative support.**\n\nFor creative or exploratory work, users are more likely to value multiple regenerations to that allow them to iterate through different options. In more convergent work, quick regenerations can help users reach their intended need quickly and efficiently. Know which makes the most sense for your use case and support it in all touchpoints.\n\n### From aiuxpatterns.com\n\nAI usually provides a single result per prompt; this pattern re-submits and regenerates the entire previous prompt result. Consider if the results your users are generating are more subjective and whether full regeneration could assist ideation. Also consider whether regenerating the results requires edits to the initial prompt, or whether users would benefit from contextually relevant pre-canned prompts such as 'make more succinct' or 'make less technical'.",
         "relatedPatterns": [
           "draft-mode",
           "variations",
@@ -689,8 +754,19 @@
             "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68d9c1e56fd88fa2958499e6_regenerate_sana.webp",
             "description": "When creating content in the canvas, Sana offers the choice to regenerate the content. This overwrites the entire content of the canvas."
           }
-        ]
-      }
+        ],
+        "userArchetype": "This pattern is more applicable to the context of the content than to the user's ability level. It is primarily a question of the user's expectation of the system's flexibility. More technically proficient users may want more granular control."
+      },
+      "sources": [
+        {
+          "name": "shapeof.ai",
+          "url": "https://www.shapeof.ai/patterns/regenerate"
+        },
+        {
+          "name": "aiuxpatterns.com",
+          "url": "https://www.aiuxpatterns.com/pattern-full-regeneration.html"
+        }
+      ]
     },
     {
       "id": "restructure",
@@ -908,10 +984,9 @@
       "description": "Give the AI a specific reference to anchor its response.",
       "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e9837cf2b132f71e96b5e7_attachment_card.webp",
       "categoryId": "settings",
-      "sourceUrl": "https://www.shapeof.ai/patterns/attachments",
       "content": {
         "description": "Attachments allow users to shape a model's logic by providing specific information for it to reference when building its response to the prompt. This grounds the AI's response in a denser and more reliable context, reducing ambiguity, counteracting hallucinations, and helping users feel more in control of the generation.\n\nUsers can add attachments when shaping their initial prompt, as part of a follow up, or applied in a canvas or other shared space. These impact the model's behavior in subtle ways like shifting token weights, or in explicit ways like limiting answers to a provided PDF.\n\n### Attachment methods\n\nWhile a paperclip icon has become ubiquitous in most direct input fields, uploading a file is far from the only way of sharing contextual sources with the AI:\n\n**Direct upload**: Added via file upload, connection (e.g. Google Docs or Notion page), or by @-mentioning a file, tab, agent, or conversation directly into the open text input box. Use when it's unclear which reference to pull from behind the scenes and where user-initiated intent is necessary such as for the initial prompt.\n\n**Inline action**: Commonly implemented as text selection, where inline actions appear relative to the highlighted area. Media content (image, video, audio) often includes overlays or menu options that start a new generation with the media file as an attached source. In conversational experiences, an action to quote the text may appear when text is highlighted. When selected, the action injects the copied quote into the text box.\n\n**URL embed**: Added by pasting a link into the input box. The AI fetches the page and treats it as context while forming its generation. Be clear whether the AI will reference only the linked page or all connected pages.\n\n**Canvas block**: Use the pointer action to select a single div, node, drawing, etc. on an open canvas surface. Depending on the context, the AI may prioritize this content for its next generation, or limit its regeneration and subsequent actions to the constraint of the selected area.\n\n**Live capture**: Supplied by recording or snapping media in the moment, such as taking a screenshot, photo, or audio clip or allowing an agent to interact with your browser. In many modes this will result in the selection being attached as a direct upload. In agentic mode, the attachment guides the AI's logic to form its next step, and may not require human interaction.\n\n### Using attachments as a style guide\n\nAttachments can provide the model with tokens that help convey the user's intent without requiring or relying on the user to detail them in full. This helps the model infer the user's intended content, structure, tone, style, etc., saving the user time while making it more likely the initial generation suits their intent.\n\nTo maximize user control and oversight, explore how you might let users understand what tokens the attachment is likely to contribute to the prompt, such as by providing a describe action for attachments.\n\nAttachments can be used to guide the generation of something, like examples attached to a prompt to direct Claude, writing samples to generate a brand voice, or image samples to maintain tone across a set of generations.\n\n### Using attachments as the primary source or subject\n\nAttachments can be used to focus the AI on its contents, such as when summarizing an idea or report, conveying a script or outline, or to constrain search to a specific area of a subject. The AI may be directed to focus only on the attachment, or to combine it with other sources it finds on its own. All sources should be listed as references to the final generation.\n\nVisually separate attachments used for guides vs. primary sources. In this case, provide citations to the areas of the attachment the AI leveraged in its generation. If the model retreives additional sources, distinguish those added directly by the user.\n\nAttachments can be used as the central object of a prompt, like asking GitHub Copilot to explain some piece of code, having Adobe PDF explain what is happening in a document, or having Perplexity expand on the ideas contained in a white paper.",
-        "designConsiderations": "### Allow attachments at any time\n\nLet users include files when first composing a prompt or during later regenerations so they can refine results without losing work.\n\n### Use multiple input methods\n\nNot every attachment needs to be a file. Enable uploads, @ mentions, clipboard paste, drag-and-drop, and canvas references to reduce friction across devices and workflows.\n\n### Let users give attachments a purpose\n\nMake clear whether a reference will guide style, serve as the subject under analysis, or act as a hybrid. Midjourney's attachment pane offers a good example, where users can specify whether it should direct the prompt, style, or subject.\n\n### Provide citations when referencing files\n\nQuote, annotate, or link back to attachment content so users can trace the AI's outputs directly to their sources, as Granola does with transcripts.\n\n### Protect organizational data\n\nEncrypt attachments in transit and at rest, separate them from training data pipelines by default, and allow enterprises to enforce stricter controls.",
+        "designConsiderations": "### Allow attachments at any time\n\nLet users include files when first composing a prompt or during later regenerations so they can refine results without losing work.\n\n### Use multiple input methods\n\nNot every attachment needs to be a file. Enable uploads, @ mentions, clipboard paste, drag-and-drop, and canvas references to reduce friction across devices and workflows.\n\n### Let users give attachments a purpose\n\nMake clear whether a reference will guide style, serve as the subject under analysis, or act as a hybrid. Midjourney's attachment pane offers a good example, where users can specify whether it should direct the prompt, style, or subject.\n\n### Provide citations when referencing files\n\nQuote, annotate, or link back to attachment content so users can trace the AI's outputs directly to their sources, as Granola does with transcripts.\n\n### Protect organizational data\n\nEncrypt attachments in transit and at rest, separate them from training data pipelines by default, and allow enterprises to enforce stricter controls.\n\n### From aiuxpatterns.com\n\nWhen providing file uploads, consider core metrics of size and resolution. For image analysis, a minimum resolution should likely be set — formats like .gif aren't generally capable of high resolution and therefore aren't as useful as JPG or PNG. Consider whether your users need to identify a focal point or a specified area within the image for the AI to focus on. For reference material, the key variables are how many, how large, and what file types you allow users to add — these choices are highly contextual to your users' use case.",
         "relatedPatterns": [
           "connectors",
           "citations",
@@ -942,8 +1017,19 @@
             "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68bc8b6467f3b690b1b94695_attachments_perplexity_active.webp",
             "description": "As demonstrated by Perplexity, some products interact with the document within the surface of the interaction as a way of showing progress and making it clear how it is using the attached source"
           }
-        ]
-      }
+        ],
+        "userArchetype": "Users of all technical abilities are mostly familiar with images and visual files. The ability to attach and query an image should be ubiquitous for all user types, though the level of detail and sophistication will vary. For reference material, all users will have an intuitive sense of what material they'd like the AI to focus on, though understanding the difference between training data, publicly accessible data, and reference material may take time."
+      },
+      "sources": [
+        {
+          "name": "shapeof.ai",
+          "url": "https://www.shapeof.ai/patterns/attachments"
+        },
+        {
+          "name": "aiuxpatterns.com",
+          "url": "https://www.aiuxpatterns.com/pattern-image.html"
+        }
+      ]
     },
     {
       "id": "connectors",
@@ -1034,10 +1120,9 @@
       "description": "Let users specify what model to use for their prompts.",
       "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e9840f9d0a014a76716a8b_model_management_card.webp",
       "categoryId": "settings",
-      "sourceUrl": "https://www.shapeof.ai/patterns/model-management",
       "content": {
         "description": "There are many reasons why a user may want to switch the model they are using for generation. Different models come with different capabilities and tradeoffs. Giving users the ability to change their model on the fly, or at least know which one the AI is using at any given time, has become a standardized pattern across AI products.\n\n### Why users might switch models\n\n**Accuracy and reliability**: Some models are more prone to hallucinations or errors depending on their training data and foundational prompts.\n\n**Recency of knowledge**: Newer models often contain more recent references and larger training sets, which can lead to more relevant outputs.\n\n**Cost considerations**: Advanced models typically carry higher token or subscription costs. Users may prototype prompts on cheaper models before scaling them on premium ones.\n\n**Aesthetic differences**: In image generation, different models carry distinct styles. Users may choose a specific model for its \"look,\" much like preferring vinyl for its character even if digital audio is technically higher fidelity.\n\n**Remixing across models**: Some tools allow users to generate in one model for its style and then refine or re-render in another for structure or predictability.\n\n**Security concerns**: Users may avoid certain models when handling sensitive or proprietary data depending on how the provider manages training, storage, and compliance.\n\n**Research and comparison**: Engineers, analysts, and researchers often run the same task across multiple models to benchmark performance.\n\nModel management is no longer optional. As models proliferate and differentiate, users expect the ability to select, compare, and control which system is powering their results.\n\n### Model tiers\n\nModel choice is often structured into tiers, each with its own tradeoffs:\n\n**Free models**: Typically smaller, cheaper, and more limited. Useful for casual exploration, onboarding, or testing prompts before scaling.\n\n**Pro models**: Larger, more up-to-date, and more capable. These are often gated behind subscriptions or pay-per-use pricing.\n\n**Enterprise models**: Scoped for compliance, security, and governance. Organizations may lock users into enterprise models to enforce retention, privacy, or regional restrictions.\n\n**Domain-specialized models**: Built or fine-tuned for specific tasks like coding, medical, legal, creative domains. These provide focused strengths but may sacrifice general-purpose ability.\n\nThe tier system creates a predictable progression for users, but it also shapes how they perceive value. A free or lighter model may be \"good enough,\" saving money and compute, while a more powerful option can unlock higher quality if the product makes that difference visible.",
-        "designConsiderations": "### Make the active model visible at the point of generation\n\nUsers should always know which model is powering their output, especially when multiple options are available. Hiding this detail saves space but risks confusion when results vary in quality, tone, or speed.\n\n### Explain model differences in human terms\n\n\"GPT-4o, Claude Sonnet, Llama-3\" means little to most users. Translate distinctions into accuracy, recency of knowledge, creativity, cost, or latency.\n\n### Support seamless model switching without loss of context\n\nRestarting a conversation or re-uploading files just to change models is a major usability hit. Let users change models in between prompts wherever possible to ramp up (or drop down) compute where needed.\n\n### Provide routing as a default, but keep manual override\n\nMany users prefer the system to choose the \"best\" model for their task. But power users and enterprises demand control. Offering both reduces friction while avoiding lock-in to opaque model behavior.\n\n### Encourage cost-aware prototyping\n\nLet users run drafts on cheaper, lighter models before escalating to premium ones. This lowers experimentation costs but requires surfacing where fidelity may drop. Be explicit about what corners are cut on lower-tier runs.\n\n### Expose usage and cost impacts before selection\n\nToken limits, latency differences, and billing tiers should appear when choosing a model, not after. Hiding costs makes onboarding smoother, but it also undermines trust when unexpected bills or truncations occur.\n\n### Align permissions with context and audience\n\nIn enterprise, admins may need to restrict which models can be used to meet compliance. In consumer tools, explore defaults that protect against runaway costs while still letting curious users try new options.\n\n### Consider aesthetic and brand alignment\n\nIn creative domains, models have \"styles\" as much as capabilities. Presenting them only as technical tiers misses the emotional and brand implications of choosing one over another.",
+        "designConsiderations": "### Make the active model visible at the point of generation\n\nUsers should always know which model is powering their output, especially when multiple options are available. Hiding this detail saves space but risks confusion when results vary in quality, tone, or speed.\n\n### Explain model differences in human terms\n\n\"GPT-4o, Claude Sonnet, Llama-3\" means little to most users. Translate distinctions into accuracy, recency of knowledge, creativity, cost, or latency.\n\n### Support seamless model switching without loss of context\n\nRestarting a conversation or re-uploading files just to change models is a major usability hit. Let users change models in between prompts wherever possible to ramp up (or drop down) compute where needed.\n\n### Provide routing as a default, but keep manual override\n\nMany users prefer the system to choose the \"best\" model for their task. But power users and enterprises demand control. Offering both reduces friction while avoiding lock-in to opaque model behavior.\n\n### Encourage cost-aware prototyping\n\nLet users run drafts on cheaper, lighter models before escalating to premium ones. This lowers experimentation costs but requires surfacing where fidelity may drop. Be explicit about what corners are cut on lower-tier runs.\n\n### Expose usage and cost impacts before selection\n\nToken limits, latency differences, and billing tiers should appear when choosing a model, not after. Hiding costs makes onboarding smoother, but it also undermines trust when unexpected bills or truncations occur.\n\n### Align permissions with context and audience\n\nIn enterprise, admins may need to restrict which models can be used to meet compliance. In consumer tools, explore defaults that protect against runaway costs while still letting curious users try new options.\n\n### Consider aesthetic and brand alignment\n\nIn creative domains, models have \"styles\" as much as capabilities. Presenting them only as technical tiers misses the emotional and brand implications of choosing one over another.\n\n### From aiuxpatterns.com\n\nWhilst a broad AI model brought the pattern into the mainstream, the long-term landscape will feature varied models trained for particular domains. Choosing between models may be done automatically based on desired output, but providing manual selection offers flexibility for accuracy or experimentation. As the list of available models grows, this option may become more relevant even for general-purpose interfaces.",
         "relatedPatterns": [
           "cost-estimates",
           "filters",
@@ -1068,8 +1153,19 @@
             "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b4bb1afbd0f57252152c8b_tuners_model_selector_vercel.avif",
             "description": "Vercel allows you to switch between model weights in the flow of work so you can save compute power for more challenging tasks or getting unstuck"
           }
-        ]
-      }
+        ],
+        "userArchetype": "Another advanced-user pattern — to fully utilise a model selection feature requires some understanding of what models exist, their intended purpose, and what data they have been trained on. Most user interfaces are designed with a particular goal defined, so the appropriate model would typically be pre-selected for less experienced users."
+      },
+      "sources": [
+        {
+          "name": "shapeof.ai",
+          "url": "https://www.shapeof.ai/patterns/model-management"
+        },
+        {
+          "name": "aiuxpatterns.com",
+          "url": "https://www.aiuxpatterns.com/pattern-modal-selection.html"
+        }
+      ]
     },
     {
       "id": "modes",
@@ -1136,10 +1232,9 @@
       "description": "Include constraints with your prompt for the AI to reference when generating its result.",
       "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e9843fc0c8bd03a9a69183_parameters_card.webp",
       "categoryId": "settings",
-      "sourceUrl": "https://www.shapeof.ai/patterns/parameters",
       "content": {
         "description": "Parameters sit between the user's intent and the model's generation process, helping to guide how the AI interprets the input, weights different aspects, and commits to an answer. Essentially, they act as the knobs on the machine that let users control how tightly or loosely the AI behaves, how exploratory or constrained it should be, and how much initiative it should take.\n\nThe earliest form of parameters was raw flags typed into prompts. Midjourney popularized this with inline commands like --v 4 to switch model versions or --no dogs to exclude unwanted tokens.\n\nSince then, this pattern has become more user-friendly. Parameters migrated into interfaces: sliders for temperature, dropdowns for model versions, quick chips for tone or length.\n\n### Parameter forms\n\nParameters are used across all content formats and use cases.\n\n**Inline flags**: These include typed tokens inside of the prompt. They offer high precision, but also a high learning curve. Examples include Midjourney's --no to exclude tokens, --v for model version, or --ar for aspect ratio. These can be added manually, or reflect in the prompt box after being added from within the UI.\n\n**Toggles and switches**: When parameters have only two values, a toggle makes adjusting it easy. Copy.ai offers a toggle to make the writing more casual or more formal, and Jasper provides the option to bias for speed vs. quality. This parameter can also impact model behavior, such as the option to enable linting by coding copilots.\n\n**Sliders**: To dial up or down the weights associated with different parameters, sliders have become a common UI option. These can be open-ended or have set tick marks to represent common values. For example, OpenAI has recently introduced sliders in their canvas tools to control reading level with set levels to choose from, while Midjourney's OmniReference weight is open ended.\n\n**Matrix controls**: To add an additional dimension, two related sliders can be combined in a 2x2 matrix, granting more granular control over the balance between the two. The tradeoff to this heightened precision is a more complicated interface. Figma Slides uses this UI when using AI to adjust voice and tone.\n\n### Location and visibility\n\nParameters may become critical tools for more advanced users, but people who are just learning your interface and product may find them distracting or confusing. Balance visibility with ease of access.\n\nOptions that control cost or speed of generation, or the general format of the final generation such as length or aspect ratio may need to be more visible or even available by default from the input field.\n\nGroup more complicated parameters in panels and consider how progressive disclosure or relative association might be utilized to expose advanced options at the moment they apply.",
-        "designConsiderations": "### Make defaults transparent and meaningful\n\nMost users will never touch parameters. Focus defaults on easy-to-understand, common options. Avoid making the interface feel like a black box for newer users, and offer more advanced options when relevant.\n\n### Bundle complexity when possible\n\nUse presets or modes to wrap multiple parameters into a clear choice like \"draft vs. publish\" or \"quality vs. speed.\" These wrappers should be transparent, showing which dials move under the hood when someone inspects further.\n\n### Expose depth progressively\n\nBeginners need one or two approachable controls, not a wall of knobs. Keep advanced parameters in drawers or side panels. Let power users drop into inline flags or multi-parameter panels. This separation avoids overwhelming novices while still respecting experts.\n\n### Treat autonomy as a parameter, not a surprise\n\nInitiative should never be hidden in the model's behavior. Let people set whether the AI should only suggest, ask for approval, or execute directly. Make these modes visible and easy to adjust mid-task so the AI doesn't feel inconsistent\n\n### Call out expensive choices\n\nSome options take longer to run or use up more credits. Label these clearly so people know when they're asking the AI to work harder, and what they'll get in return.\n\n### Design for edge cases\n\nParameters can create failure modes if set too high or low. Anticipate these extremes. For example, warn users when high temperature risks nonsense, or when long token limits may cut off mid-response. Provide guardrails without blocking exploration.",
+        "designConsiderations": "### Make defaults transparent and meaningful\n\nMost users will never touch parameters. Focus defaults on easy-to-understand, common options. Avoid making the interface feel like a black box for newer users, and offer more advanced options when relevant.\n\n### Bundle complexity when possible\n\nUse presets or modes to wrap multiple parameters into a clear choice like \"draft vs. publish\" or \"quality vs. speed.\" These wrappers should be transparent, showing which dials move under the hood when someone inspects further.\n\n### Expose depth progressively\n\nBeginners need one or two approachable controls, not a wall of knobs. Keep advanced parameters in drawers or side panels. Let power users drop into inline flags or multi-parameter panels. This separation avoids overwhelming novices while still respecting experts.\n\n### Treat autonomy as a parameter, not a surprise\n\nInitiative should never be hidden in the model's behavior. Let people set whether the AI should only suggest, ask for approval, or execute directly. Make these modes visible and easy to adjust mid-task so the AI doesn't feel inconsistent\n\n### Call out expensive choices\n\nSome options take longer to run or use up more credits. Label these clearly so people know when they're asking the AI to work harder, and what they'll get in return.\n\n### Design for edge cases\n\nParameters can create failure modes if set too high or low. Anticipate these extremes. For example, warn users when high temperature risks nonsense, or when long token limits may cut off mid-response. Provide guardrails without blocking exploration.\n\n### From aiuxpatterns.com\n\nA highly abstracted pattern that prioritises user selections from available controls mapped to pre-existing prompt snippets. The key consideration is defining appropriate options and being confident in their effectiveness for your users' context. Even a simple set of options can provide a wide variety of output possibilities — for example, 3 inputs with 3 options each can produce 27 possible prompt variations. For larger sets of inputs, some conditional logic may be required.",
         "relatedPatterns": [
           "memory",
           "controls",
@@ -1178,8 +1273,19 @@
             "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68b4d8ea464044463538e3fd_tuners_parameters_midjourney.avif",
             "description": "Midjourney's parameters can be added inline to the prompt (a call back to its roots in Discord?) or from the parameters dropdown"
           }
-        ]
-      }
+        ],
+        "userArchetype": "Like all highly abstracted interfaces, this pattern allows users to quickly author a prompt far beyond the complexity possible with direct text input. Users who understand the meaning of the available options benefit not only from the initial speed of selection but also from the rapid experimentation it enables."
+      },
+      "sources": [
+        {
+          "name": "shapeof.ai",
+          "url": "https://www.shapeof.ai/patterns/parameters"
+        },
+        {
+          "name": "aiuxpatterns.com",
+          "url": "https://www.aiuxpatterns.com/pattern-configure-controls.html"
+        }
+      ]
     },
     {
       "id": "preset-styles",
@@ -1222,10 +1328,9 @@
       "description": "Rewrite or expand user prompts to improve generation quality.",
       "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e651504a4a87aeb3219e70_prompt_tuner_prompt_improver_card.webp",
       "categoryId": "settings",
-      "sourceUrl": "https://www.shapeof.ai/patterns/prompt-enhancer",
       "content": {
         "description": "Models already rewrite our prompts. Most systems take what you type, adjust it, then send a stronger instruction to the model. A prompt enhancer brings that process into the open. It sits near the input, suggests concrete additions or rewrites, and turns a rough intent into a clear, constrained prompt before anything runs.\n\nEnhancers support a better user experience and more efficient use of compute power:\n\nAI systems feel more approachable by externalizing the \"hidden rules\" of prompting\n\nThe user can understand how the AI logically produced its generation, learning to control for bias, improve their own prompting capabilities, and remain in control.\n\nA strengthened input inceases the liklihood of getting to a good first result on the first go.\n\nWhile parameters tune model behavior after the fact, Prompt enhancers improve the instruction itself up front. Tools that expand, clarify, or score prompt completeness move from passive guidance to active assistance, closing skill gaps for non-experts.\n\nEnhancers show up across modalities. In text tools you see \"optimize\" or \"rewrite\" controls in editors and playgrounds. In image and video tools you see style chips, prompt expanders, and reference helpers that add structure behind the scenes while keeping the user's goal intact.\n\n### Co-generation\n\nFoundational models and many AI products include a workspace or playground for users to test various prompts against the model. Anthropic includes the option to have AI co-write your prompt with you, taking the user's input and using advanced prompt techniques to include it. In this way, a user can understand how AI processes their prompt into an improved form to logically get the best outcome.",
-        "designConsiderations": "### Make enhancement explicit and reviewable\n\nWhen the system rewrites the prompt, show the new prompt and allow users to continue editing before submitting. In this way, the prompt enhancement feature allows the user to quickly get to a first draft of their intent without abdicating agency over the prompt itself.\n\n### Replace follow up prompts with actions\n\nInstead of requiring a direct input, systems can use plain-language inline actions like \"more concise,\" \"add examples,\" or \"cinematic lighting,\" then translate them to model-specific syntax under the hood. This reduces cognitive load without hiding capability.\n\n### Require just enough input before enhancing\n\nIf the tool needs a minimum amount of context in order to accurately refine the bar, show a clear character count or relative affordance instead of rendering the action disabled until the arbitary floor is met.\n\n### Keep user intent and voice intact\n\nPreserve key nouns, constraints, and style cues from the user's text. Avoid adding facts, opinions, or scope changes unless the user opts in, and highlight any material expansions for easy review.\n\n### Keep the raw prompt accessible\n\nLet users view, copy, and export the final prompt that will be sent to the model. For power users, expose token count and key parameters so they can manage cost and context.\n\n### Offer control levels that match expertise\n\nDefault to a single \"Enhance\" action with sensible presets. Provide an \"Advanced\" drawer for users who want fine-grained knobs like tone, audience, structure, references, or safety filters.",
+        "designConsiderations": "### Make enhancement explicit and reviewable\n\nWhen the system rewrites the prompt, show the new prompt and allow users to continue editing before submitting. In this way, the prompt enhancement feature allows the user to quickly get to a first draft of their intent without abdicating agency over the prompt itself.\n\n### Replace follow up prompts with actions\n\nInstead of requiring a direct input, systems can use plain-language inline actions like \"more concise,\" \"add examples,\" or \"cinematic lighting,\" then translate them to model-specific syntax under the hood. This reduces cognitive load without hiding capability.\n\n### Require just enough input before enhancing\n\nIf the tool needs a minimum amount of context in order to accurately refine the bar, show a clear character count or relative affordance instead of rendering the action disabled until the arbitary floor is met.\n\n### Keep user intent and voice intact\n\nPreserve key nouns, constraints, and style cues from the user's text. Avoid adding facts, opinions, or scope changes unless the user opts in, and highlight any material expansions for easy review.\n\n### Keep the raw prompt accessible\n\nLet users view, copy, and export the final prompt that will be sent to the model. For power users, expose token count and key parameters so they can manage cost and context.\n\n### Offer control levels that match expertise\n\nDefault to a single \"Enhance\" action with sensible presets. Provide an \"Advanced\" drawer for users who want fine-grained knobs like tone, audience, structure, references, or safety filters.\n\n### From aiuxpatterns.com\n\nProviding feedback on the overall quality of a user's prompt allows them to adjust it in real time before submitting for generation. What determines prompt quality can vary across multiple dimensions — for example length, detail, specificity, or context description. Consider providing feedback on multiple dimensions if it empowers users. AI-assisted editing leverages the model's language ability to refine quickly typed thoughts. Consider what types of writing enhancements would help your users most — not only for their prompt writing but also to enhance the quality of their generated results.",
         "relatedPatterns": [
           "parameters",
           "preset-styles"
@@ -1259,8 +1364,19 @@
             "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e8a7d8be224b4b6609cae7_CleanShot-2025-10-10-at-00.28.22-2x.png",
             "description": "v0 proactively includes a prompt enhancement feature from the input box."
           }
-        ]
-      }
+        ],
+        "userArchetype": "Both novice and experienced users can benefit from prompt enhancement. Any generation — whether image or text — takes time, so allowing users to author quality prompts faster benefits all skill levels. Novice users particularly benefit from AI-assisted authoring: having inline, instant assistance can even boost some users' confidence to start writing in the first place. Advanced users gain efficiency by seeing how AI processes and improves their intent into an optimised form."
+      },
+      "sources": [
+        {
+          "name": "shapeof.ai",
+          "url": "https://www.shapeof.ai/patterns/prompt-enhancer"
+        },
+        {
+          "name": "aiuxpatterns.com",
+          "url": "https://www.aiuxpatterns.com/pattern-quality-feedback.html"
+        }
+      ]
     },
     {
       "id": "saved-styles",
@@ -1427,10 +1543,9 @@
       "description": "Lets the AI give inline annotations to cite its sources",
       "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ecf994e5cffecf3e20b432_citations_card.webp",
       "categoryId": "governors",
-      "sourceUrl": "https://www.shapeof.ai/patterns/citations",
       "content": {
         "description": "Citations give users a way to see where an AI’s response comes from. They connect a generated output back to its underlying material, whether that’s a PDF, a transcript, a web page, or an internal database. Their role is to create transparency and help users verify information.\n\nCitations also influence the user's perception of AI as an authority, lending credibility to the summarized content. This can backfire, since summaries are susceptible to hallucinations or misrepresentations.\n\nEncourage users to dig into cited content by providing metadata and summaries of the referenced material, which also helps weed out hallucinated sources. To counteract the AI drawing erroneous facts and conclusions from the sourced material, deep link to the relevant part of the source or pull quotes up into the summary, such as when hovering on a citation.\n\n### Variations and forms\n\n- **Inline highlights:** Best for attached material like PDFs. Example: Adobe Acrobat cites passages directly in a summary panel so users can jump to the source text.\n- **Direct quotations:** For longer texts or transcripts, show the specific quote the model relied on to generate its summary. Example: Granola paraphrases or directly quotes the segments of the transcript behind each takeaway.\n- **Multi-source references:** Found in search and aggregation. Example: Perplexity shows citations inline, with metadata such as title and favicon to help scan relevance.\n- **Lightweight links:** Best for verification rather than exploration. Example: Copy.ai lists full URLs at the end of generated copy, prioritizing transparency over polish.\n\nEach variation comes with tradeoffs. Inline highlights and direct quotations are useful to verify specific information, but can prematurely converge on a single source or concept when drawing from a broader reference set. Multi-source references and lightweight links are useful to lead users deeper into a topic or large set of content, but are less reliable as the source material is more likely to be external and unverified.",
-        "designConsiderations": "- **Let context guide specificity.** Point to exact passages, timestamps, or assets rather than broad documents when information is being presented as factual and specific. Rely on broader reference collections when the user‘s intent is grounded in broader discovery.\n- **Place citations where people expect them.** Inline cues work for sentence-level claims. Panels or drawers work better for long-form exploration. Consistency matters more than polish so users know where to look.\n- **Respect the user‘s focus.** Allow users to hover for a short preview or click through to the full source. This dual mode balances speed with thoroughness.\n- **Make broken or missing citations explicit.** If a source is unavailable, call it out directly rather than hiding the gap. Empty states maintain trust, filler content erodes it.\n- **Use metadata to support scanning.** Titles, site names, and favicons help users quickly judge relevance. Too much detail can overwhelm, so keep labels short and consistent.\n- **Let users rescope references.** After an initial generation, users may want to filter by domain, remove weak sources, or attach new files. Give them controls to reshape citations without restarting the whole process.",
+        "designConsiderations": "- **Let context guide specificity.** Point to exact passages, timestamps, or assets rather than broad documents when information is being presented as factual and specific. Rely on broader reference collections when the user‘s intent is grounded in broader discovery.\n- **Place citations where people expect them.** Inline cues work for sentence-level claims. Panels or drawers work better for long-form exploration. Consistency matters more than polish so users know where to look.\n- **Respect the user‘s focus.** Allow users to hover for a short preview or click through to the full source. This dual mode balances speed with thoroughness.\n- **Make broken or missing citations explicit.** If a source is unavailable, call it out directly rather than hiding the gap. Empty states maintain trust, filler content erodes it.\n- **Use metadata to support scanning.** Titles, site names, and favicons help users quickly judge relevance. Too much detail can overwhelm, so keep labels short and consistent.\n- **Let users rescope references.** After an initial generation, users may want to filter by domain, remove weak sources, or attach new files. Give them controls to reshape citations without restarting the whole process.\n\n### From aiuxpatterns.com\n\nProviding clear insights into where and how an AI has generated its results is one of the biggest builders of trust and understanding for users — avoiding the 'black box' perception is key to users staying with a product long term. Two common approaches: appending cited sources after the result, or displaying a citation indicator inline that opens a sidebar.",
         "relatedPatterns": [
           "summary",
           "synthesis",
@@ -1477,8 +1592,19 @@
             "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e98b063b0e859a606f7295_peek-citation-sana.png",
             "description": "Sana includes a popover with citations showing the highlighted aspects of the source material"
           }
-        ]
-      }
+        ],
+        "userArchetype": "Citations apply to all users. They are a fundamental aspect of making users feel comfortable utilising AI output for which they are still likely accountable. Citations also provide a clear path forward for users to investigate sources directly or provide their own documented references."
+      },
+      "sources": [
+        {
+          "name": "shapeof.ai",
+          "url": "https://www.shapeof.ai/patterns/citations"
+        },
+        {
+          "name": "aiuxpatterns.com",
+          "url": "https://www.aiuxpatterns.com/pattern-result-citations.html"
+        }
+      ]
     },
     {
       "id": "controls",
@@ -1532,10 +1658,9 @@
       "description": "Help users proactively modulate compute power through transparent cost estimates for actions",
       "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ecfa97453e9bbea96e32ef_cost_card.webp",
       "categoryId": "governors",
-      "sourceUrl": "https://www.shapeof.ai/patterns/cost-estimates",
       "content": {
         "description": "Every generation costs money to run, and supporting iterative prompting or complicated chained-runs or workflows can quickly add up. Most products pay these costs behind the scenes and roll them into metered usage, governed by credits that refresh regularly or can be purchased in bulk. This guards users from the minutiae of managing individual token counts, but also has the effect of turning AI costs into a black box.\n\nTransparent spend lifts the veil, helping users understand the relative costs of different prompt, parameter, and model combinations before anything runs. Estimated costs are shown beside key actions, and users can see in real-time how changing their selection adjusts what they will \"pay\" in equivilent credits.\n\n### Common choices that impact run cost\n\n- **Model size and family:** Larger models consume more compute per token. Show estimates from a model selector so users balance the power with what they are willing to pay for it.\n- **Prompt length and context window:** Longer prompts, or more complicated actions like deep research, require more thinking power from the AI. Update cost estimates plainly when users change mode or direct the model to think harder.\n- **Expected output length:** Expansive or detailed responses use more output tokens. Encourage draft mode so users can spend less when still working through ideas.\n- **Number of steps in a chain or agent plan:** Workflows and chained actions can quickly run up. Show the full cost of the run as well as costs at a per-step level to help users facilitate an effective process.\n- Number of inference steps or loops: Each computational cycle the model uses to refine its thinking adds to the overall cost. In addition to credit-spend estimates, allow more advanced users to adjust the step count to govern how many cycles should be completed to return a result.\n\n### Credits or dollar values?\n\nIn AI playgrounds and development environments, credits may be priced in local currency to normalize the cost to a common denominator. This is helpful for technical users, but non-technical users are likely to be confused when seeing a dollar amount on top of the cost of their subscription.\n\nNon-technical users benefit from a clear product-based credit system. However, the tradeoff to using product-specific currency is that there is no standard. Users working across multiple products will not have a consistent way of comparing the relative cost of different iterations of inputs and parameters. This standard may evolve over time but it currently creates usability risks to be aware of.",
-        "designConsiderations": "- **Make the unit explicit.** Tell users exactly what you are estimating, such as “~3,200 input tokens, ~1,000–2,000 output tokens,” or “12 credits for 1 second of Gen-4 video.” People make better trade-offs when they see the base unit and the currency mapping.\n- **Anchor estimates in the units people understand.** Users reason differently across modalities: tokens in text, characters in TTS, seconds in video, credits in consumer apps. Always map these back to money where possible, and explain any conversion rules so the relationship between effort and cost is transparent.\n- **Show ranges for unknowns.** You cannot know output tokens before the run. Present a low–high range based on max tokens or typical lengths, and update in real time during streaming. This sets expectations and prevents “estimate drift.”\n- **Surface the drivers of cost.** Break the estimate into components, for example system prompt, retrieved context, user input, tool calls, and expected output. Call out the heavy parts so users can trim the right thing.\n- **Offer cheaper paths when relevant.** If the task is non-urgent or batched, propose batch mode with the updated estimate and time window. When caching applies, show the expected cache read savings in the estimate.\n- **Reward onboarding.** Ensure users have sufficient tokens for onboarding so they can sufficiently work with the program to understand it while interested to do so. Some products reward onboarding and other key flows with a token pack, making up for tokens spent during that initial run and giving users a boost to stay.\n- **Put estimates where decisions are made.** Inline next to the prompt, per-step in builders, and on action buttons in credit-based tools. Avoid burying the estimate in settings.",
+        "designConsiderations": "- **Make the unit explicit.** Tell users exactly what you are estimating, such as “~3,200 input tokens, ~1,000–2,000 output tokens,” or “12 credits for 1 second of Gen-4 video.” People make better trade-offs when they see the base unit and the currency mapping.\n- **Anchor estimates in the units people understand.** Users reason differently across modalities: tokens in text, characters in TTS, seconds in video, credits in consumer apps. Always map these back to money where possible, and explain any conversion rules so the relationship between effort and cost is transparent.\n- **Show ranges for unknowns.** You cannot know output tokens before the run. Present a low–high range based on max tokens or typical lengths, and update in real time during streaming. This sets expectations and prevents “estimate drift.”\n- **Surface the drivers of cost.** Break the estimate into components, for example system prompt, retrieved context, user input, tool calls, and expected output. Call out the heavy parts so users can trim the right thing.\n- **Offer cheaper paths when relevant.** If the task is non-urgent or batched, propose batch mode with the updated estimate and time window. When caching applies, show the expected cache read savings in the estimate.\n- **Reward onboarding.** Ensure users have sufficient tokens for onboarding so they can sufficiently work with the program to understand it while interested to do so. Some products reward onboarding and other key flows with a token pack, making up for tokens spent during that initial run and giving users a boost to stay.\n- **Put estimates where decisions are made.** Inline next to the prompt, per-step in builders, and on action buttons in credit-based tools. Avoid burying the estimate in settings.\n\n### From aiuxpatterns.com\n\nAI generations cost compute which is not free, so tokens or credits are a way to control a user's allocation when each generation costs a different amount. The key elements in not making tokens frustrating for users are: making the allocation clear, explaining when and how it is spent, and showing when it replenishes. Ensure your UI includes: token allocation, remaining allocation, cost per prompt before execution, token replenishment interval, and an upgrade CTA.",
         "relatedPatterns": [
           "chained-action",
           "draft-mode",
@@ -1570,8 +1695,19 @@
             "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68dc5022f59a6162f5632ace_cost_transparency_klingai.webp",
             "description": "Kling.ai reveals how much a generation will cost as a popover beside the generate button."
           }
-        ]
-      }
+        ],
+        "userArchetype": "Primarily employed for non-paying users to preview a product with compute limitations — clearly communicating the allocation and how/when it is spent is important for a positive user experience. Technical users in API or playground contexts may prefer currency-based estimates, while non-technical users benefit from a clear product-based credit system."
+      },
+      "sources": [
+        {
+          "name": "shapeof.ai",
+          "url": "https://www.shapeof.ai/patterns/cost-estimates"
+        },
+        {
+          "name": "aiuxpatterns.com",
+          "url": "https://www.aiuxpatterns.com/pattern-generation-tokens.html"
+        }
+      ]
     },
     {
       "id": "draft-mode",
@@ -1819,10 +1955,9 @@
       "description": "Trace through multiple variations of a result to choose the one that works best for them",
       "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ec26da7a5a255bad19b622_variant_card.webp",
       "categoryId": "governors",
-      "sourceUrl": "https://www.shapeof.ai/patterns/variations",
       "content": {
         "description": "Since generative AI is probabilistic in nature, there will always be a degree of randomness to its results. Providing variations allows users to compare different permutations of the model's logic against their prompt, some of which will be far from their intent but some might be different in unexpectedly positive ways. Whether exploring a prompt space divergently or converging on a final result, this pattern gives users a degree of control over the models’ output.\n\n### Different methods of showing variations\n\nThis pattern takes different forms depending on the modality or product-specific choices.\n\nThis form is common for visual generators like image and text. Multiple options (commonly four) are created at once, deriving from a common seed, and shown in a grid of thumbnails. Users can run additional prompts and actions on any one of those variations. Some tools allow users to adjust the number of variations to create per prompt. Examples: Krea, Midjourney, Canva",
-        "designConsiderations": "- **Keep follow up actions close at hand.** Let users select, merge, or branch off of a variation from the variant itself to keep users in the flow of work.\n- **Allow additional generations.** If the first version or set of variations doesn't meet the user's needs, allow them to regenerate a new variant or set of variants from the same place on the surface.\n- **Use parameters to keep users in control.** Let users change how different the variants should be, whether to use a consistent seed, how many variants to include, etc. Maintain this as metadata associated with the variant so users have footprints to guide them back into how it was created.\n- **Avoid unintentional replacement.** Never overwrite the original output without confirmation. Variations should extend the workspace, not risk data loss or undo effort.",
+        "designConsiderations": "- **Keep follow up actions close at hand.** Let users select, merge, or branch off of a variation from the variant itself to keep users in the flow of work.\n- **Allow additional generations.** If the first version or set of variations doesn't meet the user's needs, allow them to regenerate a new variant or set of variants from the same place on the surface.\n- **Use parameters to keep users in control.** Let users change how different the variants should be, whether to use a consistent seed, how many variants to include, etc. Maintain this as metadata associated with the variant so users have footprints to guide them back into how it was created.\n- **Avoid unintentional replacement.** Never overwrite the original output without confirmation. Variations should extend the workspace, not risk data loss or undo effort.\n\n### From aiuxpatterns.com\n\nAI's probabilistic nature means it can provide useful variations to a single prompt, allowing users to compare and contrast results. Not all users understand why an AI can deliver multiple responses to the same question. Consider whether these extra results build or damage trust for your product. Ensure users understand probabilities and why they can provide a range of useful results.",
         "relatedPatterns": [
           "parameters",
           "branches",
@@ -1853,8 +1988,19 @@
             "image": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ed065ab7124ab00345a217_writer.png",
             "description": "Writer provides preset variations rather than generating the same seed multiple times. This way users can compare different ways of modifying the text to meet different goals."
           }
-        ]
-      }
+        ],
+        "userArchetype": "Most users may find extended results useful, although context is key. Consider whether the user's workflow and use case requires experimentation and creativity, or whether it calls for more accurate, defined results — more is not always better."
+      },
+      "sources": [
+        {
+          "name": "shapeof.ai",
+          "url": "https://www.shapeof.ai/patterns/variations"
+        },
+        {
+          "name": "aiuxpatterns.com",
+          "url": "https://www.aiuxpatterns.com/pattern-result-variations.html"
+        }
+      ]
     },
     {
       "id": "verification",
@@ -2385,6 +2531,150 @@
             "description": "Zendesk has preset personas to choose from when creating a new bot."
           }
         ]
+      }
+    },
+    {
+      "id": "voice-input",
+      "title": "Voice Input",
+      "description": "A natural spoken-language alternative to text, allowing users to prompt AI using their voice.",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e91c0634999bad82eb61cd_direct_input_card.webp",
+      "categoryId": "input-modalities",
+      "sources": [
+        {
+          "name": "aiuxpatterns.com",
+          "url": "https://www.aiuxpatterns.com/pattern-voice-input.html"
+        }
+      ],
+      "content": {
+        "userArchetype": "Speaking is a natural form of expression (for those capable) which means it is widely applicable for many user types. However, it still inherently requires users to understand how to author an effective prompt.",
+        "description": "A modal variation of the raw text input, prompt authoring using natural language can be fast and intuitive in the right circumstances. Voice input allows users to dictate prompts verbally, reducing the friction of typing and enabling hands-free or accessibility-driven interactions.\n\nVoice input is closely related to the open text input pattern but differs in modality. The spoken word is transcribed and used as the prompt, making it especially useful in mobile or ambient contexts where typing is inconvenient.\n\n### Common affordances\n\n- A microphone icon or button to trigger recording\n- Visual feedback (waveform, animation) to confirm the system is listening\n- Transcription preview so users can review and edit before submitting\n- Auto-submit option for fast, frictionless flows",
+        "designConsiderations": "### Design for environmental context\n\nThe context in which users will speak becomes critical: Is it polite for the user to speak out loud? Can they be heard — is their context reasonably quiet? Does the user want others hearing the input?\n\n### Provide a transcription review step\n\nSpeech recognition is not perfect. Allow users to review and edit the transcription before it is submitted to the model to avoid embarrassing or inaccurate prompts.\n\n### Pair with open text as a fallback\n\nVoice input should complement, not replace, text input. Always provide a keyboard alternative and make switching between modalities seamless.\n\n### Set expectations for processing time\n\nTranscription and potential prompt enhancement add latency. Show clear loading states so users understand the system is working.\n\n### Consider accessibility carefully\n\nVoice input is powerful for users with motor or typing difficulties, but prohibitive for users with speech impairments. Never make it the only input method.",
+        "relatedPatterns": [
+          "open-input",
+          "nudges",
+          "suggestions"
+        ],
+        "examples": []
+      }
+    },
+    {
+      "id": "thread-options",
+      "title": "Thread Options",
+      "description": "Provide users control over whether each prompt continues an existing thread or starts a fresh one.",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e983e10d03dc12cdcccedc_connectors_card.webp",
+      "categoryId": "settings",
+      "sources": [
+        {
+          "name": "aiuxpatterns.com",
+          "url": "https://www.aiuxpatterns.com/pattern-threading-options.html"
+        }
+      ],
+      "content": {
+        "userArchetype": "This option is likely suited to users with a good understanding of how AI systems work and the impact of this setting on their results. Whilst providing the option is fairly passive, the impact on results could be large and confuse novice users.",
+        "description": "A key aspect of prompting AI is whether the prompt thread is cached or 'remembered' by the AI, or treated as a fresh input. Depending on the context, users may want each prompt to be a new, independent input for the AI.\n\nMost conversational AI products default to a threaded (continued) context, but some use cases — such as independent queries, privacy-sensitive tasks, or debugging — benefit from resetting the context between prompts.",
+        "designConsiderations": "### Default to threaded context\n\nA continual thread is the most common interaction model with AI, via a conversational interface using natural language. Default to threading unless the use case explicitly calls for independence.\n\n### Provide a clear refresh action\n\nEven when threading is desired, having the ability to clear the history for a fresh start is valuable. Provide a prominent 'New conversation' or 'Clear context' action.\n\n### Communicate the impact clearly\n\nThe difference between a fresh prompt and a continued thread can significantly affect results. Use helpful copy or tooltips to explain the tradeoff to users who may not understand it.\n\n### Scope thread options to your context\n\nProviding this option heavily depends on your use case. Not all products benefit from exposing this setting — evaluate whether your users have sufficient understanding to use it meaningfully.",
+        "relatedPatterns": [
+          "thread-history",
+          "memory",
+          "open-input"
+        ],
+        "examples": []
+      }
+    },
+    {
+      "id": "thread-history",
+      "title": "Thread History",
+      "description": "Let users review and resume a history of their previous AI conversation threads.",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68e983e10d03dc12cdcccedc_connectors_card.webp",
+      "categoryId": "settings",
+      "sources": [
+        {
+          "name": "aiuxpatterns.com",
+          "url": "https://www.aiuxpatterns.com/pattern-threading-history.html"
+        }
+      ],
+      "content": {
+        "userArchetype": "Skewed toward more frequent or advanced users — this pattern requires a user to have enough usage to warrant using the thread history feature.",
+        "description": "A widely expected account management feature, thread history is not only convenient but even more relevant for AI workflows. Since AI has such a multifaceted skill set, users' interactions will also broaden over time. A clear thread history helps users switch between various topics without losing prior context.\n\nThread history is a key differentiator for products that want to serve as long-term AI companions or work assistants rather than single-session tools.",
+        "designConsiderations": "### Organise threads with sensible heuristics\n\nThread histories can be segmented easily if a 'new thread' button is provided. Consider whether simple heuristics can help organise threads, such as grouping by date, topic, or project.\n\n### Name threads automatically and allow renaming\n\nDefault thread names derived from the first prompt help users identify content at a glance. Allow users to rename threads for better organisation.\n\n### Consider history as a retention lever\n\nA thread history encourages return visits and investment in the product. Consider how long history is maintained and whether extended history retention could be a paid account feature.\n\n### Manage privacy expectations\n\nThread history raises privacy implications. Be transparent about what is stored, how long it is kept, and provide easy deletion controls.",
+        "relatedPatterns": [
+          "thread-options",
+          "memory",
+          "open-input"
+        ],
+        "examples": []
+      }
+    },
+    {
+      "id": "result-options",
+      "title": "Result Options",
+      "description": "Provide contextual utilities alongside generated results so users can quickly act on them.",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ec26da7a5a255bad19b622_variant_card.webp",
+      "categoryId": "results",
+      "sources": [
+        {
+          "name": "aiuxpatterns.com",
+          "url": "https://www.aiuxpatterns.com/pattern-result-options.html"
+        }
+      ],
+      "content": {
+        "userArchetype": "All users want to quickly action their results, so common actions like copy help everyone. Other functions like auto-play can be highly convenient for anyone and also make products more accessible.",
+        "description": "Providing options alongside each result allows users to easily utilise them. The options vary between contexts, but common utilities like copy text are obvious to include.\n\nResult options are the persistent or on-hover controls that appear relative to a generated output. They reduce the friction of common follow-up tasks and keep users in the flow of work.\n\n### Common result options\n\n- **Copy**: Copy the result text or file to the clipboard\n- **Download**: Save a generated file or image\n- **Share**: Share the result with others\n- **Thumbs up/down**: Quick quality feedback\n- **Regenerate**: Re-run the same prompt for a different result\n- **Auto-play**: For audio or video, trigger immediate playback",
+        "designConsiderations": "### Keep options close to the result\n\nPlace result options relative to the generated content, not in a distant toolbar. Inline or hover-revealed options reduce the distance between seeing a result and acting on it.\n\n### Prioritise the most common actions\n\nSurface the one or two most used actions prominently and group others in an overflow menu. Avoid cluttering the result surface with rarely used options.\n\n### Use result options as feedback mechanisms\n\nThumb ratings and similar signals allow users to provide feedback on individual results, which products can correlate to the prompt and analyse for quality improvements.\n\n### Include regenerate as an option\n\nA counter-intuitive but important option — because LLMs can provide different results for the same prompt, regenerate allows users to compare and contrast multiple outputs from the same input.",
+        "relatedPatterns": [
+          "result-actions",
+          "regenerate",
+          "variations"
+        ],
+        "examples": []
+      }
+    },
+    {
+      "id": "result-actions",
+      "title": "Result Actions",
+      "description": "Offer contextually relevant, task-specific actions per generated result to accelerate the user's workflow.",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ec26da7a5a255bad19b622_variant_card.webp",
+      "categoryId": "results",
+      "sources": [
+        {
+          "name": "aiuxpatterns.com",
+          "url": "https://www.aiuxpatterns.com/pattern-result-actions.html"
+        }
+      ],
+      "content": {
+        "userArchetype": "Depending on the actions provided, novice users can benefit from pre-canned options like 'more succinct'. More advanced users would appreciate these actions being tailored to their specific workflows and potentially even performing multi-step actions.",
+        "description": "Result actions serve to provide a quick and easy workflow for complex actions a user might take. Similar to result options, they are more specific to context and usually represent a more complex task than simple utilities like 'copy'.\n\nResult actions are a key place to personalise your product's quick options to simplify complex workflows for your user. Unlike generic options, result actions are derived from domain knowledge about what users typically want to do next with generated content.\n\n### Examples of result actions\n\n- 'Make more succinct' on a text result\n- 'Export to Figma' on a design generation\n- 'Convert to code' on a pseudocode result\n- 'Create ticket from this' on a task description\n- 'Send as email' on a drafted message",
+        "designConsiderations": "### Context is everything\n\nWhat do you know about your users and what are they trying to achieve? Can you provide actions that go beyond evolving the immediate result and support their larger workflow?\n\n### Separate options from actions\n\nGeneric utilities (copy, download, share) belong in result options. Specific, domain-relevant tasks with workflow impact belong in result actions. Keeping these visually distinct helps users quickly find the right affordance.\n\n### Support multi-step actions\n\nPower users appreciate result actions that perform multiple steps atomically — for example, summarising and then sending as a Slack message. Design these as clearly-named compound actions rather than exposing each intermediate step.\n\n### Make actions reversible or previewed\n\nSince result actions often have downstream effects (exporting, sending, overwriting), consider showing a preview or requiring confirmation for high-impact actions.",
+        "relatedPatterns": [
+          "result-options",
+          "inline-action",
+          "chained-action"
+        ],
+        "examples": []
+      }
+    },
+    {
+      "id": "result-rendered-preview",
+      "title": "Result Rendered Preview",
+      "description": "Instantly render and display generated content — code, markup, or media — so users can review the live output.",
+      "thumbnail": "https://cdn.prod.website-files.com/65db6dd21591364dfcb8ae36/68ec26da7a5a255bad19b622_variant_card.webp",
+      "categoryId": "results",
+      "sources": [
+        {
+          "name": "aiuxpatterns.com",
+          "url": "https://www.aiuxpatterns.com/pattern-result-rendered-preview.html"
+        }
+      ],
+      "content": {
+        "userArchetype": "Likely for more technical users, this pattern is most commonly used for coded results which require rendering to actually see and review the result's accuracy.",
+        "description": "As AI improved its ability to generate varied content types, a rendered preview allows users to instantly see not only the initial result but any iterations made as well.\n\nInstead of presenting raw code, markup, or media files, the rendered preview shows the living, interactive output. This dramatically reduces the cognitive load of evaluating generated content and shortens the feedback loop.\n\n### Common use cases\n\n- **Code/HTML preview**: Generated web components or applications rendered in an iframe or sandbox\n- **Markdown preview**: Formatted text shown alongside the raw markup\n- **SVG/diagram preview**: Vector-based output rendered visually\n- **Audio/video preview**: Generated media played inline without needing to download\n- **Data visualisation**: Generated charts or tables rendered from raw data",
+        "designConsiderations": "### Show the preview when it adds value, hide it when it doesn't\n\nNot all file types or results require a preview. A preview is highly effective when relevant but adds friction when it is not required. Define clearly what presents in the preview pane.\n\n### Use split-pane layout for editable content\n\nFor content that users will iterate on (code, markup), show the source on one side and the rendered output on the other. Changes should propagate in near real-time.\n\n### Consider result complexity and length\n\nVery long or complex outputs may be slow to render. Consider pagination, virtual rendering, or progressive loading for large results to keep the interface responsive.\n\n### Sandbox rendered content\n\nFor code previews in particular, render output in a sandboxed environment to prevent security risks from executing untrusted generated code in the main application context.",
+        "relatedPatterns": [
+          "result-options",
+          "result-actions",
+          "inpainting"
+        ],
+        "examples": []
       }
     }
   ]

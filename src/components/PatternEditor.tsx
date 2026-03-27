@@ -276,6 +276,16 @@ export function PatternEditor({ pattern, categories, onSave, onDelete, onClose }
               />
             </Field>
 
+            <Field label="User archetype" hint="Optional: who this pattern is for (supports markdown)">
+              <textarea
+                rows={4}
+                value={form.content.userArchetype ?? ""}
+                onChange={(e) => setContent("userArchetype", e.target.value || undefined)}
+                className={`${inputClass} font-mono text-xs`}
+                placeholder="Describe the intended user type(s) for this pattern…"
+              />
+            </Field>
+
             <Field label="Design considerations" hint="Same markdown syntax">
               <textarea
                 rows={8}

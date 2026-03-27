@@ -8,7 +8,7 @@ import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { SidebarNav } from "@/components/SidebarNav";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
-type TabType = "description" | "design-considerations" | "related-patterns" | "examples";
+type TabType = "description" | "user-archetype" | "design-considerations" | "related-patterns" | "examples";
 
 interface PatternDetailClientProps {
   pattern: Pattern;
@@ -26,7 +26,8 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
   // Build tabs array
   const tabs: { id: TabType; label: string }[] = [
     { id: "description", label: "Description" },
-    { id: "design-considerations", label: "Design Considerations" },
+    ...(pattern.content.userArchetype ? [{ id: "user-archetype" as TabType, label: "User Archetype" }] : []),
+    { id: "design-considerations", label: "Design considerations" },
     { id: "related-patterns", label: "Related Patterns" },
     ...(pattern.content.examples.length > 0 ? [{ id: "examples" as TabType, label: "Examples" }] : []),
   ];
@@ -259,11 +260,22 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
             <div>
               <h1 className="text-4xl font-bold mb-4 text-gray-900">{pattern.title}</h1>
               <p className="text-xl text-gray-500 mb-4">{pattern.description}</p>
-              {pattern.sourceUrl && (
+              {pattern.sources && pattern.sources.length > 0 ? (
                 <p className="text-sm text-gray-400">
-                  Source: <a href={pattern.sourceUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">{pattern.sourceUrl}</a>
+                  Sources:{" "}
+                  {pattern.sources.map((s, i) => (
+                    <span key={s.url}>
+                      <a href={s.url} target="_blank" rel="noopener noreferrer" className="hover:underline">{s.name}</a>
+                      {i < pattern.sources!.length - 1 ? ", " : ""}
+                    </span>
+                  ))}
                 </p>
-              )}
+              ) : pattern.sourceUrl ? (
+                <p className="text-sm text-gray-400">
+                  Source:{" "}
+                  <a href={pattern.sourceUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">{pattern.sourceUrl}</a>
+                </p>
+              ) : null}
             </div>
 
             {/* Tabs */}
@@ -271,6 +283,13 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
               <h2 className="text-2xl font-bold mb-6 text-gray-900">Description</h2>
               {renderMarkdownContent(pattern.content.description)}
             </div>
+
+            {pattern.content.userArchetype && (
+              <div id="section-user-archetype" className="scroll-mt-20">
+                <h2 className="text-2xl font-bold mb-6 text-gray-900">User Archetype</h2>
+                {renderMarkdownContent(pattern.content.userArchetype)}
+              </div>
+            )}
 
             <div id="section-design-considerations" className="scroll-mt-20">
               <h2 className="text-2xl font-bold mb-6 text-gray-900">Design considerations</h2>
