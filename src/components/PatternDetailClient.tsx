@@ -123,7 +123,7 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
 
     const flushParagraph = () => {
       if (currentParagraph.length > 0) {
-        elements.push(<p key={`p-${key++}`} className="mb-6 leading-relaxed text-gray-700">{renderInlineMarkdown(currentParagraph.join(" "))}</p>);
+        elements.push(<p key={`p-${key++}`} className="mb-10 text-lg leading-relaxed text-sk-text md:text-xl">{renderInlineMarkdown(currentParagraph.join(" "))}</p>);
         currentParagraph = [];
       }
     };
@@ -131,9 +131,9 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
     const flushList = () => {
       if (currentList.length > 0) {
         elements.push(
-          <ul key={`ul-${key++}`} className="mb-6 ml-6 list-disc space-y-3 text-gray-700">
+          <ul key={`ul-${key++}`} className="mb-10 ml-6 list-disc space-y-3 text-lg text-sk-text md:text-xl">
             {currentList.map((item, i) => (
-              <li key={i} className="pl-1 leading-relaxed marker:text-gray-400">
+              <li key={i} className="pl-1 leading-relaxed marker:text-[var(--sk-color-text-muted)]">
                 {typeof item === "string" ? renderInlineMarkdown(item) : item}
               </li>
             ))}
@@ -152,8 +152,8 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
             key={`h3-${key++}`}
             className={
               options?.compactSectionHeadings
-                ? "text-lg font-semibold mb-3 mt-7 first:mt-0 text-gray-900"
-                : "text-xl font-semibold mb-4 mt-8 first:mt-0 text-gray-900"
+                ? "mb-3 mt-8 text-xl font-semibold text-sk-primary first:mt-0 md:text-2xl"
+                : "mb-4 mt-10 text-2xl font-semibold text-sk-primary first:mt-0 md:text-3xl"
             }
           >
             {trimmedLine.substring(4)}
@@ -219,10 +219,10 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
     }
 
     return (
-      <ul className="space-y-4">
+      <ul className="space-y-10">
         {items.map((item, index) => (
-          <li key={`${item.title}-${index}`} className="text-gray-700 leading-relaxed">
-            <strong className="text-gray-900">{item.title}.</strong> {item.body}
+          <li key={`${item.title}-${index}`} className="text-lg leading-relaxed text-sk-text md:text-xl">
+            <strong className="text-sk-primary">{item.title}.</strong> {item.body}
           </li>
         ))}
       </ul>
@@ -233,20 +233,20 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
     <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
       <div className="border-b">
-        <div className="container mx-auto flex flex-wrap items-center justify-between gap-3 px-4 py-4 text-sm text-gray-500">
+        <div className="container mx-auto flex flex-wrap items-center justify-between gap-3 px-4 py-4 text-base text-sk-text md:text-lg">
           <div className="flex gap-2">
-            <Link href="/" className="hover:text-gray-900">Home</Link>
+            <Link href="/" className="transition-colors hover:text-sk-primary">Home</Link>
             <span>/</span>
-            <Link href={`/#category-${category.id}`} className="hover:text-gray-900">{category.name}</Link>
+            <Link href={`/#category-${category.id}`} className="transition-colors hover:text-sk-primary">{category.name}</Link>
             <span>/</span>
-            <span className="text-gray-900">{pattern.title}</span>
+            <span className="text-sk-primary">{pattern.title}</span>
           </div>
-          <Link href="/admin" className="hover:text-gray-900">Content admin</Link>
+          <Link href="/admin" className="transition-colors hover:text-sk-primary">Content admin</Link>
         </div>
       </div>
 
       {/* Banner */}
-      <div className="relative w-full h-96 overflow-hidden border-b bg-gray-50">
+      <div className="relative h-96 w-full overflow-hidden border-b bg-[var(--sk-color-surface-muted)]">
         <Image
           src={pattern.thumbnail}
           alt={pattern.title}
@@ -269,10 +269,10 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
           {/* Main Content */}
           <main className="flex-1 space-y-8">
             <div>
-              <h1 className="text-4xl font-bold mb-4 text-gray-900">{pattern.title}</h1>
-              <p className="text-xl text-gray-500 mb-4">{pattern.description}</p>
+              <h1 className="mb-4 text-5xl font-bold leading-tight text-sk-primary md:text-6xl">{pattern.title}</h1>
+              <p className="mb-5 text-xl leading-[1.7] text-sk-text-muted md:text-2xl">{pattern.description}</p>
               {pattern.sources && pattern.sources.length > 0 ? (
-                <p className="text-sm text-gray-400">
+                <p className="text-base text-sk-text-muted md:text-lg">
                   Sources:{" "}
                   {pattern.sources.map((s, i) => (
                     <span key={s.url}>
@@ -282,7 +282,7 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
                   ))}
                 </p>
               ) : pattern.sourceUrl ? (
-                <p className="text-sm text-gray-400">
+                <p className="text-base text-sk-text-muted md:text-lg">
                   Source:{" "}
                   <a href={pattern.sourceUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">{pattern.sourceUrl}</a>
                 </p>
@@ -291,37 +291,37 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
 
             {/* Tabs */}
             <div id="section-description" className="scroll-mt-20">
-              <h2 className="text-2xl font-bold mb-6 text-gray-900">Description</h2>
+              <h2 className="mb-7 text-3xl font-bold text-sk-primary md:text-4xl">Description</h2>
               {renderMarkdownContent(pattern.content.description)}
             </div>
 
             {pattern.content.userArchetype && (
               <div id="section-user-archetype" className="scroll-mt-20">
-                <h2 className="text-2xl font-bold mb-6 text-gray-900">User Archetype</h2>
+                <h2 className="mb-7 text-3xl font-bold text-sk-primary md:text-4xl">User Archetype</h2>
                 {renderMarkdownContent(pattern.content.userArchetype)}
               </div>
             )}
 
             <div id="section-design-considerations" className="scroll-mt-20">
-              <h2 className="text-2xl font-bold mb-6 text-gray-900">Design considerations</h2>
+              <h2 className="mb-7 text-3xl font-bold text-sk-primary md:text-4xl">Design considerations</h2>
               {renderDesignConsiderationsContent(pattern.content.designConsiderations)}
             </div>
 
             {relatedPatterns.length > 0 && (
               <div id="section-related-patterns" className="scroll-mt-20">
-                <h2 className="text-2xl font-bold mb-6 text-gray-900">Related Patterns</h2>
+                <h2 className="mb-7 text-3xl font-bold text-sk-primary md:text-4xl">Related Patterns</h2>
                 <ul className="space-y-6">
                   {relatedPatterns.map((relPattern) => (
                     <li key={relPattern.id} className="list-none">
-                      <h3 className="text-lg font-semibold text-gray-900">
+                      <h3 className="text-lg font-semibold text-sk-primary md:text-xl">
                         <Link
                           href={`/patterns/${relPattern.id}`}
-                          className="underline decoration-gray-300 underline-offset-4 transition hover:decoration-gray-900"
+                          className="underline decoration-[var(--sk-color-border-strong)] underline-offset-4 transition hover:decoration-[var(--sk-color-primary)]"
                         >
                           {relPattern.title}
                         </Link>
                       </h3>
-                      <p className="mt-2 ml-6 leading-relaxed text-gray-600">{relPattern.description}</p>
+                      <p className="mt-2 ml-6 text-lg leading-[1.85] text-sk-text">{relPattern.description}</p>
                     </li>
                   ))}
                 </ul>
@@ -330,12 +330,12 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
 
             {pattern.content.examples.length > 0 && (
               <div id="section-examples" className="scroll-mt-20">
-                <h2 className="text-2xl font-bold mb-6 text-gray-900">Examples</h2>
+                <h2 className="mb-7 text-3xl font-bold text-sk-primary md:text-4xl">Examples</h2>
                 <div className="space-y-8">
                   {embedExamples.length > 0 && (
                     <div className="space-y-4">
                       {imageExamples.length > 0 && (
-                        <h3 className="text-lg font-semibold text-gray-900">Interactive prototypes</h3>
+                        <h3 className="text-2xl font-semibold text-sk-primary">Interactive prototypes</h3>
                       )}
                       <div className="space-y-6">
                         {embedExamples.map((example, index) => (
@@ -345,10 +345,10 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
                           >
                             <div className="border-b border-gray-200 px-5 py-4">
                               <div>
-                                <h4 className="text-lg font-semibold text-gray-900">
+                                <h4 className="text-2xl font-semibold text-sk-primary">
                                   {example.title ?? `Prototype ${index + 1}`}
                                 </h4>
-                                <p className="mt-2 max-w-3xl leading-relaxed text-gray-700">{example.description}</p>
+                                <p className="mt-2 max-w-3xl text-lg leading-[1.85] text-sk-text">{example.description}</p>
                               </div>
                             </div>
 
@@ -375,7 +375,7 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
                   {imageExamples.length > 0 && (
                     <div className="space-y-4">
                       {embedExamples.length > 0 && (
-                        <h3 className="text-lg font-semibold text-gray-900">Screenshots</h3>
+                        <h3 className="text-2xl font-semibold text-sk-primary">Screenshots</h3>
                       )}
                       <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
                         {imageExamples.map((example, index) => (
@@ -395,9 +395,9 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
                             </div>
                             <div className="border-t border-gray-200 px-4 py-3">
                               {example.title && (
-                                <p className="mb-1 text-sm font-semibold text-gray-900">{example.title}</p>
+                                <p className="mb-1 text-base font-semibold text-sk-primary">{example.title}</p>
                               )}
-                              <p className="leading-relaxed text-gray-700">{example.description}</p>
+                              <p className="text-lg leading-[1.85] text-sk-text">{example.description}</p>
                             </div>
                           </button>
                         ))}
@@ -436,15 +436,15 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
               <div className="w-full overflow-hidden rounded-[28px] bg-white shadow-2xl">
                 <div className="flex items-center justify-between border-b border-gray-200 px-5 py-4 md:px-7">
                   <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-gray-400">
+                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-sk-text-muted">
                       Example
                     </p>
-                    <h2 className="mt-1 text-xl font-semibold text-gray-900 md:text-2xl">
+                    <h2 className="mt-1 text-2xl font-semibold text-sk-primary md:text-3xl">
                       {pattern.title}
                     </h2>
                   </div>
 
-                  <span className="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-600">
+                  <span className="rounded-full bg-[var(--sk-color-surface-muted)] px-3 py-1 text-base font-medium text-sk-text md:text-lg">
                     {selectedImageIndex + 1} / {imageExamples.length}
                   </span>
                 </div>
@@ -454,7 +454,7 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
                     <>
                       <button
                         onClick={handlePrevious}
-                        className="absolute left-5 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-3 text-gray-900 shadow-lg transition hover:bg-white"
+                        className="absolute left-5 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-3 text-sk-primary shadow-lg transition hover:bg-white"
                         aria-label="Previous example"
                       >
                         <ChevronLeft size={22} />
@@ -462,7 +462,7 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
 
                       <button
                         onClick={handleNext}
-                        className="absolute right-5 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-3 text-gray-900 shadow-lg transition hover:bg-white"
+                        className="absolute right-5 top-1/2 z-10 -translate-y-1/2 rounded-full bg-white/90 p-3 text-sk-primary shadow-lg transition hover:bg-white"
                         aria-label="Next example"
                       >
                         <ChevronRight size={22} />
@@ -485,7 +485,7 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
                 </div>
 
                 <div className="border-t border-gray-200 px-5 py-4 md:px-7 md:py-5">
-                  <p className="text-base leading-relaxed text-gray-700 md:text-lg">
+                  <p className="text-lg leading-[1.9] text-sk-text md:text-xl">
                     {selectedExample.description}
                   </p>
 

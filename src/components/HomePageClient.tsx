@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import { Compass, Zap, Settings, Grid, Pencil, Shield, CheckCircle, Tag } from "lucide-react";
+import { Compass, Mic, Sparkles, Settings, LayoutGrid, Pencil, Gavel, ShieldCheck, CircleCheck, Tag } from "lucide-react";
 import type { Category, Pattern } from "@/lib/patterns";
 import { useIconResolver } from "@/hooks/useIconResolver";
 import { SidebarNav } from "@/components/SidebarNav";
@@ -19,15 +19,18 @@ interface HomePageClientProps {
 export function HomePageClient({ categories, categoryData }: HomePageClientProps) {
   const { resolveIcon } = useIconResolver();
   const [activeCategory, setActiveCategory] = useState<string>("");
-// Map icon names to lucide-react components
+
+  // Map resolved category icons to renderer components.
   const iconComponentMap: Record<string, React.ComponentType<{ className?: string }>> = {
     compass: Compass,
-    zap: Zap,
+    microphone: Mic,
+    sparkles: Sparkles,
     settings: Settings,
-    grid: Grid,
+    layout: LayoutGrid,
     pencil: Pencil,
-    shield: Shield,
-    "check-circle": CheckCircle,
+    gavel: Gavel,
+    "shield-checkmark": ShieldCheck,
+    "checkmark-circle": CircleCheck,
     tag: Tag,
   };
 
@@ -83,11 +86,11 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
   return (
     <div className="min-h-screen bg-white">
       <header className="border-b border-sk-border">
-        <div className="container mx-auto flex flex-wrap items-start justify-between gap-4 px-4 py-8">
+        <div className="container mx-auto flex flex-wrap items-start justify-between gap-4 px-4 py-12 md:py-14">
           <div>
-            <h1 className="mb-2 text-skapa-display text-sk-primary">AI Design Patterns</h1>
-            <p className="max-w-2xl text-skapa-body-md text-sk-text-muted">
-              Foundational elements and interactions to help us design for AI-enabled interfaces
+            <h1 className="mb-3 text-5xl font-bold leading-tight text-sk-primary md:text-6xl">AI Design Patterns</h1>
+            <p className="max-w-none text-base leading-relaxed text-sk-text-muted md:text-lg lg:whitespace-nowrap">
+              Foundational elements and interactions for AI-enabled experiences
             </p>
           </div>
           <Link
@@ -99,7 +102,7 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-4 py-12 md:py-14">
         <div className="flex gap-8">
           <SidebarNav
             items={sidebarItems}
@@ -113,11 +116,11 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
               <section
                 key={category.id}
                 id={`category-${category.id}`}
-                className="mb-16 scroll-mt-20"
+                className="mb-24 scroll-mt-20"
               >
                 <div className="mb-6">
-                  <h2 className="mb-2 text-skapa-h1 text-sk-primary">{category.name}</h2>
-                  <p className="text-skapa-body-md text-sk-text-muted">{category.description}</p>
+                  <h2 className="mb-3 text-5xl font-bold leading-tight text-sk-primary md:text-6xl">{category.name}</h2>
+                  <p className="text-lg leading-relaxed text-sk-text-muted md:text-xl">{category.description}</p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {patterns.map((pattern) => (

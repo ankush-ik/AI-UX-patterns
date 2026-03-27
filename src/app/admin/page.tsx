@@ -32,7 +32,7 @@ export default async function AdminPage() {
       <div className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex flex-wrap items-center justify-between gap-4 border-b border-gray-200 pb-6">
           <div>
-            <p className="text-sm uppercase tracking-[0.22em] text-gray-500">Phase 3 Admin • Connected to: {cmsProvider}</p>
+            <p className="text-sm uppercase tracking-[0.22em] text-gray-500">Connected to: {cmsProvider}</p>
             <h1 className="mt-2 text-4xl font-semibold">Content Dashboard</h1>
             <p className="mt-3 max-w-3xl text-gray-600">
               A local admin surface for auditing pattern coverage, validating references, and exposing file-backed JSON endpoints for a future CMS migration.

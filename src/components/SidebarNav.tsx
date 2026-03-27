@@ -22,8 +22,8 @@ export function SidebarNav({
   onItemClick,
 }: SidebarNavProps) {
   return (
-    <aside className="w-64 flex-shrink-0">
-      <nav className="sticky top-4 space-y-1">
+    <aside className="w-72 flex-shrink-0">
+      <nav className="sticky top-4 space-y-2">
         {items.map((item) => {
           const IconComponent = item.icon;
           return (
@@ -31,16 +31,16 @@ export function SidebarNav({
               key={item.id}
               onClick={() => onItemClick(item.id)}
               className={cn(
-                "w-full flex items-center gap-3 px-4 py-3 text-left transition-colors text-sm",
+                "w-full flex items-center gap-4 px-5 py-4 text-left text-base transition-colors md:text-lg",
                 activeItem === item.id
-                  ? "bg-gray-900 text-white"
-                  : "text-gray-700 hover:bg-gray-100"
+                  ? "bg-[var(--sk-color-primary)] text-[var(--sk-color-on-primary)]"
+                  : "text-sk-text hover:bg-[var(--sk-color-surface-muted)]"
               )}
             >
               {IconComponent && (
-                <IconComponent className="w-5 h-5 flex-shrink-0" />
+                <IconComponent className="h-6 w-6 flex-shrink-0 md:h-7 md:w-7" />
               )}
-              <span className="font-medium">{item.label}</span>
+              <span className="font-semibold leading-tight">{item.label}</span>
             </button>
           );
         })}

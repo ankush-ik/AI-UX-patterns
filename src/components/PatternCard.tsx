@@ -19,6 +19,9 @@ export function PatternCard({
   description,
   thumbnail,
 }: PatternCardProps) {
+  const cleanTitle = title.trim().replace(/\.+$/, "");
+  const cleanDescription = description.trim().replace(/\.+$/, "");
+
   return (
     <Link href={`/patterns/${id}`} className="group block">
       <div className="h-full overflow-hidden border border-sk-border bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
@@ -32,10 +35,10 @@ export function PatternCard({
           />
         </div>
         <div className="p-5">
-          <h3 className="mb-2 text-skapa-h4 text-sk-primary transition-colors group-hover:text-sk-primary-strong">
-            {title}
+          <h3 className="mb-2 text-xl font-semibold leading-tight text-sk-primary transition-colors group-hover:text-sk-primary-strong md:text-2xl">
+            {cleanTitle}
           </h3>
-          <p className="text-skapa-body-sm text-sk-text-muted">{description}</p>
+          <p className="text-base leading-relaxed text-sk-primary md:text-lg">{cleanDescription}</p>
         </div>
       </div>
     </Link>

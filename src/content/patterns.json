@@ -10,13 +10,13 @@
       "id": "input-modalities",
       "name": "Input Modalities",
       "description": "Different modes and media types users can employ to direct AI",
-      "icon": "mic"
+      "icon": "microphone"
     },
     {
       "id": "prompt-actions",
       "name": "Prompt Actions",
       "description": "Different actions that users can direct AI to complete",
-      "icon": "zap"
+      "icon": "sparkles"
     },
     {
       "id": "settings",
@@ -34,19 +34,19 @@
       "id": "editing",
       "name": "Editing",
       "description": "Options to tweak and remixing results",
-      "icon": "edit"
+      "icon": "pencil"
     },
     {
       "id": "governors",
       "name": "Governors",
       "description": "Human-in-the-loop features to maintain user oversight and agency",
-      "icon": "shield"
+      "icon": "gavel"
     },
     {
       "id": "trust-builders",
       "name": "Trust Builders",
       "description": "Give users confidence that the AI's results are ethical, accurate, and trustworthy",
-      "icon": "check-circle"
+      "icon": "shield-checkmark"
     },
     {
       "id": "identifiers",
