@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import type { Pattern, Category } from "@/lib/patterns";
+import type { Pattern, Category, PatternExample, PatternEmbedExample, PatternImageExample } from "@/lib/patterns";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { SidebarNav } from "@/components/SidebarNav";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
@@ -16,12 +16,23 @@ interface PatternDetailClientProps {
   relatedPatterns: Pattern[];
 }
 
+function isEmbedExample(example: PatternExample): example is PatternEmbedExample {
+  return example.type === "embed" && "embedUrl" in example;
+}
+
+function isImageExample(example: PatternExample): example is PatternImageExample {
+  return !isEmbedExample(example) && typeof example.image === "string";
+}
+
 export function PatternDetailClient({ pattern, category, relatedPatterns }: PatternDetailClientProps) {
   const [activeTab, setActiveTab] = useState<TabType>("description");
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
 
+  const embedExamples = pattern.content.examples.filter(isEmbedExample);
+  const imageExamples = pattern.content.examples.filter(isImageExample);
+
   const selectedExample =
-    selectedImageIndex !== null ? pattern.content.examples[selectedImageIndex] : null;
+    selectedImageIndex !== null ? imageExamples[selectedImageIndex] : null;
 
   // Build tabs array
   const tabs: { id: TabType; label: string }[] = [
@@ -34,15 +45,15 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
 
   const handlePrevious = useCallback(() => {
     if (selectedImageIndex !== null) {
-      setSelectedImageIndex((selectedImageIndex - 1 + pattern.content.examples.length) % pattern.content.examples.length);
+      setSelectedImageIndex((selectedImageIndex - 1 + imageExamples.length) % imageExamples.length);
     }
-  }, [pattern.content.examples.length, selectedImageIndex]);
+  }, [imageExamples.length, selectedImageIndex]);
 
   const handleNext = useCallback(() => {
     if (selectedImageIndex !== null) {
-      setSelectedImageIndex((selectedImageIndex + 1) % pattern.content.examples.length);
+      setSelectedImageIndex((selectedImageIndex + 1) % imageExamples.length);
     }
-  }, [pattern.content.examples.length, selectedImageIndex]);
+  }, [imageExamples.length, selectedImageIndex]);
 
   const handleCloseLightbox = useCallback(() => {
     setSelectedImageIndex(null);
@@ -320,27 +331,78 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
             {pattern.content.examples.length > 0 && (
               <div id="section-examples" className="scroll-mt-20">
                 <h2 className="text-2xl font-bold mb-6 text-gray-900">Examples</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {pattern.content.examples.map((example, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setSelectedImageIndex(index)}
-                      className="group overflow-hidden rounded-lg border border-gray-200 text-left transition hover:border-gray-900"
-                    >
-                      <div className="relative aspect-video overflow-hidden bg-gray-50">
-                        <Image
-                          src={example.image}
-                          alt={example.description}
-                          fill
-                          sizes="(min-width: 768px) 50vw, 100vw"
-                          className="object-cover transition-transform group-hover:scale-105"
-                        />
+                <div className="space-y-8">
+                  {embedExamples.length > 0 && (
+                    <div className="space-y-4">
+                      {imageExamples.length > 0 && (
+                        <h3 className="text-lg font-semibold text-gray-900">Interactive prototypes</h3>
+                      )}
+                      <div className="space-y-6">
+                        {embedExamples.map((example, index) => (
+                          <article
+                            key={`${example.embedUrl}-${index}`}
+                            className="overflow-hidden rounded-2xl border border-gray-200 bg-white"
+                          >
+                            <div className="border-b border-gray-200 px-5 py-4">
+                              <div>
+                                <h4 className="text-lg font-semibold text-gray-900">
+                                  {example.title ?? `Prototype ${index + 1}`}
+                                </h4>
+                              </div>
+                            </div>
+
+                            <div className="bg-gray-50 p-3 md:p-5">
+                              <div
+                                className="relative overflow-hidden rounded-2xl border border-gray-200 bg-white"
+                                style={{ aspectRatio: example.aspectRatio ?? "16 / 10" }}
+                              >
+                                <iframe
+                                  src={example.embedUrl}
+                                  title={example.title ?? `${pattern.title} prototype ${index + 1}`}
+                                  className="absolute inset-0 h-full w-full"
+                                  loading="lazy"
+                                  allowFullScreen
+                                />
+                              </div>
+                            </div>
+                          </article>
+                        ))}
                       </div>
-                      <div className="border-t border-gray-200 px-4 py-3">
-                        <p className="leading-relaxed text-gray-700">{example.description}</p>
+                    </div>
+                  )}
+
+                  {imageExamples.length > 0 && (
+                    <div className="space-y-4">
+                      {embedExamples.length > 0 && (
+                        <h3 className="text-lg font-semibold text-gray-900">Screenshots</h3>
+                      )}
+                      <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                        {imageExamples.map((example, index) => (
+                          <button
+                            key={`${example.image}-${index}`}
+                            onClick={() => setSelectedImageIndex(index)}
+                            className="group overflow-hidden rounded-lg border border-gray-200 text-left transition hover:border-gray-900"
+                          >
+                            <div className="relative aspect-video overflow-hidden bg-gray-50">
+                              <Image
+                                src={example.image}
+                                alt={example.description}
+                                fill
+                                sizes="(min-width: 768px) 50vw, 100vw"
+                                className="object-cover transition-transform group-hover:scale-105"
+                              />
+                            </div>
+                            <div className="border-t border-gray-200 px-4 py-3">
+                              {example.title && (
+                                <p className="mb-1 text-sm font-semibold text-gray-900">{example.title}</p>
+                              )}
+                              <p className="leading-relaxed text-gray-700">{example.description}</p>
+                            </div>
+                          </button>
+                        ))}
                       </div>
-                    </button>
-                  ))}
+                    </div>
+                  )}
                 </div>
               </div>
             )}
@@ -382,12 +444,12 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
                   </div>
 
                   <span className="rounded-full bg-gray-100 px-3 py-1 text-sm font-medium text-gray-600">
-                    {selectedImageIndex + 1} / {pattern.content.examples.length}
+                    {selectedImageIndex + 1} / {imageExamples.length}
                   </span>
                 </div>
 
                 <div className="relative bg-[#f5f3ee] px-3 py-3 md:px-5 md:py-5">
-                  {pattern.content.examples.length > 1 && (
+                  {imageExamples.length > 1 && (
                     <>
                       <button
                         onClick={handlePrevious}
@@ -426,10 +488,10 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
                     {selectedExample.description}
                   </p>
 
-                  {pattern.content.examples.length > 1 && (
+                  {imageExamples.length > 1 && (
                     <div className="mt-5 overflow-x-auto pb-1">
                       <div className="flex min-w-max gap-3">
-                        {pattern.content.examples.map((example, index) => {
+                        {imageExamples.map((example, index) => {
                           const isActive = index === selectedImageIndex;
 
                           return (

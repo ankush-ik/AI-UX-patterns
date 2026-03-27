@@ -10,7 +10,7 @@ export interface CategoryHealth {
   category: Category;
   patternCount: number;
   withExamplesCount: number;
-  withSourceUrlCount: number;
+  withSourceCount: number;
 }
 
 export interface RelatedPatternIssue {
@@ -63,7 +63,9 @@ export async function getContentReport(): Promise<ContentReport> {
   const patternsWithoutExamples = patterns.filter(
     (pattern) => pattern.content.examples.length === 0
   );
-  const patternsWithoutSourceUrl = patterns.filter((pattern) => !pattern.sourceUrl);
+  const patternsWithoutSourceUrl = patterns.filter(
+    (pattern) => !pattern.sourceUrl && (!pattern.sources || pattern.sources.length === 0)
+  );
   const patternsWithoutRelatedPatterns = patterns.filter(
     (pattern) => pattern.content.relatedPatterns.length === 0
   );
@@ -82,7 +84,9 @@ export async function getContentReport(): Promise<ContentReport> {
       withExamplesCount: categoryPatterns.filter(
         (pattern) => pattern.content.examples.length > 0
       ).length,
-      withSourceUrlCount: categoryPatterns.filter((pattern) => pattern.sourceUrl)
+      withSourceCount: categoryPatterns.filter(
+        (pattern) => pattern.sourceUrl || (pattern.sources && pattern.sources.length > 0)
+      )
         .length,
     };
   });

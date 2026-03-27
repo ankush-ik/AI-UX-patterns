@@ -37,9 +37,11 @@ export async function POST(request: Request) {
     thumbnail: body.thumbnail ?? "",
     categoryId: body.categoryId,
     sourceUrl: body.sourceUrl ?? undefined,
+    sources: body.sources ?? undefined,
     content: {
       description: body.content?.description ?? "",
       designConsiderations: body.content?.designConsiderations ?? "",
+      userArchetype: body.content?.userArchetype ?? undefined,
       relatedPatterns: body.content?.relatedPatterns ?? [],
       examples: body.content?.examples ?? [],
     },

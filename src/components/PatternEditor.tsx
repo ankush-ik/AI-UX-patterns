@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { X, Plus, Trash2 } from "lucide-react";
-import type { Pattern, Category } from "@/lib/patterns";
+import type { Pattern, Category, PatternExample } from "@/lib/patterns";
 
 interface PatternEditorProps {
   /** Pass a pattern to edit it; omit to create a new one */
@@ -25,6 +25,25 @@ const EMPTY_PATTERN: Omit<Pattern, "id"> = {
     relatedPatterns: [],
     examples: [],
   },
+};
+
+const EMPTY_IMAGE_EXAMPLE: PatternExample = {
+  type: "image",
+  image: "",
+  title: "",
+  description: "",
+  href: "",
+};
+
+const EMPTY_EMBED_EXAMPLE: PatternExample = {
+  type: "embed",
+  title: "",
+  description: "",
+  embedUrl: "",
+  href: "",
+  provider: "Figma",
+  image: "",
+  aspectRatio: "16 / 10",
 };
 
 export function PatternEditor({ pattern, categories, onSave, onDelete, onClose }: PatternEditorProps) {
@@ -54,14 +73,36 @@ export function PatternEditor({ pattern, categories, onSave, onDelete, onClose }
   function addExample() {
     setContent("examples", [
       ...form.content.examples,
-      { image: "", description: "" },
+      { ...EMPTY_IMAGE_EXAMPLE },
     ]);
   }
 
-  function updateExample(index: number, field: "image" | "description", value: string) {
+  function updateExample(index: number, field: string, value: string) {
     const updated = form.content.examples.map((ex, i) =>
       i === index ? { ...ex, [field]: value } : ex
     );
+    setContent("examples", updated);
+  }
+
+  function updateExampleType(index: number, type: "image" | "embed") {
+    const updated = form.content.examples.map((ex, i) => {
+      if (i !== index) return ex;
+      return type === "embed"
+        ? {
+            ...EMPTY_EMBED_EXAMPLE,
+            title: ex.title ?? "",
+            description: ex.description,
+            href: ex.href ?? "",
+            image: ex.image ?? "",
+          }
+        : {
+            ...EMPTY_IMAGE_EXAMPLE,
+            title: ex.title ?? "",
+            description: ex.description,
+            href: ex.href ?? "",
+            image: ex.image ?? "",
+          };
+    });
     setContent("examples", updated);
   }
 
@@ -377,24 +418,93 @@ export function PatternEditor({ pattern, categories, onSave, onDelete, onClose }
                     <Trash2 size={14} />
                   </button>
                 </div>
-                <Field label="Image URL">
-                  <input
-                    type="url"
-                    value={ex.image}
-                    onChange={(e) => updateExample(i, "image", e.target.value)}
+                <Field label="Media type">
+                  <select
+                    value={ex.type ?? "image"}
+                    onChange={(e) => updateExampleType(i, e.target.value as "image" | "embed")}
                     className={inputClass}
-                    placeholder="https://..."
-                  />
-                  {ex.image && (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={ex.image}
-                      alt={`Example ${i + 1} preview`}
-                      className="mt-2 h-20 w-full rounded-lg object-cover border border-gray-200"
-                      onError={(e) => (e.currentTarget.style.display = "none")}
-                    />
-                  )}
+                  >
+                    <option value="image">Image</option>
+                    <option value="embed">Embed</option>
+                  </select>
                 </Field>
+                <Field label="Title">
+                  <input
+                    type="text"
+                    value={ex.title ?? ""}
+                    onChange={(e) => updateExample(i, "title", e.target.value)}
+                    className={inputClass}
+                    placeholder="Optional label shown above the example"
+                  />
+                </Field>
+                {ex.type === "embed" ? (
+                  <>
+                    <Field label="Embed URL">
+                      <input
+                        type="url"
+                        value={ex.embedUrl}
+                        onChange={(e) => updateExample(i, "embedUrl", e.target.value)}
+                        className={inputClass}
+                        placeholder="https://www.figma.com/embed?..."
+                      />
+                    </Field>
+                    <Field label="External URL">
+                      <input
+                        type="url"
+                        value={ex.href ?? ""}
+                        onChange={(e) => updateExample(i, "href", e.target.value)}
+                        className={inputClass}
+                        placeholder="https://www.figma.com/design/..."
+                      />
+                    </Field>
+                    <Field label="Provider">
+                      <input
+                        type="text"
+                        value={ex.provider ?? ""}
+                        onChange={(e) => updateExample(i, "provider", e.target.value)}
+                        className={inputClass}
+                        placeholder="Figma"
+                      />
+                    </Field>
+                    <Field label="Aspect ratio">
+                      <input
+                        type="text"
+                        value={ex.aspectRatio ?? ""}
+                        onChange={(e) => updateExample(i, "aspectRatio", e.target.value)}
+                        className={inputClass}
+                        placeholder="16 / 10"
+                      />
+                    </Field>
+                    <Field label="Poster image URL" hint="Optional fallback thumbnail shown later if you decide to use it">
+                      <input
+                        type="url"
+                        value={ex.image ?? ""}
+                        onChange={(e) => updateExample(i, "image", e.target.value)}
+                        className={inputClass}
+                        placeholder="https://..."
+                      />
+                    </Field>
+                  </>
+                ) : (
+                  <Field label="Image URL">
+                    <input
+                      type="url"
+                      value={ex.image}
+                      onChange={(e) => updateExample(i, "image", e.target.value)}
+                      className={inputClass}
+                      placeholder="https://..."
+                    />
+                    {ex.image && (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={ex.image}
+                        alt={`Example ${i + 1} preview`}
+                        className="mt-2 h-20 w-full rounded-lg object-cover border border-gray-200"
+                        onError={(e) => (e.currentTarget.style.display = "none")}
+                      />
+                    )}
+                  </Field>
+                )}
                 <Field label="Caption">
                   <input
                     type="text"

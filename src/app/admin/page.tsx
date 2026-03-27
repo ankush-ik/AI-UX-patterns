@@ -52,7 +52,7 @@ export default async function AdminPage() {
           <StatCard label="Categories" value={report.totalCategories} />
           <StatCard label="Patterns" value={report.totalPatterns} />
           <StatCard label="Missing examples" value={report.patternsWithoutExamples.length} tone={report.patternsWithoutExamples.length ? "warn" : "default"} />
-          <StatCard label="Missing source URLs" value={report.patternsWithoutSourceUrl.length} tone={report.patternsWithoutSourceUrl.length ? "warn" : "default"} />
+          <StatCard label="Missing sources" value={report.patternsWithoutSourceUrl.length} tone={report.patternsWithoutSourceUrl.length ? "warn" : "default"} />
           <StatCard label="Broken related refs" value={report.brokenRelatedPatterns.length} tone={report.brokenRelatedPatterns.length ? "danger" : "default"} />
         </section>
 
@@ -87,7 +87,7 @@ export default async function AdminPage() {
                       </td>
                       <td className="px-4 py-3">{entry.patternCount}</td>
                       <td className="px-4 py-3">{entry.withExamplesCount}</td>
-                      <td className="px-4 py-3">{entry.withSourceUrlCount}</td>
+                      <td className="px-4 py-3">{entry.withSourceCount}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -177,7 +177,7 @@ export default async function AdminPage() {
           </div>
 
           <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
-            <h2 className="text-2xl font-semibold">Patterns missing source URLs</h2>
+            <h2 className="text-2xl font-semibold">Patterns missing sources</h2>
             <p className="mt-1 text-sm text-gray-500">Good targets for editorial completion or CMS metadata.</p>
             <div className="mt-5 space-y-3">
               {report.patternsWithoutSourceUrl.slice(0, 12).map((pattern) => (
