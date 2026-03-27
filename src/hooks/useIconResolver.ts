@@ -1,27 +1,21 @@
 /**
- * Custom hook for resolving icon names to Lucide React components
- * Centralizes icon mapping to avoid duplication across components
+ * Custom hook for resolving category icon keys to Skapa icon names.
  */
-import * as Icons from "lucide-react";
+import type { SkapaIconName } from "@/components/SkapaIcon";
 
-const iconMap: Record<string, string> = {
-  compass: "Compass",
-  zap: "Zap",
-  settings: "Settings",
-  layout: "Layout",
-  edit: "Edit3",
-  shield: "Shield",
-  "check-circle": "CheckCircle",
-  tag: "Tag",
+const iconMap: Record<string, SkapaIconName> = {
+  compass: "compass",
+  zap: "zap",
+  settings: "settings",
+  layout: "grid",
+  edit: "pencil",
+  shield: "shield",
+  "check-circle": "check-circle",
+  tag: "tag",
 };
 
 export function useIconResolver() {
-  const resolveIcon = (iconName: string) => {
-    const mappedName = iconMap[iconName];
-    if (!mappedName) return null;
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    return (Icons as any)[mappedName] || null;
-  };
+  const resolveIcon = (iconName: string): SkapaIconName | null => iconMap[iconName] ?? null;
 
   return { resolveIcon, iconMap };
 }

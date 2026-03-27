@@ -21,8 +21,8 @@ export function PatternCard({
 }: PatternCardProps) {
   return (
     <Link href={`/patterns/${id}`} className="group block">
-      <div className="h-full border border-gray-200 rounded-xl overflow-hidden shadow-sm transition-all hover:shadow-lg hover:-translate-y-1 bg-white">
-        <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
+      <div className="h-full overflow-hidden border border-sk-border bg-white shadow-sm transition-all hover:-translate-y-1 hover:shadow-lg">
+        <div className="relative aspect-video w-full overflow-hidden bg-sk-surface-muted">
           <Image
             src={thumbnail}
             alt={title}
@@ -32,10 +32,10 @@ export function PatternCard({
           />
         </div>
         <div className="p-5">
-          <h3 className="text-lg font-semibold mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
+          <h3 className="mb-2 text-skapa-h4 text-sk-primary transition-colors group-hover:text-sk-primary-strong">
             {title}
           </h3>
-          <p className="text-sm text-gray-500">{description}</p>
+          <p className="text-skapa-body-sm text-sk-text-muted">{description}</p>
         </div>
       </div>
     </Link>

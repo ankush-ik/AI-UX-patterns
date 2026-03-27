@@ -2,9 +2,10 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Plus, Pencil } from "lucide-react";
 import type { Pattern, Category } from "@/lib/patterns";
 import { PatternEditor } from "@/components/PatternEditor";
+import { SkapaButton } from "@/components/SkapaButton";
+import { SkapaIcon } from "@/components/SkapaIcon";
 
 interface AdminPatternListProps {
   patterns: Pattern[];
@@ -35,39 +36,40 @@ export function AdminPatternList({ patterns: initialPatterns, categories }: Admi
   return (
     <>
       {/* "New pattern" button — injected into whatever section uses this */}
-      <div className="mt-10 rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
+      <div className="rounded-3xl border border-sk-border bg-white p-6 shadow-sm">
         <div className="flex items-center justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-semibold">All patterns</h2>
-            <p className="mt-1 text-sm text-gray-500">Click any pattern to edit it, or create a new one.</p>
+            <h2 className="text-skapa-h2 text-sk-primary">All patterns</h2>
+            <p className="mt-1 text-skapa-body-sm text-sk-text-muted">Click any pattern to edit it, or create a new one.</p>
           </div>
-          <button
+          <SkapaButton
             onClick={() => setCreatingNew(true)}
-            className="flex items-center gap-2 rounded-full bg-gray-900 px-4 py-2 text-sm text-white hover:bg-gray-700"
+            variant="primary"
+            size="small"
+            iconName="add"
           >
-            <Plus size={15} />
             New pattern
-          </button>
+          </SkapaButton>
         </div>
 
-        <div className="mt-6 divide-y divide-gray-100">
+        <div className="mt-6 divide-y divide-sk-border">
           {initialPatterns.map((pattern) => (
             <button
               key={pattern.id}
               onClick={() => setEditingPattern(pattern)}
-              className="group flex w-full items-center justify-between gap-4 py-3 text-left hover:text-gray-600"
+              className="group flex w-full items-center justify-between gap-4 py-3 text-left text-sk-text-muted hover:text-sk-primary"
             >
               <div className="min-w-0">
-                <p className="truncate font-medium text-gray-900 group-hover:text-gray-600">
+                <p className="truncate text-skapa-body-md font-medium text-sk-primary group-hover:text-sk-primary-strong">
                   {pattern.title}
                 </p>
-                <p className="truncate text-xs text-gray-400">{pattern.description}</p>
+                <p className="truncate text-skapa-caption text-sk-text-muted">{pattern.description}</p>
               </div>
               <div className="flex shrink-0 items-center gap-3">
-                <span className="rounded-full bg-gray-100 px-2.5 py-0.5 text-xs text-gray-500">
+                <span className="rounded-full bg-sk-surface-muted px-2.5 py-0.5 text-skapa-caption text-sk-text-muted">
                   {pattern.categoryId}
                 </span>
-                <Pencil size={13} className="text-gray-300 group-hover:text-gray-500" />
+                <SkapaIcon name="pencil" size={14} className="text-sk-border-strong group-hover:text-sk-primary" />
               </div>
             </button>
           ))}

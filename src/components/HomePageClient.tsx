@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { Compass, Zap, Settings, Grid, Pencil, Shield, CheckCircle, Tag } from "lucide-react";
 import type { Category, Pattern } from "@/lib/patterns";
 import { useIconResolver } from "@/hooks/useIconResolver";
 import { SidebarNav } from "@/components/SidebarNav";
@@ -18,6 +19,17 @@ interface HomePageClientProps {
 export function HomePageClient({ categories, categoryData }: HomePageClientProps) {
   const { resolveIcon } = useIconResolver();
   const [activeCategory, setActiveCategory] = useState<string>("");
+// Map icon names to lucide-react components
+  const iconComponentMap: Record<string, React.ComponentType<{ className?: string }>> = {
+    compass: Compass,
+    zap: Zap,
+    settings: Settings,
+    grid: Grid,
+    pencil: Pencil,
+    shield: Shield,
+    "check-circle": CheckCircle,
+    tag: Tag,
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -59,25 +71,28 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
     }
   };
 
-  const sidebarItems = categories.map((category) => ({
-    id: category.id,
-    label: category.name,
-    icon: resolveIcon(category.icon),
-  }));
+  const sidebarItems = categories.map((category) => {
+    const iconName = resolveIcon(category.icon);
+    return {
+      id: category.id,
+      label: category.name,
+      icon: iconName ? iconComponentMap[iconName] : undefined,
+    };
+  });
 
   return (
     <div className="min-h-screen bg-white">
-      <header className="border-b">
+      <header className="border-b border-sk-border">
         <div className="container mx-auto flex flex-wrap items-start justify-between gap-4 px-4 py-8">
           <div>
-            <h1 className="text-4xl font-bold mb-2 text-gray-900">AI Design Patterns</h1>
-            <p className="text-gray-500">
+            <h1 className="mb-2 text-skapa-display text-sk-primary">AI Design Patterns</h1>
+            <p className="max-w-2xl text-skapa-body-md text-sk-text-muted">
               Foundational elements and interactions to help us design for AI-enabled interfaces
             </p>
           </div>
           <Link
             href="/admin"
-            className="rounded-full border border-gray-300 px-4 py-2 text-sm text-gray-700 transition-colors hover:border-gray-900 hover:text-gray-900"
+            className="inline-flex min-h-10 items-center border border-sk-border-strong px-4 text-skapa-body-sm text-sk-primary transition-colors hover:border-sk-primary"
           >
             Content admin
           </Link>
@@ -101,8 +116,8 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
                 className="mb-16 scroll-mt-20"
               >
                 <div className="mb-6">
-                  <h2 className="text-3xl font-bold mb-2 text-gray-900">{category.name}</h2>
-                  <p className="text-gray-500">{category.description}</p>
+                  <h2 className="mb-2 text-skapa-h1 text-sk-primary">{category.name}</h2>
+                  <p className="text-skapa-body-md text-sk-text-muted">{category.description}</p>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {patterns.map((pattern) => (

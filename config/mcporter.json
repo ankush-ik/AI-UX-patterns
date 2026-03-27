@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "skapa-design-system": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@ingka/skapa-design-system-mcp@latest"
+      ]
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "context_servers": {
+    "skapa-design-system": {
+      "source": "custom",
+      "command": "npx",
+      "args": [
+        "-y",
+        "@ingka/skapa-design-system-mcp@latest"
+      ],
+      "env": {}
+    }
+  }
+}

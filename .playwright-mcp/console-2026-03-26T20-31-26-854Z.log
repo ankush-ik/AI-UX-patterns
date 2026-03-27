@@ -1,0 +1,2 @@
+[     131ms] [ERROR] Failed to load resource: net::ERR_CONNECTION_REFUSED @ http://localhost:3333/fonts/noto-ikea-latin.css:0
+[   69894ms] [ERROR] WebSocket connection to 'ws://localhost:3000/_next/webpack-hmr?id=w-GViwtw4u4tO4BVnciNC' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_client_0fhqo1d._.js:13299
