@@ -31,7 +31,7 @@ export function SidebarNav({
               key={item.id}
               onClick={() => onItemClick(item.id)}
               className={cn(
-                "w-full flex items-center gap-3 px-4 py-3 text-left transition-colors rounded-lg text-sm",
+                "w-full flex items-center gap-3 px-4 py-3 text-left transition-colors text-sm",
                 activeItem === item.id
                   ? "bg-gray-900 text-white"
                   : "text-gray-700 hover:bg-gray-100"
