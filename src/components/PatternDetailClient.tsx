@@ -348,6 +348,7 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
                                 <h4 className="text-lg font-semibold text-gray-900">
                                   {example.title ?? `Prototype ${index + 1}`}
                                 </h4>
+                                <p className="mt-2 max-w-3xl leading-relaxed text-gray-700">{example.description}</p>
                               </div>
                             </div>
 
