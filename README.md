@@ -74,6 +74,45 @@ npm start
 npm run lint
 ```
 
+### Shape Of Parity Audit
+
+Use these commands to validate and remediate full-repo parity against source pages.
+
+```bash
+# Run parity audit only (writes scripts/audit_shapeof_parity.output.json)
+npm run audit:parity
+
+# Run deterministic remediation flow (audit -> fixes -> re-audit)
+npm run fix:parity
+
+# Allow additional remediation loops when needed
+node scripts/remediate_shapeof_parity.mjs --max-passes=3
+```
+
+What remediation runs:
+- Sync single-source Shape Of text for failing patterns.
+- Merge dual-source Shape Of + AIUX sections.
+- Normalize markdown content formatting.
+- Fill missing inline source images and captions.
+- Re-audit after each pass.
+
+### Source Image Sync
+
+Use the sync script to scrape pattern source pages and insert missing inline images into pattern descriptions.
+
+```bash
+# Preview planned updates without writing files
+npm run sync:source-images:dry
+
+# Download images to public/patterns/<pattern-id>/ and update patterns.json
+npm run sync:source-images
+```
+
+Notes:
+- The script only fills missing inline description images and does not remove existing images/examples.
+- Sources are read from sources[] with sourceUrl as fallback.
+- The script is idempotent and safe to rerun.
+
 ## 📚 Usage
 
 ### Viewing Patterns

@@ -1,0 +1,29 @@
+<svg width="1600" height="900" viewBox="0 0 1600 900" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1600" height="900" fill="#F4F5F7"/>
+  <rect x="140" y="170" width="760" height="560" rx="28" fill="#FFFFFF" stroke="#D8DDE3" stroke-width="4"/>
+  <rect x="200" y="240" width="620" height="28" rx="10" fill="#E8EDF2"/>
+  <rect x="200" y="288" width="540" height="22" rx="8" fill="#EEF2F6"/>
+  <rect x="200" y="346" width="640" height="260" rx="16" fill="#F9FBFD" stroke="#E3E8ED" stroke-width="3"/>
+  <rect x="230" y="382" width="560" height="22" rx="7" fill="#E9EDF2"/>
+  <rect x="230" y="420" width="490" height="22" rx="7" fill="#EEF2F6"/>
+  <rect x="230" y="458" width="520" height="22" rx="7" fill="#E9EDF2"/>
+
+  <path d="M900 450H980" stroke="#A5AFBA" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="980" cy="450" r="6" fill="#A5AFBA"/>
+
+  <rect x="1020" y="256" width="390" height="90" rx="20" fill="#E8F3FF" stroke="#9CC7F5" stroke-width="3"/>
+  <text x="1055" y="311" font-family="Noto Sans, Arial, sans-serif" font-size="34" font-weight="700" fill="#174A7C">Summarize</text>
+
+  <path d="M900 450H980" stroke="#A5AFBA" stroke-width="4" stroke-linecap="round"/>
+  <path d="M980 450V450" stroke="#A5AFBA"/>
+
+  <rect x="980" y="405" width="430" height="90" rx="20" fill="#EAF9EF" stroke="#9BD1AA" stroke-width="3"/>
+  <text x="1015" y="460" font-family="Noto Sans, Arial, sans-serif" font-size="34" font-weight="700" fill="#165A2E">Create ticket</text>
+
+  <rect x="1020" y="554" width="390" height="90" rx="20" fill="#FFF1DF" stroke="#E6BC7A" stroke-width="3"/>
+  <text x="1055" y="609" font-family="Noto Sans, Arial, sans-serif" font-size="34" font-weight="700" fill="#7D4A12">Export to Figma</text>
+
+  <path d="M980 450L1020 300" stroke="#A5AFBA" stroke-width="4" stroke-linecap="round"/>
+  <path d="M980 450L980 450" stroke="#A5AFBA"/>
+  <path d="M980 450L1020 598" stroke="#A5AFBA" stroke-width="4" stroke-linecap="round"/>
+</svg>

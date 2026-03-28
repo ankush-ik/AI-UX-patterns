@@ -1,0 +1,1047 @@
+{
+  "generatedAt": "2026-03-28T13:29:08.892Z",
+  "total": 57,
+  "passCount": 56,
+  "failCount": 1,
+  "errorCount": 0,
+  "results": [
+    {
+      "id": "example-gallery",
+      "sourceUrl": "https://www.shapeof.ai/patterns/gallery",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "follow-up",
+      "sourceUrl": "https://www.shapeof.ai/patterns/follow-up",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "initial-cta",
+      "sourceUrl": "https://www.shapeof.ai/patterns/cta",
+      "status": "fail",
+      "summary": {
+        "sourceHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 4,
+          "design": 0
+        },
+        "sourceImages": 5,
+        "currentInlineImages": 5
+      },
+      "issues": [
+        {
+          "kind": "image-placement",
+          "details": [
+            {
+              "heading": "Action-First CTA",
+              "expectedCount": 3,
+              "actualCount": 1,
+              "kind": "missing-or-misplaced-images"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "nudges",
+      "sourceUrl": "https://www.shapeof.ai/patterns/nudges",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "sourceImages": 3,
+        "currentInlineImages": 3
+      },
+      "issues": []
+    },
+    {
+      "id": "prompt-details",
+      "sourceUrl": "https://www.shapeof.ai/patterns/prompt-details",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "randomize",
+      "sourceUrl": "https://www.shapeof.ai/patterns/randomize",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "suggestions",
+      "sourceUrl": "https://www.shapeof.ai/patterns/suggestions",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "templates",
+      "sourceUrl": "https://www.shapeof.ai/patterns/templates",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "auto-fill",
+      "sourceUrl": "https://www.shapeof.ai/patterns/auto-fill",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "chained-action",
+      "sourceUrl": "https://www.shapeof.ai/patterns/chained-action",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 4,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 4,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "describe",
+      "sourceUrl": "https://www.shapeof.ai/patterns/describe",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "sourceImages": 1,
+        "currentInlineImages": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "expand",
+      "sourceUrl": "https://www.shapeof.ai/patterns/expand",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "inline-action",
+      "sourceUrl": "https://www.shapeof.ai/patterns/inline-action",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "inpainting",
+      "sourceUrl": "https://www.shapeof.ai/patterns/inpainting",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "sourceImages": 1,
+        "currentInlineImages": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "madlibs",
+      "sourceUrl": "https://www.shapeof.ai/patterns/madlibs",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "sourceImages": 2,
+        "currentInlineImages": 2
+      },
+      "issues": []
+    },
+    {
+      "id": "open-input",
+      "sourceUrl": "https://www.shapeof.ai/patterns/open-input",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "regenerate",
+      "sourceUrl": "https://www.shapeof.ai/patterns/regenerate",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "restructure",
+      "sourceUrl": "https://www.shapeof.ai/patterns/restructure",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "sourceImages": 1,
+        "currentInlineImages": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "restyle",
+      "sourceUrl": "https://www.shapeof.ai/patterns/restyle",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "sourceImages": 1,
+        "currentInlineImages": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "summary",
+      "sourceUrl": "https://www.shapeof.ai/patterns/summary",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "synthesis",
+      "sourceUrl": "https://www.shapeof.ai/patterns/synthesis",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "change-form",
+      "sourceUrl": "https://www.shapeof.ai/patterns/change-form",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "attachments",
+      "sourceUrl": "https://www.shapeof.ai/patterns/attachments",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 3,
+          "design": 0
+        },
+        "sourceImages": 2,
+        "currentInlineImages": 2
+      },
+      "issues": []
+    },
+    {
+      "id": "connectors",
+      "sourceUrl": "https://www.shapeof.ai/patterns/connectors",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "filters",
+      "sourceUrl": "https://www.shapeof.ai/patterns/filters",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "model-management",
+      "sourceUrl": "https://www.shapeof.ai/patterns/model-management",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "modes",
+      "sourceUrl": "https://www.shapeof.ai/patterns/modes",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "sourceImages": 1,
+        "currentInlineImages": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "parameters",
+      "sourceUrl": "https://www.shapeof.ai/patterns/parameters",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "preset-styles",
+      "sourceUrl": "https://www.shapeof.ai/patterns/preset-styles",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "prompt-enhancer",
+      "sourceUrl": "https://www.shapeof.ai/patterns/prompt-enhancer",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "sourceImages": 2,
+        "currentInlineImages": 2
+      },
+      "issues": []
+    },
+    {
+      "id": "saved-styles",
+      "sourceUrl": "https://www.shapeof.ai/patterns/saved-styles",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 3,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 3,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "voice-and-tone",
+      "sourceUrl": "https://www.shapeof.ai/patterns/voice-and-tone",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "action-plan",
+      "sourceUrl": "https://www.shapeof.ai/patterns/action-plan",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "branches",
+      "sourceUrl": "https://www.shapeof.ai/patterns/branches",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "citations",
+      "sourceUrl": "https://www.shapeof.ai/patterns/citations",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "controls",
+      "sourceUrl": "https://www.shapeof.ai/patterns/controls",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "cost-estimates",
+      "sourceUrl": "https://www.shapeof.ai/patterns/cost-estimates",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "draft-mode",
+      "sourceUrl": "https://www.shapeof.ai/patterns/draft-mode",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "memory",
+      "sourceUrl": "https://www.shapeof.ai/patterns/memory",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "references",
+      "sourceUrl": "https://www.shapeof.ai/patterns/references",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "sample-response",
+      "sourceUrl": "https://www.shapeof.ai/patterns/sample-response",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "shared-vision",
+      "sourceUrl": "https://www.shapeof.ai/patterns/shared-vision",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "sourceImages": 3,
+        "currentInlineImages": 3
+      },
+      "issues": []
+    },
+    {
+      "id": "stream-of-thought",
+      "sourceUrl": "https://www.shapeof.ai/patterns/stream-of-thought",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "variations",
+      "sourceUrl": "https://www.shapeof.ai/patterns/variations",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "sourceImages": 3,
+        "currentInlineImages": 3
+      },
+      "issues": []
+    },
+    {
+      "id": "verification",
+      "sourceUrl": "https://www.shapeof.ai/patterns/verification",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 3,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 4,
+          "design": 0
+        },
+        "sourceImages": 2,
+        "currentInlineImages": 2
+      },
+      "issues": []
+    },
+    {
+      "id": "caveat",
+      "sourceUrl": "https://www.shapeof.ai/patterns/caveat",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "consent",
+      "sourceUrl": "https://www.shapeof.ai/patterns/consent",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "sourceImages": 1,
+        "currentInlineImages": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "data-ownership",
+      "sourceUrl": "https://www.shapeof.ai/patterns/data-ownership",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 4,
+          "design": 0
+        },
+        "sourceImages": 2,
+        "currentInlineImages": 2
+      },
+      "issues": []
+    },
+    {
+      "id": "disclosure",
+      "sourceUrl": "https://www.shapeof.ai/patterns/disclosure",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "sourceImages": 2,
+        "currentInlineImages": 2
+      },
+      "issues": []
+    },
+    {
+      "id": "footprints",
+      "sourceUrl": "https://www.shapeof.ai/patterns/footprints",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 4,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 4,
+          "design": 0
+        },
+        "sourceImages": 1,
+        "currentInlineImages": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "incognito-mode",
+      "sourceUrl": "https://www.shapeof.ai/patterns/incognito-mode",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "watermark",
+      "sourceUrl": "https://www.shapeof.ai/patterns/watermark",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 3,
+          "design": 0
+        },
+        "sourceImages": 1,
+        "currentInlineImages": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "avatar",
+      "sourceUrl": "https://www.shapeof.ai/patterns/avatar",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "sourceImages": 0,
+        "currentInlineImages": 0
+      },
+      "issues": []
+    },
+    {
+      "id": "color",
+      "sourceUrl": "https://www.shapeof.ai/patterns/color",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "sourceImages": 2,
+        "currentInlineImages": 2
+      },
+      "issues": []
+    },
+    {
+      "id": "iconography",
+      "sourceUrl": "https://www.shapeof.ai/patterns/iconography",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 2,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 10,
+          "design": 0
+        },
+        "sourceImages": 9,
+        "currentInlineImages": 9
+      },
+      "issues": []
+    },
+    {
+      "id": "name",
+      "sourceUrl": "https://www.shapeof.ai/patterns/name",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "sourceImages": 1,
+        "currentInlineImages": 1
+      },
+      "issues": []
+    },
+    {
+      "id": "personality",
+      "sourceUrl": "https://www.shapeof.ai/patterns/personality",
+      "status": "pass",
+      "summary": {
+        "sourceHeadings": {
+          "description": 0,
+          "design": 0
+        },
+        "currentHeadings": {
+          "description": 1,
+          "design": 0
+        },
+        "sourceImages": 2,
+        "currentInlineImages": 2
+      },
+      "issues": []
+    }
+  ]
+}

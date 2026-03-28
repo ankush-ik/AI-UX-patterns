@@ -104,21 +104,63 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
     const elements: JSX.Element[] = [];
     let currentParagraph: string[] = [];
     let currentList: (string | JSX.Element)[] = [];
+    let currentListType: "ul" | "ol" | null = null;
+    let pendingLeadIn: string | null = null;
     let key = 0;
 
+    const sanitizeMarkdownText = (text: string) => text
+      .replace(/[\u200B-\u200D\uFEFF]/g, "")
+      .replace(/\*\*\*\*:\*\*/g, "**:")
+      .replace(/\*\*\*\*:/g, "**:")
+      .replace(/\*\*‍\*\*/g, "")
+      .replace(/!\[\/\]\(([^)]+)\)/g, "![Pattern source image]($1)")
+      .replace(/\s+/g, " ")
+      .trim();
+
+    const sanitizeHeadingText = (text: string) => sanitizeMarkdownText(text)
+      .replace(/^\*\*(.+)\*\*$/, "$1")
+      .replace(/\*\*/g, "")
+      .trim();
+
     const renderInlineMarkdown = (text: string) => {
+      const safeText = sanitizeMarkdownText(text);
       const parts: (string | JSX.Element)[] = [];
       let lastIndex = 0;
       let partKey = 0;
       const boldRegex = /\*\*([^*]+)\*\*/g;
       let match;
-      while ((match = boldRegex.exec(text)) !== null) {
+      while ((match = boldRegex.exec(safeText)) !== null) {
         if (match.index > lastIndex) parts.push(text.substring(lastIndex, match.index));
         parts.push(<strong key={`bold-${partKey++}`}>{match[1]}</strong>);
         lastIndex = match.index + match[0].length;
       }
-      if (lastIndex < text.length) parts.push(text.substring(lastIndex));
-      return parts.length > 0 ? parts : text;
+      if (lastIndex < safeText.length) parts.push(safeText.substring(lastIndex));
+      return parts.length > 0 ? parts : safeText;
+    };
+
+    const parseMarkdownImageLine = (text: string) => {
+      const imageMatch = text.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+      if (!imageMatch) {
+        return null;
+      }
+
+      const alt = imageMatch[1].trim() || "Pattern image";
+      const src = imageMatch[2].trim();
+
+      if (!src) {
+        return null;
+      }
+
+      return { alt, src };
+    };
+
+    const parseMarkdownCaptionLine = (text: string) => {
+      const captionMatch = text.match(/^\*(.+)\*$/);
+      if (!captionMatch) {
+        return null;
+      }
+
+      return captionMatch[1].trim();
     };
 
     const flushParagraph = () => {
@@ -130,23 +172,38 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
 
     const flushList = () => {
       if (currentList.length > 0) {
+        const ListTag = currentListType === "ol" ? "ol" : "ul";
+        const listClassName = currentListType === "ol"
+          ? "mb-10 ml-6 list-decimal space-y-3 text-lg text-sk-text md:text-xl"
+          : "mb-10 ml-6 list-disc space-y-3 text-lg text-sk-text md:text-xl";
+
         elements.push(
-          <ul key={`ul-${key++}`} className="mb-10 ml-6 list-disc space-y-3 text-lg text-sk-text md:text-xl">
+          <ListTag key={`list-${key++}`} className={listClassName}>
             {currentList.map((item, i) => (
               <li key={i} className="pl-1 leading-relaxed marker:text-[var(--sk-color-text-muted)]">
                 {typeof item === "string" ? renderInlineMarkdown(item) : item}
               </li>
             ))}
-          </ul>
+          </ListTag>
         );
         currentList = [];
+        currentListType = null;
       }
     };
 
-    lines.forEach((line) => {
+    for (let index = 0; index < lines.length; index += 1) {
+      const line = sanitizeMarkdownText(lines[index]);
       const trimmedLine = line.trim();
       if (trimmedLine.startsWith("### ")) {
         flushParagraph(); flushList();
+        if (pendingLeadIn) {
+          elements.push(
+            <p key={`p-${key++}`} className="mb-10 text-lg leading-relaxed text-sk-text md:text-xl">
+              <strong>{pendingLeadIn}</strong>
+            </p>
+          );
+          pendingLeadIn = null;
+        }
         elements.push(
           <h3
             key={`h3-${key++}`}
@@ -156,23 +213,109 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
                 : "mb-4 mt-10 text-2xl font-semibold text-sk-primary first:mt-0 md:text-3xl"
             }
           >
-            {trimmedLine.substring(4)}
+            {sanitizeHeadingText(trimmedLine.substring(4))}
           </h3>
         );
+      } else if (trimmedLine.startsWith("#### ")) {
+        flushParagraph(); flushList();
+        pendingLeadIn = sanitizeHeadingText(trimmedLine.substring(5));
+      } else if (parseMarkdownImageLine(trimmedLine)) {
+        flushParagraph(); flushList();
+        if (pendingLeadIn) {
+          elements.push(
+            <p key={`p-${key++}`} className="mb-10 text-lg leading-relaxed text-sk-text md:text-xl">
+              <strong>{pendingLeadIn}</strong>
+            </p>
+          );
+          pendingLeadIn = null;
+        }
+        const imageData = parseMarkdownImageLine(trimmedLine);
+        if (imageData) {
+          const caption = parseMarkdownCaptionLine(lines[index + 1]?.trim() ?? "");
+          elements.push(
+            <figure key={`img-${key++}`} className="mb-10 overflow-hidden rounded-2xl border border-[var(--sk-color-border)] bg-[var(--sk-color-surface-muted)] p-2">
+              <Image
+                src={imageData.src}
+                alt={imageData.alt}
+                width={1600}
+                height={1000}
+                className="h-auto w-full rounded-xl object-contain"
+                sizes="(min-width: 1280px) 90ch, 100vw"
+              />
+              {caption ? (
+                <figcaption className="px-3 pb-2 pt-3 text-sm italic leading-relaxed text-sk-text-muted md:text-base">
+                  {caption}
+                </figcaption>
+              ) : null}
+            </figure>
+          );
+          if (caption) {
+            index += 1;
+          }
+        }
       } else if (trimmedLine.match(/^\*\*[^*]+\*\*:/)) {
         flushParagraph();
+        if (pendingLeadIn) {
+          elements.push(
+            <p key={`p-${key++}`} className="mb-10 text-lg leading-relaxed text-sk-text md:text-xl">
+              <strong>{pendingLeadIn}</strong>
+            </p>
+          );
+          pendingLeadIn = null;
+        }
+        currentListType = currentListType ?? "ul";
         const m = trimmedLine.match(/^\*\*([^*]+)\*\*:\s*(.+)$/);
         if (m) currentList.push(<><strong>{m[1]}</strong>: {m[2]}</>);
+      } else if (trimmedLine.match(/^\d+\.\s+/)) {
+        flushParagraph();
+        if (pendingLeadIn) {
+          elements.push(
+            <p key={`p-${key++}`} className="mb-10 text-lg leading-relaxed text-sk-text md:text-xl">
+              <strong>{pendingLeadIn}</strong>
+            </p>
+          );
+          pendingLeadIn = null;
+        }
+        if (currentListType && currentListType !== "ol") {
+          flushList();
+        }
+        currentListType = "ol";
+        currentList.push(trimmedLine.replace(/^\d+\.\s+/, ""));
       } else if (trimmedLine.startsWith("- ")) {
         flushParagraph();
+        if (pendingLeadIn) {
+          elements.push(
+            <p key={`p-${key++}`} className="mb-10 text-lg leading-relaxed text-sk-text md:text-xl">
+              <strong>{pendingLeadIn}</strong>
+            </p>
+          );
+          pendingLeadIn = null;
+        }
+        if (currentListType && currentListType !== "ul") {
+          flushList();
+        }
+        currentListType = "ul";
         currentList.push(trimmedLine.substring(2));
       } else if (trimmedLine === "") {
         flushParagraph(); flushList();
       } else {
         flushList();
-        currentParagraph.push(trimmedLine);
+        if (pendingLeadIn && currentParagraph.length === 0) {
+          currentParagraph.push(`**${pendingLeadIn}:** ${trimmedLine}`);
+          pendingLeadIn = null;
+        } else {
+          currentParagraph.push(trimmedLine);
+        }
       }
-    });
+    }
+
+    if (pendingLeadIn) {
+      elements.push(
+        <p key={`p-${key++}`} className="mb-10 text-lg leading-relaxed text-sk-text md:text-xl">
+          <strong>{pendingLeadIn}</strong>
+        </p>
+      );
+    }
 
     flushParagraph(); flushList();
     return <>{elements}</>;
@@ -180,6 +323,15 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
 
   const renderDesignConsiderationsContent = (content: string) => {
     const lines = content.split("\n");
+    const hasComplexMarkdown = lines.some((line) => {
+      const trimmed = line.trim();
+      return trimmed.startsWith("#### ") || trimmed.startsWith("- ") || /^\d+\.\s+/.test(trimmed) || /^!\[/.test(trimmed) || /^\*\*[^*]+\*\*$/.test(trimmed);
+    });
+
+    if (hasComplexMarkdown) {
+      return renderMarkdownContent(content, { compactSectionHeadings: true });
+    }
+
     const items: { title: string; body: string }[] = [];
     let currentTitle = "";
     let currentBody: string[] = [];
@@ -267,8 +419,8 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
           />
 
           {/* Main Content */}
-          <main className="flex-1 space-y-8">
-            <div>
+          <main className="flex-1 space-y-8 pr-0 lg:pr-10 xl:pr-16">
+            <div className="max-w-[90ch]">
               <h1 className="mb-4 text-5xl font-bold leading-tight text-sk-primary md:text-6xl">{pattern.title}</h1>
               <p className="mb-5 text-xl leading-[1.7] text-sk-text-muted md:text-2xl">{pattern.description}</p>
               {pattern.sources && pattern.sources.length > 0 ? (
@@ -292,19 +444,19 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
             {/* Tabs */}
             <div id="section-description" className="scroll-mt-20">
               <h2 className="mb-7 text-3xl font-bold text-sk-primary md:text-4xl">Description</h2>
-              {renderMarkdownContent(pattern.content.description)}
+              <div className="max-w-[90ch]">{renderMarkdownContent(pattern.content.description)}</div>
             </div>
 
             {pattern.content.userArchetype && (
               <div id="section-user-archetype" className="scroll-mt-20">
                 <h2 className="mb-7 text-3xl font-bold text-sk-primary md:text-4xl">User Archetype</h2>
-                {renderMarkdownContent(pattern.content.userArchetype)}
+                <div className="max-w-[90ch]">{renderMarkdownContent(pattern.content.userArchetype)}</div>
               </div>
             )}
 
             <div id="section-design-considerations" className="scroll-mt-20">
               <h2 className="mb-7 text-3xl font-bold text-sk-primary md:text-4xl">Design considerations</h2>
-              {renderDesignConsiderationsContent(pattern.content.designConsiderations)}
+              <div className="max-w-[90ch]">{renderDesignConsiderationsContent(pattern.content.designConsiderations)}</div>
             </div>
 
             {relatedPatterns.length > 0 && (

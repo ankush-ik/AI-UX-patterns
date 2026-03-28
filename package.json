@@ -6,9 +6,16 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "audit:parity": "node scripts/audit_shapeof_parity.mjs",
+    "fix:parity": "node scripts/remediate_shapeof_parity.mjs",
+    "merge:dual-source": "node scripts/merge_dual_source_content.mjs",
+    "normalize:content": "node scripts/normalize_pattern_content.mjs",
+    "sync:source-images:dry": "node scripts/sync_source_images.mjs",
+    "sync:source-images": "node scripts/sync_source_images.mjs --apply"
   },
   "dependencies": {
+    "@ingka/icon-webc": "^0.13.6",
     "lucide-react": "^1.7.0",
     "next": "^16.2.1",
     "react": "^18.3.1",
