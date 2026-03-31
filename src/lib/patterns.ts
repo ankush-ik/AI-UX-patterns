@@ -49,3 +49,50 @@ export interface Category {
   icon: string;
 }
 
+type PatternSourceLike = Pick<Pattern, "sourceUrl" | "sources">;
+
+function getLegacySourceName(sourceUrl: string): string {
+  const defaultName = "Source";
+
+  try {
+    const hostname = new URL(sourceUrl).hostname.toLowerCase();
+
+    if (hostname === "shapeof.ai" || hostname === "www.shapeof.ai") {
+      return "Shapeof.ai";
+    }
+
+    const normalizedHostname = hostname.replace(/^www\./, "");
+    return normalizedHostname || defaultName;
+  } catch {
+    return defaultName;
+  }
+}
+
+/**
+ * Returns normalized sources while keeping backward compatibility with legacy sourceUrl.
+ */
+export function getPatternSources(pattern: PatternSourceLike): PatternSource[] {
+  const multiSources = (pattern.sources ?? []).filter((source) => {
+    return Boolean(source?.url);
+  });
+
+  if (multiSources.length > 0) {
+    return multiSources;
+  }
+
+  if (pattern.sourceUrl) {
+    return [
+      {
+        name: getLegacySourceName(pattern.sourceUrl),
+        url: pattern.sourceUrl,
+      },
+    ];
+  }
+
+  return [];
+}
+
+export function hasPatternSource(pattern: PatternSourceLike): boolean {
+  return getPatternSources(pattern).length > 0;
+}
+
