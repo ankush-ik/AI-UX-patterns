@@ -1,4 +1,4 @@
-import type { Category, Pattern } from "@/lib/patterns";
+import { hasPatternSource, type Category, type Pattern } from "@/lib/patterns";
 import {
   getCategories,
   getPatternById,
@@ -64,7 +64,7 @@ export async function getContentReport(): Promise<ContentReport> {
     (pattern) => pattern.content.examples.length === 0
   );
   const patternsWithoutSourceUrl = patterns.filter(
-    (pattern) => !pattern.sourceUrl && (!pattern.sources || pattern.sources.length === 0)
+    (pattern) => !hasPatternSource(pattern)
   );
   const patternsWithoutRelatedPatterns = patterns.filter(
     (pattern) => pattern.content.relatedPatterns.length === 0
@@ -85,7 +85,7 @@ export async function getContentReport(): Promise<ContentReport> {
         (pattern) => pattern.content.examples.length > 0
       ).length,
       withSourceCount: categoryPatterns.filter(
-        (pattern) => pattern.sourceUrl || (pattern.sources && pattern.sources.length > 0)
+        (pattern) => hasPatternSource(pattern)
       )
         .length,
     };

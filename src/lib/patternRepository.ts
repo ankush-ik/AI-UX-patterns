@@ -11,8 +11,6 @@ export interface PatternWithCategory extends Pattern {
  * All content access goes through the configured CMS adapter (Local JSON, Contentful, Sanity, etc.)
  */
 
-const adapter = getCMSAdapter();
-
 // Note: The following caches are built lazily on first call.
 // For static builds, LocalJsonAdapter loads synchronously, so this works fine.
 // For dynamic CMS sources (Contentful, Sanity), you may want to implement cache invalidation.
@@ -20,15 +18,35 @@ let categoriesCache: Category[] | null = null;
 let patternsCache: Pattern[] | null = null;
 let patternIndex: Map<string, Pattern> | null = null;
 let categoryIndex: Map<string, Category> | null = null;
+let cacheLoadPromise: Promise<void> | null = null;
+
+function hasLoadedCache() {
+  return Boolean(categoriesCache && patternsCache && patternIndex && categoryIndex);
+}
+
+async function loadCache() {
+  const adapter = getCMSAdapter();
+  const [categories, patterns] = await Promise.all([
+    adapter.getCategories(),
+    adapter.getPatterns(),
+  ]);
+
+  categoriesCache = categories;
+  patternsCache = patterns;
+  categoryIndex = new Map(categories.map((category) => [category.id, category]));
+  patternIndex = new Map(patterns.map((pattern) => [pattern.id, pattern]));
+}
 
 async function ensureCacheLoaded() {
-  if (categoriesCache && patternsCache) return;
+  if (hasLoadedCache()) return;
 
-  categoriesCache = await adapter.getCategories();
-  patternsCache = await adapter.getPatterns();
+  if (!cacheLoadPromise) {
+    cacheLoadPromise = loadCache().finally(() => {
+      cacheLoadPromise = null;
+    });
+  }
 
-  patternIndex = new Map(patternsCache.map((pattern) => [pattern.id, pattern]));
-  categoryIndex = new Map(categoriesCache.map((category) => [category.id, category]));
+  await cacheLoadPromise;
 }
 
 export async function getCategories() {
@@ -129,4 +147,5 @@ export function resetCache() {
   patternsCache = null;
   patternIndex = null;
   categoryIndex = null;
+  cacheLoadPromise = null;
 }

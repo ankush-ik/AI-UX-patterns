@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import type { Pattern, Category, PatternExample, PatternEmbedExample, PatternImageExample } from "@/lib/patterns";
+import { getPatternSources } from "@/lib/patterns";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { SidebarNav } from "@/components/SidebarNav";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
@@ -30,6 +31,7 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
 
   const embedExamples = pattern.content.examples.filter(isEmbedExample);
   const imageExamples = pattern.content.examples.filter(isImageExample);
+  const sources = getPatternSources(pattern);
 
   const selectedExample =
     selectedImageIndex !== null ? imageExamples[selectedImageIndex] : null;
@@ -423,20 +425,15 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
             <div className="max-w-[90ch]">
               <h1 className="mb-4 text-5xl font-bold leading-tight text-sk-primary md:text-6xl">{pattern.title}</h1>
               <p className="mb-5 text-xl leading-[1.7] text-sk-text-muted md:text-2xl">{pattern.description}</p>
-              {pattern.sources && pattern.sources.length > 0 ? (
+              {sources.length > 0 ? (
                 <p className="text-base text-sk-text-muted md:text-lg">
-                  Sources:{" "}
-                  {pattern.sources.map((s, i) => (
+                  {sources.length > 1 ? "Sources:" : "Source:"}{" "}
+                  {sources.map((s, i) => (
                     <span key={s.url}>
-                      <a href={s.url} target="_blank" rel="noopener noreferrer" className="hover:underline">{s.name}</a>
-                      {i < pattern.sources!.length - 1 ? ", " : ""}
+                      <a href={s.url} target="_blank" rel="noopener noreferrer" className="hover:underline">{s.name || s.url}</a>
+                      {i < sources.length - 1 ? ", " : ""}
                     </span>
                   ))}
-                </p>
-              ) : pattern.sourceUrl ? (
-                <p className="text-base text-sk-text-muted md:text-lg">
-                  Source:{" "}
-                  <a href={pattern.sourceUrl} target="_blank" rel="noopener noreferrer" className="hover:underline">{pattern.sourceUrl}</a>
                 </p>
               ) : null}
             </div>

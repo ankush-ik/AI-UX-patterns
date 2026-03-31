@@ -162,15 +162,6 @@ function richtextToMarkdown(fragment) {
     .trim();
 }
 
-function markdownToParagraphs(markdown) {
-  return dedupeParagraphs(
-    markdown
-      .split(/\n\n+/)
-      .map((section) => section.trim())
-      .filter(Boolean)
-  );
-}
-
 function getSourceUrls(pattern) {
   const shapeofUrl = pattern.sourceUrl?.includes('shapeof.ai')
     ? pattern.sourceUrl

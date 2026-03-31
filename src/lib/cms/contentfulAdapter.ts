@@ -61,11 +61,7 @@ export class ContentfulAdapter implements ICMSAdapter {
   }
 
   async isHealthy(): Promise<boolean> {
-    try {
-      // TODO: Make a simple health check call to Contentful
-      return true;
-    } catch {
-      return false;
-    }
+    // Template adapter is not implemented yet, so report unhealthy explicitly.
+    return false;
   }
 }

@@ -8,9 +8,12 @@ import { ContentfulAdapter } from "@/lib/cms/contentfulAdapter";
  * based on environment configuration.
  *
  * Environment variables:
- * - CMS_PROVIDER: "local-json" (default) | "contentful" | "sanity" | etc.
+ * - CMS_PROVIDER: "local-json" (default) | "contentful" | "sanity"
  * - For Contentful: CONTENTFUL_SPACE_ID, CONTENTFUL_ACCESS_TOKEN
- * - For Sanity: SANITY_PROJECT_ID, SANITY_DATASET, SANITY_READ_TOKEN
+ *
+ * Note:
+ * - "local-json" is the only fully implemented provider in this repository.
+ * - "contentful" and "sanity" are scaffolding paths and require implementation.
  */
 
 let instance: ICMSAdapter | null = null;
@@ -35,7 +38,7 @@ function createAdapter(): ICMSAdapter {
       throw new Error('Sanity adapter not yet implemented. Use CMS_PROVIDER="local-json" for now.');
 
     default:
-      throw new Error(`Unknown CMS provider: ${provider}. Use "local-json", "contentful", or "sanity".`);
+      throw new Error(`Unknown CMS provider: ${provider}. Use "local-json".`);
   }
 }
 

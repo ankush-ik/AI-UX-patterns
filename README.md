@@ -193,14 +193,14 @@ This project uses a **flexible CMS adapter pattern** for content management. Thi
   - No external dependencies
   - Fast, deterministic builds
 
-- **Contentful** - Ready to implement
+- **Contentful** - Template only (not implemented in this repo)
   - Template provided in `src/lib/cms/contentfulAdapter.ts`
   - Full guide in [docs/CMS_ADAPTER.md](docs/CMS_ADAPTER.md#creating-a-new-adapter)
   - Connect via environment variables
 
-- **Sanity** - Coming soon
-  - Template placeholder for future implementation
-  - Use same environment-based approach
+- **Sanity** - Placeholder only (not implemented)
+  - Currently throws a not-implemented error when selected
+  - Use `local-json` unless you implement a Sanity adapter
 
 ### Setting a Provider
 
@@ -216,6 +216,10 @@ export CONTENTFUL_SPACE_ID=your_space_id
 export CONTENTFUL_ACCESS_TOKEN=your_read_token
 npm run dev
 ```
+
+Important:
+- The repository currently ships with `local-json` as the only fully implemented provider.
+- Contentful/Sanity entries are scaffolding paths and require adapter implementation before use.
 
 That's it! No code changes needed. The app automatically uses the configured provider.
 

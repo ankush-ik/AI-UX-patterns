@@ -1,7 +1,8 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import { X, Plus, Trash2 } from "lucide-react";
+import { SkapaIcon } from "@/components/SkapaIcon";
+import { SkapaButton } from "@/components/SkapaButton";
 import type { Pattern, Category, PatternExample } from "@/lib/patterns";
 
 interface PatternEditorProps {
@@ -193,29 +194,29 @@ export function PatternEditor({ pattern, categories, onSave, onDelete, onClose }
       {/* panel */}
       <div className="relative z-10 flex h-full w-full max-w-2xl flex-col bg-white shadow-2xl">
         {/* header */}
-        <div className="flex items-center justify-between border-b border-gray-200 px-6 py-4">
-          <h2 className="text-lg font-semibold text-gray-900">
+        <div className="flex items-center justify-between border-b border-sk-border px-6 py-4">
+          <h2 className="text-skapa-h3 font-semibold text-sk-primary">
             {isEditing ? `Edit: ${pattern!.title}` : "New Pattern"}
           </h2>
           <button
             onClick={onClose}
-            className="rounded-lg p-1.5 text-gray-400 hover:bg-gray-100 hover:text-gray-700"
+            className="rounded-lg p-1.5 text-sk-text-muted hover:bg-sk-surface-muted hover:text-sk-text"
           >
-            <X size={18} />
+            <SkapaIcon name="close" size={18} />
           </button>
         </div>
 
         {/* scrollable body */}
         <div className="flex-1 overflow-y-auto px-6 py-6 space-y-6">
           {error && (
-            <div className="rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+            <div className="rounded-lg border border-[var(--sk-color-danger)] bg-white px-4 py-3 text-skapa-body-sm text-[var(--sk-color-danger)]">
               {error}
             </div>
           )}
 
           {/* Basic fields */}
           <fieldset className="space-y-4">
-            <legend className="text-xs font-semibold uppercase tracking-widest text-gray-400">
+            <legend className="text-skapa-overline font-semibold text-sk-text-muted">
               Core info
             </legend>
 
@@ -282,7 +283,7 @@ export function PatternEditor({ pattern, categories, onSave, onDelete, onClose }
                 <img
                   src={form.thumbnail}
                   alt="Thumbnail preview"
-                  className="mt-2 h-24 w-full rounded-lg object-cover border border-gray-200"
+                  className="mt-2 h-24 w-full rounded-lg object-cover border border-sk-border"
                   onError={(e) => (e.currentTarget.style.display = "none")}
                 />
               )}
@@ -299,11 +300,11 @@ export function PatternEditor({ pattern, categories, onSave, onDelete, onClose }
             </Field>
           </fieldset>
 
-          <hr className="border-gray-100" />
+          <hr className="border-sk-border" />
 
           {/* Content */}
           <fieldset className="space-y-4">
-            <legend className="text-xs font-semibold uppercase tracking-widest text-gray-400">
+            <legend className="text-skapa-overline font-semibold text-sk-text-muted">
               Content
             </legend>
 
@@ -338,11 +339,11 @@ export function PatternEditor({ pattern, categories, onSave, onDelete, onClose }
             </Field>
           </fieldset>
 
-          <hr className="border-gray-100" />
+          <hr className="border-sk-border" />
 
           {/* Related patterns */}
           <fieldset className="space-y-3">
-            <legend className="text-xs font-semibold uppercase tracking-widest text-gray-400">
+            <legend className="text-skapa-overline font-semibold text-sk-text-muted">
               Related patterns
             </legend>
 
@@ -355,13 +356,14 @@ export function PatternEditor({ pattern, categories, onSave, onDelete, onClose }
                 className={`${inputClass} flex-1`}
                 placeholder="pattern-id (press Enter to add)"
               />
-              <button
+              <SkapaButton
                 type="button"
                 onClick={addRelated}
-                className="rounded-lg border border-gray-200 px-3 py-2 text-sm hover:border-gray-400"
-              >
-                <Plus size={16} />
-              </button>
+                variant="ghost"
+                size="small"
+                iconName="add"
+                iconOnly
+              />
             </div>
 
             {form.content.relatedPatterns.length > 0 && (
@@ -369,15 +371,15 @@ export function PatternEditor({ pattern, categories, onSave, onDelete, onClose }
                 {form.content.relatedPatterns.map((id) => (
                   <span
                     key={id}
-                    className="flex items-center gap-1.5 rounded-full bg-gray-100 px-3 py-1 text-xs font-mono"
+                    className="flex items-center gap-1.5 rounded-full bg-sk-surface-muted px-3 py-1 text-skapa-caption font-mono text-sk-text"
                   >
                     {id}
                     <button
                       type="button"
                       onClick={() => removeRelated(id)}
-                      className="text-gray-400 hover:text-red-500"
+                      className="text-sk-text-muted hover:text-[var(--sk-color-danger)]"
                     >
-                      <X size={12} />
+                      <SkapaIcon name="close" size={12} />
                     </button>
                   </span>
                 ))}
@@ -390,32 +392,34 @@ export function PatternEditor({ pattern, categories, onSave, onDelete, onClose }
           {/* Examples */}
           <fieldset className="space-y-3">
             <div className="flex items-center justify-between">
-              <legend className="text-xs font-semibold uppercase tracking-widest text-gray-400">
+              <legend className="text-skapa-overline font-semibold text-sk-text-muted">
                 Examples
               </legend>
-              <button
+              <SkapaButton
                 type="button"
                 onClick={addExample}
-                className="flex items-center gap-1 rounded-lg border border-gray-200 px-3 py-1.5 text-xs hover:border-gray-400"
+                variant="ghost"
+                size="small"
+                iconName="add"
               >
-                <Plus size={13} /> Add example
-              </button>
+                Add example
+              </SkapaButton>
             </div>
 
             {form.content.examples.length === 0 && (
-              <p className="text-sm text-gray-400">No examples yet. Click &ldquo;Add example&rdquo; above.</p>
+              <p className="text-skapa-body-sm text-sk-text-muted">No examples yet. Click &ldquo;Add example&rdquo; above.</p>
             )}
 
             {form.content.examples.map((ex, i) => (
-              <div key={i} className="rounded-xl border border-gray-200 p-4 space-y-3">
+              <div key={i} className="rounded-xl border border-sk-border p-4 space-y-3">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium text-gray-500">Example {i + 1}</span>
+                  <span className="text-skapa-caption font-medium text-sk-text-muted">Example {i + 1}</span>
                   <button
                     type="button"
                     onClick={() => removeExample(i)}
-                    className="text-gray-300 hover:text-red-500"
+                    className="text-sk-text-muted hover:text-[var(--sk-color-danger)]"
                   >
-                    <Trash2 size={14} />
+                    <SkapaIcon name="trash" size={14} />
                   </button>
                 </div>
                 <Field label="Media type">
@@ -499,7 +503,7 @@ export function PatternEditor({ pattern, categories, onSave, onDelete, onClose }
                       <img
                         src={ex.image}
                         alt={`Example ${i + 1} preview`}
-                        className="mt-2 h-20 w-full rounded-lg object-cover border border-gray-200"
+                        className="mt-2 h-20 w-full rounded-lg object-cover border border-sk-border"
                         onError={(e) => (e.currentTarget.style.display = "none")}
                       />
                     )}
@@ -520,36 +524,39 @@ export function PatternEditor({ pattern, categories, onSave, onDelete, onClose }
         </div>
 
         {/* footer actions */}
-        <div className="flex items-center justify-between border-t border-gray-200 px-6 py-4">
+        <div className="flex items-center justify-between border-t border-sk-border px-6 py-4">
           <div>
             {isEditing && onDelete && (
-              <button
+              <SkapaButton
                 type="button"
                 onClick={handleDelete}
                 disabled={deleting}
-                className="flex items-center gap-1.5 rounded-lg border border-red-200 px-3 py-2 text-sm text-red-600 hover:bg-red-50 disabled:opacity-50"
+                variant="danger"
+                size="small"
+                iconName="trash"
               >
-                <Trash2 size={14} />
                 {deleting ? "Deleting…" : "Delete pattern"}
-              </button>
+              </SkapaButton>
             )}
           </div>
           <div className="flex gap-3">
-            <button
+            <SkapaButton
               type="button"
               onClick={onClose}
-              className="rounded-lg border border-gray-200 px-4 py-2 text-sm hover:border-gray-400"
+              variant="secondary"
+              size="small"
             >
               Cancel
-            </button>
-            <button
+            </SkapaButton>
+            <SkapaButton
               type="button"
               onClick={handleSave}
               disabled={saving}
-              className="rounded-lg bg-gray-900 px-4 py-2 text-sm text-white hover:bg-gray-700 disabled:opacity-50"
+              variant="primary"
+              size="small"
             >
               {saving ? "Saving…" : isEditing ? "Save changes" : "Create pattern"}
-            </button>
+            </SkapaButton>
           </div>
         </div>
       </div>
@@ -560,7 +567,7 @@ export function PatternEditor({ pattern, categories, onSave, onDelete, onClose }
 // ─── helpers ────────────────────────────────────────────────────────────────
 
 const inputClass =
-  "w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm text-gray-900 placeholder-gray-400 focus:border-gray-400 focus:outline-none focus:ring-0";
+  "w-full rounded-lg border border-sk-border bg-white px-3 py-2 text-skapa-body-sm text-sk-text placeholder-sk-text-muted focus:border-[var(--sk-color-focus)] focus:outline-none focus:ring-1 focus:ring-[var(--sk-color-focus)]";
 
 function Field({
   label,
@@ -575,11 +582,11 @@ function Field({
 }) {
   return (
     <div className="space-y-1">
-      <label className="block text-sm font-medium text-gray-700">
+      <label className="block text-skapa-body-sm font-medium text-sk-text">
         {label}
-        {required && <span className="ml-1 text-red-400">*</span>}
+        {required && <span className="ml-1 text-[var(--sk-color-danger)]">*</span>}
       </label>
-      {hint && <p className="text-xs text-gray-400">{hint}</p>}
+      {hint && <p className="text-skapa-caption text-sk-text-muted">{hint}</p>}
       {children}
     </div>
   );
