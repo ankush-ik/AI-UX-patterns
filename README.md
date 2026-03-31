@@ -244,6 +244,37 @@ The admin dashboard at `/admin` provides insights into your content:
 - **Provider Info** - See which CMS is currently connected
 - **Data Export** - Export patterns as JSON for integration or migration
 
+### Admin Authentication
+
+The admin dashboard and mutating pattern endpoints are protected with HTTP Basic Auth:
+
+- `GET /admin`
+- `POST /api/patterns/new`
+- `PATCH /api/patterns/[id]/edit`
+- `DELETE /api/patterns/[id]/edit`
+
+Default local credentials:
+
+- Username: `demo`
+- Password: `summertime`
+
+You can override these using environment variables:
+
+```bash
+export ADMIN_USERNAME=demo
+export ADMIN_PASSWORD=summertime
+```
+
+Quick check:
+
+```bash
+# Expect 401
+curl -i http://localhost:3000/admin
+
+# Expect 200
+curl -i -u demo:summertime http://localhost:3000/admin
+```
+
 ## 🗂️ Project Structure
 
 ```
