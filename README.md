@@ -253,7 +253,7 @@ The admin dashboard and mutating pattern endpoints are protected with HTTP Basic
 - `PATCH /api/patterns/[id]/edit`
 - `DELETE /api/patterns/[id]/edit`
 
-Default local credentials:
+Default local credentials (non-production only):
 
 - Username: `demo`
 - Password: `summertime`
@@ -274,6 +274,10 @@ curl -i http://localhost:3000/admin
 # Expect 200
 curl -i -u demo:summertime http://localhost:3000/admin
 ```
+
+Production note:
+- In production, `ADMIN_USERNAME` and `ADMIN_PASSWORD` are required.
+- If either value is missing, protected routes return `503` instead of falling back to demo credentials.
 
 ## 🗂️ Project Structure
 
@@ -387,9 +391,18 @@ CMS provider health check.
 {
   "status": "healthy",
   "provider": "LocalJsonAdapter",
+  "environment": "production",
+  "adminCredentialsConfigured": true,
+  "adminMutationsEnabled": false,
+  "warnings": [],
   "timestamp": "2026-03-26T..."
 }
 ```
+
+Health status semantics:
+- `healthy`: CMS is healthy and no deployment warnings are active.
+- `degraded`: CMS is healthy but deployment warnings exist (for example risky mutation settings).
+- `unhealthy`: blocking issue detected (for example CMS failure or missing production admin credentials).
 
 ## 🎨 Customization
 
@@ -433,6 +446,37 @@ git push origin main
 
 # Deploy via Vercel UI or CLI
 vercel deploy
+```
+
+Recommended Vercel environment variables:
+
+```bash
+ADMIN_USERNAME=<strong-username>
+ADMIN_PASSWORD=<strong-password>
+CMS_PROVIDER=local-json
+ENABLE_ADMIN_MUTATIONS=false
+```
+
+How mutation safety works:
+- `ENABLE_ADMIN_MUTATIONS=false` (or unset in production) keeps create/edit/delete routes disabled with `503` responses.
+- Set `ENABLE_ADMIN_MUTATIONS=true` only when using a durable write backend and you intentionally want runtime edits.
+
+Post-deploy smoke checks:
+
+```bash
+# Basic production checks (home + APIs + unauthorized admin)
+npm run smoke:deploy -- --base-url=https://your-app.vercel.app
+
+# Include authorized admin check
+npm run smoke:deploy -- --base-url=https://your-app.vercel.app \
+  --admin-user=$ADMIN_USERNAME --admin-pass=$ADMIN_PASSWORD
+
+# Phase 1 strict mode: also verifies mutation endpoints are disabled (503)
+npm run smoke:deploy -- --base-url=https://your-app.vercel.app \
+  --admin-user=$ADMIN_USERNAME --admin-pass=$ADMIN_PASSWORD --phase1
+
+# Local verification (localhost is normalized to 127.0.0.1 automatically)
+npm run smoke:deploy -- --base-url=http://localhost:3000 --admin-user=demo --admin-pass=summertime
 ```
 
 ### Other Platforms

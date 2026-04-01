@@ -7,6 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "smoke:deploy": "node scripts/smoke_deploy.mjs",
     "audit:parity": "node scripts/audit_shapeof_parity.mjs",
     "fix:parity": "node scripts/remediate_shapeof_parity.mjs",
     "merge:dual-source": "node scripts/merge_dual_source_content.mjs",

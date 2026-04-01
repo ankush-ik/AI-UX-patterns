@@ -2,6 +2,14 @@ import type { Pattern, PatternExample, PatternSource } from "@/lib/patterns";
 import { readContent, writeContent } from "@/lib/contentWriter";
 import { resetCache } from "@/lib/patternRepository";
 
+function mutationsAllowed() {
+  if (process.env.ENABLE_ADMIN_MUTATIONS === "true") {
+    return true;
+  }
+
+  return process.env.NODE_ENV !== "production";
+}
+
 function normalizeOptionalString(value: unknown): string | undefined {
   if (typeof value !== "string") {
     return undefined;
@@ -74,6 +82,16 @@ export async function PATCH(
   request: Request,
   context: { params: Promise<{ id: string }> }
 ) {
+  if (!mutationsAllowed()) {
+    return Response.json(
+      {
+        error:
+          "Admin mutations are disabled. Set ENABLE_ADMIN_MUTATIONS=true to enable POST/PATCH/DELETE routes.",
+      },
+      { status: 503 }
+    );
+  }
+
   const { id } = await context.params;
 
   let body: unknown;
@@ -170,6 +188,16 @@ export async function DELETE(
   _request: Request,
   context: { params: Promise<{ id: string }> }
 ) {
+  if (!mutationsAllowed()) {
+    return Response.json(
+      {
+        error:
+          "Admin mutations are disabled. Set ENABLE_ADMIN_MUTATIONS=true to enable POST/PATCH/DELETE routes.",
+      },
+      { status: 503 }
+    );
+  }
+
   const { id } = await context.params;
 
   const data = await readContent();

@@ -2,6 +2,14 @@ import type { Pattern, PatternExample, PatternSource } from "@/lib/patterns";
 import { readContent, writeContent } from "@/lib/contentWriter";
 import { resetCache } from "@/lib/patternRepository";
 
+function mutationsAllowed() {
+  if (process.env.ENABLE_ADMIN_MUTATIONS === "true") {
+    return true;
+  }
+
+  return process.env.NODE_ENV !== "production";
+}
+
 function slugifyPatternId(value: string) {
   return value
     .toLowerCase()
@@ -78,6 +86,16 @@ function hasCategoryId(categories: unknown[], categoryId: string): boolean {
  * Add a new pattern to patterns.json
  */
 export async function POST(request: Request) {
+  if (!mutationsAllowed()) {
+    return Response.json(
+      {
+        error:
+          "Admin mutations are disabled. Set ENABLE_ADMIN_MUTATIONS=true to enable POST/PATCH/DELETE routes.",
+      },
+      { status: 503 }
+    );
+  }
+
   let body: unknown;
   try {
     body = await request.json();

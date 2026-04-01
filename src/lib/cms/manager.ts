@@ -19,9 +19,9 @@ import { ContentfulAdapter } from "@/lib/cms/contentfulAdapter";
 let instance: ICMSAdapter | null = null;
 
 function createAdapter(): ICMSAdapter {
-  const provider = process.env.CMS_PROVIDER || "local-json";
+  const provider = (process.env.CMS_PROVIDER || "local-json").trim().toLowerCase();
 
-  switch (provider.toLowerCase()) {
+  switch (provider) {
     case "local-json":
       return new LocalJsonAdapter();
 
