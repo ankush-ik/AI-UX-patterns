@@ -18,8 +18,18 @@ import { ContentfulAdapter } from "@/lib/cms/contentfulAdapter";
 
 let instance: ICMSAdapter | null = null;
 
+function normalizeProvider(value: string) {
+  const normalized = value.trim().toLowerCase();
+
+  if (normalized === "local_json" || normalized === "localjson") {
+    return "local-json";
+  }
+
+  return normalized;
+}
+
 function createAdapter(): ICMSAdapter {
-  const provider = (process.env.CMS_PROVIDER || "local-json").trim().toLowerCase();
+  const provider = normalizeProvider(process.env.CMS_PROVIDER || "local-json");
 
   switch (provider) {
     case "local-json":
@@ -38,7 +48,9 @@ function createAdapter(): ICMSAdapter {
       throw new Error('Sanity adapter not yet implemented. Use CMS_PROVIDER="local-json" for now.');
 
     default:
-      throw new Error(`Unknown CMS provider: ${provider}. Use "local-json".`);
+      throw new Error(
+        `Unknown CMS provider: ${provider}. Use "local-json" (aliases: local_json, localjson).`
+      );
   }
 }
 
