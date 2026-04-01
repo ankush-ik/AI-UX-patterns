@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { Compass, Mic, Sparkles, Settings, LayoutGrid, Pencil, Gavel, ShieldCheck, CircleCheck, Tag } from "lucide-react";
 import type { Category, Pattern } from "@/lib/patterns";
 import { useIconResolver } from "@/hooks/useIconResolver";
@@ -93,12 +92,12 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
               Foundational elements and interactions for AI-enabled experiences
             </p>
           </div>
-          <Link
+          <a
             href="/admin"
             className="inline-flex min-h-10 items-center border border-sk-border-strong px-4 text-skapa-body-sm text-sk-primary transition-colors hover:border-sk-primary"
           >
             Content admin
-          </Link>
+          </a>
         </div>
       </header>
 

@@ -395,7 +395,7 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
             <span>/</span>
             <span className="text-sk-primary">{pattern.title}</span>
           </div>
-          <Link href="/admin" className="transition-colors hover:text-sk-primary">Content admin</Link>
+          <a href="/admin" className="transition-colors hover:text-sk-primary">Content admin</a>
         </div>
       </div>
 
