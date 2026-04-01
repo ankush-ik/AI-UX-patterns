@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import Link from "next/link";
 import { getContentReport } from "@/lib/patternValidation";
 import { getCurrentProvider } from "@/lib/cms/manager";
