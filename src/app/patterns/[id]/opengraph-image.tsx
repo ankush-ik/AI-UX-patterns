@@ -5,9 +5,17 @@ export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
 export default async function OgImage() {
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : 'http://localhost:3000');
+
   const [boldData, regularData] = await Promise.all([
-    fetch('https://www.ikea.com/global/assets/fonts/woff2/noto-ikea-700.latin.a3f10ed8.woff2').then((r) => r.arrayBuffer()),
-    fetch('https://www.ikea.com/global/assets/fonts/woff2/noto-ikea-400.latin.5a052965.woff2').then((r) => r.arrayBuffer()),
+    fetch(`${siteUrl}/fonts/noto-ikea-700.ttf`).then((r) => r.arrayBuffer()),
+    fetch(`${siteUrl}/fonts/noto-ikea-400.ttf`).then((r) => r.arrayBuffer()),
   ]);
 
   return new ImageResponse(
