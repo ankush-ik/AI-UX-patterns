@@ -17,10 +17,13 @@
   },
   "dependencies": {
     "@ingka/button": "^19.0.13",
+    "@ingka/carousel": "^21.2.1",
     "@ingka/focus": "^7.1.2",
     "@ingka/icon-webc": "^0.13.6",
     "@ingka/search": "^11.0.13",
+    "@ingka/ssr-icon": "^11.5.0",
     "@ingka/svg-icon": "^7.0.4",
+    "@ingka/tabs": "^18.1.13",
     "@ingka/text": "^7.0.8",
     "fuse.js": "^7.1.0",
     "lucide-react": "^1.7.0",

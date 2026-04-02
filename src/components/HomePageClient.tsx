@@ -5,6 +5,17 @@ import { useSearchParams } from "next/navigation";
 import Fuse from "fuse.js";
 import type { FuseResultMatch } from "fuse.js";
 import Search from "@ingka/search";
+import Tabs, { Tab } from "@ingka/tabs";
+import compassIcon from "@ingka/ssr-icon/paths/map";
+import microphoneIcon from "@ingka/ssr-icon/paths/microphone";
+import sparklesIcon from "@ingka/ssr-icon/paths/sparkles";
+import settingsIcon from "@ingka/ssr-icon/paths/gear";
+import layoutIcon from "@ingka/ssr-icon/paths/layout";
+import pencilIcon from "@ingka/ssr-icon/paths/pencil";
+import gavelIcon from "@ingka/ssr-icon/paths/scales";
+import shieldIcon from "@ingka/ssr-icon/paths/shield-checkmark";
+import checkCircleIcon from "@ingka/ssr-icon/paths/checkmark-circle";
+import tagIcon from "@ingka/ssr-icon/paths/tag";
 import { Compass, Mic, Sparkles, Settings, LayoutGrid, Pencil, Gavel, ShieldCheck, CircleCheck, Tag } from "lucide-react";
 import type { Category, Pattern } from "@/lib/patterns";
 import { useIconResolver } from "@/hooks/useIconResolver";
@@ -92,6 +103,20 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
     tag: Tag,
   };
 
+  // SSR icon mapping for Skapa Tabs (mobile nav)
+  const ssrIconMap: Record<string, unknown> = {
+    compass: compassIcon,
+    microphone: microphoneIcon,
+    sparkles: sparklesIcon,
+    settings: settingsIcon,
+    layout: layoutIcon,
+    pencil: pencilIcon,
+    gavel: gavelIcon,
+    "shield-checkmark": shieldIcon,
+    "checkmark-circle": checkCircleIcon,
+    tag: tagIcon,
+  };
+
   useEffect(() => {
     const handleScroll = () => {
       const categoryElements = categories.map((cat) =>
@@ -144,28 +169,41 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
   return (
     <div className="min-h-screen bg-white">
       <header className="border-b border-sk-border">
-        <div className="container mx-auto flex flex-wrap items-center justify-between gap-4 px-4 py-12 md:py-14">
+        <div className="container mx-auto flex flex-wrap items-center justify-between gap-4 px-[24px] py-6 md:px-4 md:py-12">
           <div>
             <h1 className="mb-3 text-4xl font-bold leading-tight text-sk-primary md:text-5xl">Designing AI</h1>
             <p className="max-w-none text-base leading-relaxed text-sk-text-muted md:text-lg lg:whitespace-nowrap">
               Foundational elements and interactions for AI-enabled experiences
             </p>
           </div>
-          <div className="w-full max-w-sm">
-            <Search
-              id="pattern-search"
-              value={searchQuery}
-              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
-              onClear={() => setSearchQuery("")}
-              placeholder="Search"
-              ariaLabel="Search patterns"
-              size="large"
-            />
+          <div className="w-full md:max-w-sm">
+            <div className="md:hidden">
+              <Search
+                id="pattern-search-sm"
+                value={searchQuery}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+                onClear={() => setSearchQuery("")}
+                placeholder="Search"
+                ariaLabel="Search patterns"
+                size="small"
+              />
+            </div>
+            <div className="hidden md:block">
+              <Search
+                id="pattern-search"
+                value={searchQuery}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+                onClear={() => setSearchQuery("")}
+                placeholder="Search"
+                ariaLabel="Search patterns"
+                size="large"
+              />
+            </div>
           </div>
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-12 md:py-14">
+      <div className="container mx-auto px-[24px] py-12 md:px-4 md:py-14">
         {isSearching ? (
           /* Search results view */
           <div>
@@ -189,22 +227,50 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
           </div>
         ) : (
           /* Category browsing view */
-          <div className="flex gap-8">
-            <SidebarNav
-              items={sidebarItems}
-              activeItem={activeCategory}
-              onItemClick={scrollToCategory}
-              footer={
-                <a
-                  href="/admin"
-                  className="block py-4 pl-[3.75rem] pr-5 text-base font-semibold leading-tight text-[#b0b0b0] transition-colors hover:text-sk-text-muted md:pl-[4rem] md:text-lg"
-                >
-                  Content admin
-                </a>
-              }
-            />
+          <div>
+            {/* Mobile horizontal category tab bar */}
+            <div className="sticky top-0 z-10 -mx-[24px] mb-[24px] bg-white pl-[24px] lg:hidden">
+              <Tabs
+                tabs={sidebarItems.map((item) => {
+                  const iconName = resolveIcon(categories.find(c => c.id === item.id)?.icon ?? "");
+                  return (
+                    <Tab
+                      key={item.id}
+                      text={item.label}
+                      tabPanelId={`category-${item.id}`}
+                      ssrIcon={iconName ? ssrIconMap[iconName] as never : undefined}
+                      onClick={() => { scrollToCategory(item.id); return true; }}
+                    />
+                  );
+                })}
+                activeTab={activeCategory ? `category-${activeCategory}` : undefined}
+                onTabChanged={(tabPanelId) => {
+                  const catId = tabPanelId.replace("category-", "");
+                  scrollToCategory(catId);
+                }}
+                tabPanels={[]}
+                ariaLabel="Categories"
+              />
+            </div>
 
-            <main className="flex-1">
+            <div className="flex gap-8">
+              <div className="hidden lg:block">
+                <SidebarNav
+                  items={sidebarItems}
+                  activeItem={activeCategory}
+                  onItemClick={scrollToCategory}
+                  footer={
+                    <a
+                      href="/admin"
+                      className="block py-4 pl-[3.75rem] pr-5 text-base font-semibold leading-tight text-[#b0b0b0] transition-colors hover:text-sk-text-muted md:pl-[4rem] md:text-lg"
+                    >
+                      Content admin
+                    </a>
+                  }
+                />
+              </div>
+
+              <main className="flex-1 min-w-0">
               {categoryData.map(({ category, patterns }) => (
                 <section
                   key={category.id}
@@ -229,6 +295,7 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
                 </section>
               ))}
             </main>
+            </div>
           </div>
         )}
       </div>

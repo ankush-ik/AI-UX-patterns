@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import Search from "@ingka/search";
+import Tabs, { Tab } from "@ingka/tabs";
 import { ThumbsUp, ThumbsDown, X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { Pattern, Category, PatternExample, PatternEmbedExample, PatternImageExample } from "@/lib/patterns";
 import { getPatternSources } from "@/lib/patterns";
@@ -395,7 +396,7 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
     <div className="min-h-screen bg-white">
       {/* Breadcrumb */}
       <div className="border-b">
-        <div className="container mx-auto flex flex-wrap items-center justify-between gap-3 px-4 py-4 text-base text-sk-text md:text-lg">
+        <div className="container mx-auto flex flex-wrap items-center justify-between gap-3 px-[24px] py-4 text-base text-sk-text md:px-4 md:text-lg">
           <div className="flex gap-2">
             <Link href="/" className="transition-colors hover:text-sk-primary">Home</Link>
             <span>/</span>
@@ -403,7 +404,7 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
             <span>/</span>
             <span className="text-sk-primary">{pattern.title}</span>
           </div>
-          <div className="w-64">
+          <div className="w-full md:w-64">
             <Search
               id="detail-search"
               value={searchQuery}
@@ -419,7 +420,7 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
       </div>
 
       {/* Banner */}
-      <div className="relative h-96 w-full overflow-hidden border-b bg-[var(--sk-color-surface-muted)]">
+      <div className="relative h-48 w-full overflow-hidden border-b bg-[var(--sk-color-surface-muted)] md:h-96">
         <Image
           src={pattern.thumbnail}
           alt={pattern.title}
@@ -430,14 +431,37 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
         />
       </div>
 
-      <div className="container mx-auto px-4 py-8">
+      <div className="container mx-auto px-[24px] py-8 md:px-4">
+        {/* Mobile horizontal tab bar */}
+        <div className="sticky top-0 z-10 -mx-[24px] mb-[24px] bg-white pl-[24px] lg:hidden">
+          <Tabs
+            tabs={tabs.map((tab) => (
+              <Tab
+                key={tab.id}
+                text={tab.label}
+                tabPanelId={`section-${tab.id}`}
+                onClick={() => { scrollToSection(tab.id); return true; }}
+              />
+            ))}
+            activeTab={`section-${activeTab}`}
+            onTabChanged={(tabPanelId) => {
+              const tabId = tabPanelId.replace("section-", "") as TabType;
+              scrollToSection(tabId);
+            }}
+            tabPanels={[]}
+            ariaLabel="Sections"
+          />
+        </div>
+
         <div className="flex gap-8">
 
-          <SidebarNav
-            items={tabs}
-            activeItem={activeTab}
-            onItemClick={scrollToSection}
-          />
+          <div className="hidden lg:block">
+            <SidebarNav
+              items={tabs}
+              activeItem={activeTab}
+              onItemClick={scrollToSection}
+            />
+          </div>
 
           {/* Main Content */}
           <main className="flex-1 space-y-8 pr-0 lg:pr-10 xl:pr-16">

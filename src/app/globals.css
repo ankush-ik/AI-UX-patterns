@@ -1,12 +1,24 @@
 @import '@ingka/svg-icon/dist/style.css';
 @import '@ingka/button/dist/style.css';
+@import '@ingka/carousel/dist/style.css';
 @import '@ingka/text/dist/style.css';
 @import '@ingka/search/dist/style.css';
+@import '@ingka/tabs/dist/style.css';
 @import '@ingka/focus/dist/style.css';
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
 
 :root {
   --sk-color-primary: #111111;
