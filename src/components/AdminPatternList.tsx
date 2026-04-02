@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useTransition } from "react";
+import { useState, useTransition, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import type { Pattern, Category } from "@/lib/patterns";
 import { PatternEditor } from "@/components/PatternEditor";
@@ -17,6 +17,15 @@ export function AdminPatternList({ patterns: initialPatterns, categories }: Admi
   const [, startTransition] = useTransition();
   const [editingPattern, setEditingPattern] = useState<Pattern | null>(null);
   const [creatingNew, setCreatingNew] = useState(false);
+  const [filter, setFilter] = useState("");
+
+  const filteredPatterns = useMemo(() => {
+    const q = filter.trim().toLowerCase();
+    if (!q) return initialPatterns;
+    return initialPatterns.filter((p) =>
+      [p.title, p.description, p.categoryId].join(" ").toLowerCase().includes(q)
+    );
+  }, [initialPatterns, filter]);
 
   function refresh() {
     startTransition(() => router.refresh());
@@ -52,8 +61,23 @@ export function AdminPatternList({ patterns: initialPatterns, categories }: Admi
           </SkapaButton>
         </div>
 
-        <div className="mt-6 divide-y divide-sk-border">
-          {initialPatterns.map((pattern) => (
+        <div className="mt-4">
+          <input
+            type="text"
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+            placeholder="Filter patterns…"
+            className="w-full rounded-lg border border-sk-border bg-white px-3 py-2 text-skapa-body-sm text-sk-text placeholder-sk-text-muted focus:border-[var(--sk-color-focus)] focus:outline-none focus:ring-1 focus:ring-[var(--sk-color-focus)]"
+          />
+          {filter && (
+            <p className="mt-1 text-skapa-caption text-sk-text-muted">
+              {filteredPatterns.length} of {initialPatterns.length} patterns
+            </p>
+          )}
+        </div>
+
+        <div className="mt-4 divide-y divide-sk-border">
+          {filteredPatterns.map((pattern) => (
             <button
               key={pattern.id}
               onClick={() => setEditingPattern(pattern)}

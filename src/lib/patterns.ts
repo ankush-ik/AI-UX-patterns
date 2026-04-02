@@ -49,6 +49,14 @@ export interface Category {
   icon: string;
 }
 
+export interface PatternFeedback {
+  id: string;
+  patternId: string;
+  rating: "helpful" | "not-helpful";
+  comment?: string;
+  createdAt: string;
+}
+
 type PatternSourceLike = Pick<Pattern, "sourceUrl" | "sources">;
 
 function getLegacySourceName(sourceUrl: string): string {

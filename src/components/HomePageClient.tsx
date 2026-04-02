@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useEffect } from "react";
-import { Compass, Mic, Sparkles, Settings, LayoutGrid, Pencil, Gavel, ShieldCheck, CircleCheck, Tag } from "lucide-react";
+import { useState, useEffect, useMemo, useRef } from "react";
+import Fuse from "fuse.js";
+import { Compass, Mic, Sparkles, Settings, LayoutGrid, Pencil, Gavel, ShieldCheck, CircleCheck, Tag, Search, X } from "lucide-react";
 import type { Category, Pattern } from "@/lib/patterns";
 import { useIconResolver } from "@/hooks/useIconResolver";
 import { SidebarNav } from "@/components/SidebarNav";
@@ -18,6 +19,37 @@ interface HomePageClientProps {
 export function HomePageClient({ categories, categoryData }: HomePageClientProps) {
   const { resolveIcon } = useIconResolver();
   const [activeCategory, setActiveCategory] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const searchInputRef = useRef<HTMLInputElement>(null);
+
+  // Flatten all patterns for Fuse.js index
+  const allPatterns = useMemo(
+    () => categoryData.flatMap(({ patterns }) => patterns),
+    [categoryData]
+  );
+
+  const fuse = useMemo(
+    () =>
+      new Fuse(allPatterns, {
+        keys: [
+          { name: "title", weight: 2 },
+          { name: "description", weight: 1.5 },
+          { name: "content.description", weight: 1 },
+          { name: "categoryId", weight: 0.5 },
+        ],
+        threshold: 0.4,
+        ignoreLocation: true,
+        minMatchCharLength: 2,
+      }),
+    [allPatterns]
+  );
+
+  const searchResults = useMemo(() => {
+    if (!searchQuery.trim()) return [];
+    return fuse.search(searchQuery).map((result) => result.item);
+  }, [fuse, searchQuery]);
+
+  const isSearching = searchQuery.trim().length > 0;
 
   // Map resolved category icons to renderer components.
   const iconComponentMap: Record<string, React.ComponentType<{ className?: string }>> = {
@@ -101,41 +133,88 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
         </div>
       </header>
 
-      <div className="container mx-auto px-4 py-12 md:py-14">
-        <div className="flex gap-8">
-          <SidebarNav
-            items={sidebarItems}
-            activeItem={activeCategory}
-            onItemClick={scrollToCategory}
-          />
-
-          {/* Main Content */}
-          <main className="flex-1">
-            {categoryData.map(({ category, patterns }) => (
-              <section
-                key={category.id}
-                id={`category-${category.id}`}
-                className="mb-24 scroll-mt-20"
+      {/* Search bar */}
+      <div className="border-b border-sk-border bg-white">
+        <div className="container mx-auto px-4 py-4">
+          <div className="relative max-w-xl">
+            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-sk-text-muted" />
+            <input
+              ref={searchInputRef}
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder={'Search patterns\u2026 e.g. "help users get started"'}
+              className="w-full rounded-lg border border-sk-border bg-white py-2.5 pl-10 pr-10 text-skapa-body-md text-sk-text placeholder-sk-text-muted focus:border-sk-primary focus:outline-none focus:ring-1 focus:ring-sk-primary"
+            />
+            {isSearching && (
+              <button
+                onClick={() => { setSearchQuery(""); searchInputRef.current?.focus(); }}
+                className="absolute right-3 top-1/2 -translate-y-1/2 rounded p-0.5 text-sk-text-muted hover:text-sk-text"
               >
-                <div className="mb-6">
-                  <h2 className="mb-3 text-5xl font-bold leading-tight text-sk-primary md:text-6xl">{category.name}</h2>
-                  <p className="text-lg leading-relaxed text-sk-text-muted md:text-xl">{category.description}</p>
-                </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  {patterns.map((pattern) => (
-                    <PatternCard
-                      key={pattern.id}
-                      id={pattern.id}
-                      title={pattern.title}
-                      description={pattern.description}
-                      thumbnail={pattern.thumbnail}
-                    />
-                  ))}
-                </div>
-              </section>
-            ))}
-          </main>
+                <X className="h-4 w-4" />
+              </button>
+            )}
+          </div>
         </div>
+      </div>
+
+      <div className="container mx-auto px-4 py-12 md:py-14">
+        {isSearching ? (
+          /* Search results view */
+          <div>
+            <p className="mb-6 text-skapa-body-md text-sk-text-muted">
+              {searchResults.length === 0
+                ? `No patterns found for "${searchQuery}"`
+                : `${searchResults.length} pattern${searchResults.length !== 1 ? "s" : ""} found`}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {searchResults.map((pattern) => (
+                <PatternCard
+                  key={pattern.id}
+                  id={pattern.id}
+                  title={pattern.title}
+                  description={pattern.description}
+                  thumbnail={pattern.thumbnail}
+                />
+              ))}
+            </div>
+          </div>
+        ) : (
+          /* Category browsing view */
+          <div className="flex gap-8">
+            <SidebarNav
+              items={sidebarItems}
+              activeItem={activeCategory}
+              onItemClick={scrollToCategory}
+            />
+
+            <main className="flex-1">
+              {categoryData.map(({ category, patterns }) => (
+                <section
+                  key={category.id}
+                  id={`category-${category.id}`}
+                  className="mb-24 scroll-mt-20"
+                >
+                  <div className="mb-6">
+                    <h2 className="mb-3 text-5xl font-bold leading-tight text-sk-primary md:text-6xl">{category.name}</h2>
+                    <p className="text-lg leading-relaxed text-sk-text-muted md:text-xl">{category.description}</p>
+                  </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {patterns.map((pattern) => (
+                      <PatternCard
+                        key={pattern.id}
+                        id={pattern.id}
+                        title={pattern.title}
+                        description={pattern.description}
+                        thumbnail={pattern.thumbnail}
+                      />
+                    ))}
+                  </div>
+                </section>
+              ))}
+            </main>
+          </div>
+        )}
       </div>
     </div>
   );

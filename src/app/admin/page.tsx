@@ -192,6 +192,71 @@ export default async function AdminPage() {
           </div>
         </section>
 
+        {/* Feedback overview */}
+        <section className="mt-10 grid gap-6 xl:grid-cols-[1fr_1fr]">
+          <div className="rounded-3xl border border-sk-border bg-white p-6 shadow-sm">
+            <h2 className="text-skapa-h2 text-sk-primary">Feedback overview</h2>
+            <p className="mt-1 text-skapa-body-sm text-sk-text-muted">
+              {report.feedback.total === 0
+                ? "No feedback submitted yet."
+                : `${report.feedback.total} total — ${report.feedback.helpful} helpful, ${report.feedback.notHelpful} not helpful`}
+            </p>
+            {report.feedback.total > 0 && (
+              <div className="mt-5 space-y-3">
+                {Object.entries(report.feedback.byPattern)
+                  .sort(([, a], [, b]) => (b.helpful + b.notHelpful) - (a.helpful + a.notHelpful))
+                  .slice(0, 8)
+                  .map(([patternId, stats]) => (
+                    <div key={patternId} className="flex items-center justify-between gap-4 rounded-2xl bg-sk-surface-muted px-4 py-3 text-skapa-body-sm">
+                      <Link href={`/patterns/${patternId}`} className="font-medium text-sk-primary hover:text-sk-primary-strong">
+                        {patternId}
+                      </Link>
+                      <div className="flex gap-3">
+                        <span className="rounded-full bg-white px-2.5 py-0.5 text-skapa-caption text-sk-text-muted">
+                          👍 {stats.helpful}
+                        </span>
+                        <span className="rounded-full bg-white px-2.5 py-0.5 text-skapa-caption text-sk-text-muted">
+                          👎 {stats.notHelpful}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+              </div>
+            )}
+          </div>
+
+          <div className="rounded-3xl border border-sk-border bg-white p-6 shadow-sm">
+            <h2 className="text-skapa-h2 text-sk-primary">Recent feedback</h2>
+            <p className="mt-1 text-skapa-body-sm text-sk-text-muted">Latest submissions from designers.</p>
+            {report.feedback.recent.length === 0 ? (
+              <p className="mt-5 text-skapa-body-sm text-sk-text-muted">No feedback yet.</p>
+            ) : (
+              <div className="mt-5 space-y-4">
+                {report.feedback.recent.map((entry) => (
+                  <div key={entry.id} className="rounded-2xl border border-sk-border px-4 py-3 text-skapa-body-sm">
+                    <div className="flex items-center justify-between gap-3">
+                      <Link href={`/patterns/${entry.patternId}`} className="font-medium text-sk-primary hover:text-sk-primary-strong">
+                        {entry.patternId}
+                      </Link>
+                      <div className="flex items-center gap-2">
+                        <span className={`rounded-full px-2 py-0.5 text-skapa-caption ${entry.rating === "helpful" ? "bg-green-50 text-green-700" : "bg-red-50 text-red-700"}`}>
+                          {entry.rating === "helpful" ? "👍 Helpful" : "👎 Not helpful"}
+                        </span>
+                        <span className="text-skapa-caption text-sk-text-muted">
+                          {new Date(entry.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                    </div>
+                    {entry.comment && (
+                      <p className="mt-2 text-sk-text-muted">{entry.comment}</p>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+
         <section className="mt-10">
           <AdminPatternList patterns={patterns} categories={categories} />
         </section>

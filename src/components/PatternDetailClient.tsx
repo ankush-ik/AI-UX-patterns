@@ -3,11 +3,11 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { ThumbsUp, ThumbsDown, X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { Pattern, Category, PatternExample, PatternEmbedExample, PatternImageExample } from "@/lib/patterns";
 import { getPatternSources } from "@/lib/patterns";
 import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { SidebarNav } from "@/components/SidebarNav";
-import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 type TabType = "description" | "user-archetype" | "design-considerations" | "related-patterns" | "examples";
 
@@ -28,6 +28,10 @@ function isImageExample(example: PatternExample): example is PatternImageExample
 export function PatternDetailClient({ pattern, category, relatedPatterns }: PatternDetailClientProps) {
   const [activeTab, setActiveTab] = useState<TabType>("description");
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
+  const [feedbackRating, setFeedbackRating] = useState<"helpful" | "not-helpful" | null>(null);
+  const [feedbackComment, setFeedbackComment] = useState("");
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
+  const [feedbackSubmitting, setFeedbackSubmitting] = useState(false);
 
   const embedExamples = pattern.content.examples.filter(isEmbedExample);
   const imageExamples = pattern.content.examples.filter(isImageExample);
@@ -556,6 +560,77 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
                 </div>
               </div>
             )}
+
+            {/* Feedback */}
+            <div className="mt-16 border-t border-sk-border pt-10">
+              {feedbackSubmitted ? (
+                <div className="rounded-2xl border border-sk-border bg-sk-surface-muted px-6 py-5">
+                  <p className="text-lg font-medium text-sk-primary">Thanks for your feedback!</p>
+                  <p className="mt-1 text-base text-sk-text-muted">Your input helps improve the pattern library.</p>
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  <h2 className="text-2xl font-bold text-sk-primary">Was this pattern helpful?</h2>
+                  <div className="flex gap-3">
+                    <button
+                      onClick={() => setFeedbackRating("helpful")}
+                      className={`flex items-center gap-2 rounded-lg border px-4 py-2.5 text-sm font-medium transition ${
+                        feedbackRating === "helpful"
+                          ? "border-sk-primary bg-sk-primary text-white"
+                          : "border-sk-border text-sk-text hover:border-sk-primary"
+                      }`}
+                    >
+                      <ThumbsUp className="h-4 w-4" /> Yes, helpful
+                    </button>
+                    <button
+                      onClick={() => setFeedbackRating("not-helpful")}
+                      className={`flex items-center gap-2 rounded-lg border px-4 py-2.5 text-sm font-medium transition ${
+                        feedbackRating === "not-helpful"
+                          ? "border-sk-primary bg-sk-primary text-white"
+                          : "border-sk-border text-sk-text hover:border-sk-primary"
+                      }`}
+                    >
+                      <ThumbsDown className="h-4 w-4" /> Not really
+                    </button>
+                  </div>
+
+                  {feedbackRating && (
+                    <div className="space-y-3">
+                      <textarea
+                        rows={3}
+                        value={feedbackComment}
+                        onChange={(e) => setFeedbackComment(e.target.value)}
+                        className="w-full rounded-lg border border-sk-border bg-white px-3 py-2 text-sm text-sk-text placeholder-sk-text-muted focus:border-sk-primary focus:outline-none focus:ring-1 focus:ring-sk-primary"
+                        placeholder="Share how you used this pattern or suggest an improvement (optional)"
+                      />
+                      <button
+                        onClick={async () => {
+                          setFeedbackSubmitting(true);
+                          try {
+                            await fetch("/api/feedback", {
+                              method: "POST",
+                              headers: { "Content-Type": "application/json" },
+                              body: JSON.stringify({
+                                patternId: pattern.id,
+                                rating: feedbackRating,
+                                comment: feedbackComment || undefined,
+                              }),
+                            });
+                            setFeedbackSubmitted(true);
+                          } finally {
+                            setFeedbackSubmitting(false);
+                          }
+                        }}
+                        disabled={feedbackSubmitting}
+                        className="rounded-lg bg-sk-primary px-4 py-2 text-sm font-medium text-white transition hover:bg-sk-primary-strong disabled:opacity-50"
+                      >
+                        {feedbackSubmitting ? "Submitting…" : "Submit feedback"}
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
           </main>
         </div>
       </div>

@@ -3,7 +3,8 @@
 import { useState, useEffect } from "react";
 import { SkapaIcon } from "@/components/SkapaIcon";
 import { SkapaButton } from "@/components/SkapaButton";
-import type { Pattern, Category, PatternExample } from "@/lib/patterns";
+import type { Pattern, Category, PatternExample, PatternSource } from "@/lib/patterns";
+import { getPatternSources } from "@/lib/patterns";
 
 interface PatternEditorProps {
   /** Pass a pattern to edit it; omit to create a new one */
@@ -19,7 +20,7 @@ const EMPTY_PATTERN: Omit<Pattern, "id"> = {
   description: "",
   thumbnail: "",
   categoryId: "",
-  sourceUrl: "",
+  sources: [],
   content: {
     description: "",
     designConsiderations: "",
@@ -56,10 +57,18 @@ export function PatternEditor({ pattern, categories, onSave, onDelete, onClose }
   const [deleting, setDeleting] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [relatedInput, setRelatedInput] = useState("");
+  const [previewField, setPreviewField] = useState<string | null>(null);
+
+  // Initialize sources from pattern
+  const [sources, setSources] = useState<PatternSource[]>(
+    pattern ? getPatternSources(pattern) : []
+  );
 
   // Reset form if pattern prop changes (e.g. user clicks different pattern)
   useEffect(() => {
     setForm(pattern ?? { id: "", ...EMPTY_PATTERN });
+    setSources(pattern ? getPatternSources(pattern) : []);
+    setPreviewField(null);
     setError(null);
   }, [pattern]);
 
@@ -122,6 +131,18 @@ export function PatternEditor({ pattern, categories, onSave, onDelete, onClose }
     setContent("relatedPatterns", form.content.relatedPatterns.filter((r) => r !== id));
   }
 
+  function addSource() {
+    setSources([...sources, { name: "", url: "" }]);
+  }
+
+  function updateSource(index: number, field: keyof PatternSource, value: string) {
+    setSources(sources.map((s, i) => (i === index ? { ...s, [field]: value } : s)));
+  }
+
+  function removeSource(index: number) {
+    setSources(sources.filter((_, i) => i !== index));
+  }
+
   async function handleSave() {
     if (!form.title.trim() || !form.categoryId) {
       setError("Title and category are required.");
@@ -131,19 +152,26 @@ export function PatternEditor({ pattern, categories, onSave, onDelete, onClose }
     setSaving(true);
     setError(null);
 
+    // Merge sources into form data
+    const payload = {
+      ...form,
+      sources: sources.filter((s) => s.url.trim()),
+      sourceUrl: undefined, // migrate away from deprecated field
+    };
+
     try {
       let res: Response;
       if (isEditing) {
         res = await fetch(`/api/patterns/${form.id}/edit`, {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(form),
+          body: JSON.stringify(payload),
         });
       } else {
         res = await fetch("/api/patterns/new", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(form),
+          body: JSON.stringify(payload),
         });
       }
 
@@ -289,14 +317,41 @@ export function PatternEditor({ pattern, categories, onSave, onDelete, onClose }
               )}
             </Field>
 
-            <Field label="Source URL">
-              <input
-                type="url"
-                value={form.sourceUrl ?? ""}
-                onChange={(e) => set("sourceUrl", e.target.value)}
-                className={inputClass}
-                placeholder="https://..."
-              />
+            <Field label="Sources">
+              <div className="space-y-2">
+                {sources.map((source, i) => (
+                  <div key={i} className="flex items-start gap-2">
+                    <input
+                      type="text"
+                      value={source.name}
+                      onChange={(e) => updateSource(i, "name", e.target.value)}
+                      className={`${inputClass} w-1/3`}
+                      placeholder="Label (e.g. Shapeof.ai)"
+                    />
+                    <input
+                      type="url"
+                      value={source.url}
+                      onChange={(e) => updateSource(i, "url", e.target.value)}
+                      className={`${inputClass} flex-1`}
+                      placeholder="https://..."
+                    />
+                    <button
+                      type="button"
+                      onClick={() => removeSource(i)}
+                      className="mt-2 text-sk-text-muted hover:text-[var(--sk-color-danger)]"
+                    >
+                      <SkapaIcon name="close" size={14} />
+                    </button>
+                  </div>
+                ))}
+                <button
+                  type="button"
+                  onClick={addSource}
+                  className="text-skapa-body-sm text-sk-text-muted hover:text-sk-primary"
+                >
+                  + Add source
+                </button>
+              </div>
             </Field>
           </fieldset>
 
@@ -308,35 +363,41 @@ export function PatternEditor({ pattern, categories, onSave, onDelete, onClose }
               Content
             </legend>
 
-            <Field label="Description" hint="Supports ### headings, **bold**, and - bullet lists">
-              <textarea
-                rows={8}
-                value={form.content.description}
-                onChange={(e) => setContent("description", e.target.value)}
-                className={`${inputClass} font-mono text-xs`}
-                placeholder="Full description with markdown…"
-              />
-            </Field>
+            <MarkdownField
+              label="Description"
+              hint="Supports ### headings, **bold**, and - bullet lists"
+              value={form.content.description}
+              onChange={(v) => setContent("description", v)}
+              rows={8}
+              placeholder="Full description with markdown…"
+              previewField={previewField}
+              fieldKey="description"
+              onTogglePreview={setPreviewField}
+            />
 
-            <Field label="User archetype" hint="Optional: who this pattern is for (supports markdown)">
-              <textarea
-                rows={4}
-                value={form.content.userArchetype ?? ""}
-                onChange={(e) => setContent("userArchetype", e.target.value || undefined)}
-                className={`${inputClass} font-mono text-xs`}
-                placeholder="Describe the intended user type(s) for this pattern…"
-              />
-            </Field>
+            <MarkdownField
+              label="User archetype"
+              hint="Optional: who this pattern is for (supports markdown)"
+              value={form.content.userArchetype ?? ""}
+              onChange={(v) => setContent("userArchetype", v || undefined)}
+              rows={4}
+              placeholder="Describe the intended user type(s) for this pattern…"
+              previewField={previewField}
+              fieldKey="userArchetype"
+              onTogglePreview={setPreviewField}
+            />
 
-            <Field label="Design considerations" hint="Same markdown syntax">
-              <textarea
-                rows={8}
-                value={form.content.designConsiderations}
-                onChange={(e) => setContent("designConsiderations", e.target.value)}
-                className={`${inputClass} font-mono text-xs`}
-                placeholder="Design tips and guidelines…"
-              />
-            </Field>
+            <MarkdownField
+              label="Design considerations"
+              hint="Same markdown syntax"
+              value={form.content.designConsiderations}
+              onChange={(v) => setContent("designConsiderations", v)}
+              rows={8}
+              placeholder="Design tips and guidelines…"
+              previewField={previewField}
+              fieldKey="designConsiderations"
+              onTogglePreview={setPreviewField}
+            />
           </fieldset>
 
           <hr className="border-sk-border" />
@@ -588,6 +649,94 @@ function Field({
       </label>
       {hint && <p className="text-skapa-caption text-sk-text-muted">{hint}</p>}
       {children}
+    </div>
+  );
+}
+
+function renderSimpleMarkdown(text: string): React.ReactNode {
+  if (!text.trim()) return <p className="text-skapa-body-sm text-sk-text-muted">Nothing to preview.</p>;
+
+  const lines = text.split("\n");
+  const elements: React.ReactNode[] = [];
+
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    const applyInline = (s: string) =>
+      s.replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>");
+
+    if (line.startsWith("### ")) {
+      elements.push(
+        <h3 key={i} className="mt-3 mb-1 text-sm font-semibold text-sk-primary" dangerouslySetInnerHTML={{ __html: applyInline(line.slice(4)) }} />
+      );
+    } else if (line.startsWith("#### ")) {
+      elements.push(
+        <h4 key={i} className="mt-2 mb-1 text-sm font-medium text-sk-text" dangerouslySetInnerHTML={{ __html: applyInline(line.slice(5)) }} />
+      );
+    } else if (line.startsWith("- ") || line.startsWith("* ")) {
+      elements.push(
+        <li key={i} className="ml-4 list-disc text-xs text-sk-text" dangerouslySetInnerHTML={{ __html: applyInline(line.slice(2)) }} />
+      );
+    } else if (line.trim() === "") {
+      elements.push(<br key={i} />);
+    } else {
+      elements.push(
+        <p key={i} className="text-xs text-sk-text" dangerouslySetInnerHTML={{ __html: applyInline(line) }} />
+      );
+    }
+  }
+
+  return <div className="space-y-0.5">{elements}</div>;
+}
+
+function MarkdownField({
+  label,
+  hint,
+  value,
+  onChange,
+  rows,
+  placeholder,
+  previewField,
+  fieldKey,
+  onTogglePreview,
+}: {
+  label: string;
+  hint?: string;
+  value: string;
+  onChange: (v: string) => void;
+  rows: number;
+  placeholder: string;
+  previewField: string | null;
+  fieldKey: string;
+  onTogglePreview: (key: string | null) => void;
+}) {
+  const isPreviewing = previewField === fieldKey;
+
+  return (
+    <div className="space-y-1">
+      <div className="flex items-center justify-between">
+        <label className="block text-skapa-body-sm font-medium text-sk-text">{label}</label>
+        <button
+          type="button"
+          onClick={() => onTogglePreview(isPreviewing ? null : fieldKey)}
+          className="text-skapa-caption text-sk-text-muted hover:text-sk-primary"
+        >
+          {isPreviewing ? "Write" : "Preview"}
+        </button>
+      </div>
+      {hint && <p className="text-skapa-caption text-sk-text-muted">{hint}</p>}
+      {isPreviewing ? (
+        <div className={`rounded-lg border border-sk-border bg-sk-surface-muted px-3 py-2 min-h-[${rows * 1.5}rem] overflow-y-auto`}>
+          {renderSimpleMarkdown(value)}
+        </div>
+      ) : (
+        <textarea
+          rows={rows}
+          value={value}
+          onChange={(e) => onChange(e.target.value)}
+          className={`${inputClass} font-mono text-xs`}
+          placeholder={placeholder}
+        />
+      )}
     </div>
   );
 }

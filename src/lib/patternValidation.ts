@@ -1,10 +1,11 @@
-import { hasPatternSource, type Category, type Pattern } from "@/lib/patterns";
+import { hasPatternSource, type Category, type Pattern, type PatternFeedback } from "@/lib/patterns";
 import {
   getCategories,
   getPatternById,
   getPatternReferenceCounts,
   getPatterns,
 } from "@/lib/patternRepository";
+import { readFeedback } from "@/lib/contentWriter";
 
 export interface CategoryHealth {
   category: Category;
@@ -16,6 +17,14 @@ export interface CategoryHealth {
 export interface RelatedPatternIssue {
   patternId: string;
   missingRelatedPatternId: string;
+}
+
+export interface FeedbackStats {
+  total: number;
+  helpful: number;
+  notHelpful: number;
+  byPattern: Record<string, { helpful: number; notHelpful: number }>;
+  recent: PatternFeedback[];
 }
 
 export interface ContentReport {
@@ -32,12 +41,14 @@ export interface ContentReport {
     pattern: Pattern;
     count: number;
   }>;
+  feedback: FeedbackStats;
 }
 
 export async function getContentReport(): Promise<ContentReport> {
   const categories = await getCategories();
   const patterns = await getPatterns();
   const referenceCounts = await getPatternReferenceCounts();
+  const allFeedback = await readFeedback();
   const seenIds = new Set<string>();
   const duplicateIds = new Set<string>();
   const brokenRelatedPatterns: RelatedPatternIssue[] = [];
@@ -104,6 +115,27 @@ export async function getContentReport(): Promise<ContentReport> {
     .sort((left, right) => right.count - left.count)
     .slice(0, 8);
 
+  // Feedback analytics
+  const feedbackByPattern: Record<string, { helpful: number; notHelpful: number }> = {};
+  let helpfulCount = 0;
+  let notHelpfulCount = 0;
+  for (const entry of allFeedback) {
+    if (!feedbackByPattern[entry.patternId]) {
+      feedbackByPattern[entry.patternId] = { helpful: 0, notHelpful: 0 };
+    }
+    if (entry.rating === "helpful") {
+      feedbackByPattern[entry.patternId].helpful++;
+      helpfulCount++;
+    } else {
+      feedbackByPattern[entry.patternId].notHelpful++;
+      notHelpfulCount++;
+    }
+  }
+
+  const recentFeedback = [...allFeedback]
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, 10);
+
   return {
     totalCategories: categories.length,
     totalPatterns: patterns.length,
@@ -115,5 +147,12 @@ export async function getContentReport(): Promise<ContentReport> {
     duplicatePatternIds: [...duplicateIds],
     categoryHealth,
     mostReferencedPatterns: topReferences,
+    feedback: {
+      total: allFeedback.length,
+      helpful: helpfulCount,
+      notHelpful: notHelpfulCount,
+      byPattern: feedbackByPattern,
+      recent: recentFeedback,
+    },
   };
 }
