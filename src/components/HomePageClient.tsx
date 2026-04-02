@@ -36,11 +36,9 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
         keys: [
           { name: "title", weight: 2 },
           { name: "description", weight: 1.5 },
-          { name: "content.description", weight: 1 },
           { name: "categoryId", weight: 0.5 },
         ],
-        threshold: 0.4,
-        ignoreLocation: true,
+        threshold: 0.2,
         minMatchCharLength: 2,
       }),
     [allPatterns]
