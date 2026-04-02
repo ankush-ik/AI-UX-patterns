@@ -33,6 +33,7 @@ export interface Pattern {
   /** @deprecated Use `sources` for multi-source patterns. Kept for single-source patterns. */
   sourceUrl?: string;
   sources?: PatternSource[];
+  searchKeywords?: string[];
   content: {
     description: string;
     designConsiderations: string;

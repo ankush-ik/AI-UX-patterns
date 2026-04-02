@@ -95,7 +95,24 @@
             "description": "Sora features video and image galleries in its core product, with a focus on curated examples. Users can view, modify, or copy the prompt or remix direct from an image."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "gallery",
+        "showcase",
+        "examples",
+        "inspiration",
+        "sample prompts",
+        "curated collection",
+        "community gallery",
+        "browse examples",
+        "getting started",
+        "onboarding",
+        "explore",
+        "discover",
+        "featured work",
+        "use cases",
+        "portfolio"
+      ]
     },
     {
       "id": "follow-up",
@@ -113,7 +130,24 @@
           "action-plan"
         ],
         "examples": []
-      }
+      },
+      "searchKeywords": [
+        "clarifying question",
+        "disambiguation",
+        "ask for more info",
+        "refine prompt",
+        "conversational",
+        "multi-turn",
+        "dialogue",
+        "not enough context",
+        "unclear request",
+        "ask again",
+        "iterative conversation",
+        "chat flow",
+        "prompt refinement",
+        "missing information",
+        "back and forth"
+      ]
     },
     {
       "id": "initial-cta",
@@ -158,7 +192,24 @@
             "description": "Templates: Pre-built entry points that let users construct their input bit-by-bit or by using variables."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "first prompt",
+        "getting started",
+        "blank state",
+        "empty state",
+        "onboarding",
+        "call to action",
+        "start here",
+        "open prompt",
+        "input field",
+        "text box",
+        "welcome screen",
+        "first interaction",
+        "landing experience",
+        "conversation starter",
+        "entry point"
+      ]
     },
     {
       "id": "nudges",
@@ -208,6 +259,23 @@
           "name": "aiuxpatterns.com",
           "url": "https://www.aiuxpatterns.com/pattern-inline-help.html"
         }
+      ],
+      "searchKeywords": [
+        "notification",
+        "prompt",
+        "suggestion bubble",
+        "tooltip",
+        "hint",
+        "callout",
+        "contextual tip",
+        "discovery",
+        "feature awareness",
+        "try this",
+        "did you know",
+        "gentle push",
+        "engagement",
+        "activation",
+        "onboarding hint"
       ]
     },
     {
@@ -235,7 +303,24 @@
             "description": "Suno shows the prompt used for each sample song in its gallery so users can understand how prompt tokens and parameters mix to create a new generation."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "behind the scenes",
+        "show your work",
+        "what happened",
+        "prompt breakdown",
+        "token details",
+        "processing steps",
+        "under the hood",
+        "system prompt",
+        "request details",
+        "debug view",
+        "technical details",
+        "prompt anatomy",
+        "how it works",
+        "transparency",
+        "explainability"
+      ]
     },
     {
       "id": "randomize",
@@ -261,7 +346,24 @@
             "description": "Scenario includes the dice icon \"randomizer\" in its prompt box for generating images."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "surprise me",
+        "random",
+        "shuffle",
+        "serendipity",
+        "lucky",
+        "dice roll",
+        "unexpected",
+        "explore",
+        "low effort start",
+        "fun",
+        "playful",
+        "discovery",
+        "creative spark",
+        "inspiration",
+        "random generation"
+      ]
     },
     {
       "id": "suggestions",
@@ -322,6 +424,23 @@
           "name": "aiuxpatterns.com",
           "url": "https://www.aiuxpatterns.com/pattern-dynamic-suggestions.html"
         }
+      ],
+      "searchKeywords": [
+        "autocomplete",
+        "recommended prompts",
+        "prompt ideas",
+        "clues",
+        "chips",
+        "quick actions",
+        "starter prompts",
+        "blank canvas",
+        "what to ask",
+        "prompt starters",
+        "conversation starters",
+        "helper text",
+        "guided input",
+        "smart suggestions",
+        "contextual recommendations"
       ]
     },
     {
@@ -375,6 +494,23 @@
           "name": "aiuxpatterns.com",
           "url": "https://www.aiuxpatterns.com/pattern-prompt-templates.html"
         }
+      ],
+      "searchKeywords": [
+        "form",
+        "fill in the blank",
+        "structured input",
+        "pre-built prompt",
+        "workflow template",
+        "recipe",
+        "boilerplate",
+        "scaffold",
+        "starter template",
+        "reusable prompt",
+        "prompt library",
+        "quick start",
+        "structured format",
+        "guided creation",
+        "pre-filled"
       ]
     },
     {
@@ -418,7 +554,24 @@
             "description": "Relay allows users to generate content for fields based on a single prompt"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "autofill",
+        "batch fill",
+        "populate fields",
+        "smart fill",
+        "form completion",
+        "auto-populate",
+        "bulk input",
+        "extend prompt",
+        "fill all",
+        "multiple fields",
+        "time saver",
+        "efficiency",
+        "automated input",
+        "field completion",
+        "one-click fill"
+      ]
     },
     {
       "id": "chained-action",
@@ -454,7 +607,24 @@
             "description": "Gumloop follows a common pattern of letting variables from previous steps pass through as context to the AI in later steps"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "multi-step",
+        "workflow",
+        "pipeline",
+        "sequence",
+        "step by step",
+        "plan and execute",
+        "chain of actions",
+        "task sequence",
+        "automated workflow",
+        "complex task",
+        "action plan",
+        "orchestration",
+        "batch operations",
+        "sequential processing",
+        "compound action"
+      ]
     },
     {
       "id": "describe",
@@ -492,7 +662,24 @@
             "description": "Midjourney triggers the describe actions when right-clicking on an image."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "decompose",
+        "break down",
+        "analyze",
+        "tokenize",
+        "explain input",
+        "prompt analysis",
+        "fundamental elements",
+        "describe image",
+        "describe content",
+        "reverse engineer",
+        "deconstruct",
+        "extract meaning",
+        "content analysis",
+        "caption",
+        "interpret"
+      ]
     },
     {
       "id": "expand",
@@ -523,7 +710,24 @@
             "description": "Wordtune's expand sentence feature"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "lengthen",
+        "elaborate",
+        "add detail",
+        "extend",
+        "make longer",
+        "enrich",
+        "flesh out",
+        "more detail",
+        "depth",
+        "amplify",
+        "grow content",
+        "write more",
+        "verbose",
+        "comprehensive",
+        "deeper explanation"
+      ]
     },
     {
       "id": "inline-action",
@@ -570,7 +774,24 @@
             "description": "Wordo shows another example of inline actions appearing when text is selected"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "contextual action",
+        "right click",
+        "selection action",
+        "in-place",
+        "hover action",
+        "quick edit",
+        "spot action",
+        "context menu",
+        "inline AI",
+        "on-page action",
+        "highlight and act",
+        "smart selection",
+        "embedded action",
+        "micro-interaction",
+        "contextual AI"
+      ]
     },
     {
       "id": "inpainting",
@@ -632,6 +853,23 @@
           "name": "aiuxpatterns.com",
           "url": "https://www.aiuxpatterns.com/pattern-partial-regeneration.html"
         }
+      ],
+      "searchKeywords": [
+        "selective edit",
+        "partial regenerate",
+        "mask and edit",
+        "region edit",
+        "touch up",
+        "spot fix",
+        "localized edit",
+        "area selection",
+        "paint over",
+        "targeted regeneration",
+        "erase and replace",
+        "local modification",
+        "region mask",
+        "detail edit",
+        "precision edit"
       ]
     },
     {
@@ -720,6 +958,23 @@
           "name": "aiuxpatterns.com",
           "url": "https://www.aiuxpatterns.com/pattern-structured-prompt.html"
         }
+      ],
+      "searchKeywords": [
+        "fill in the blank",
+        "template completion",
+        "generative form",
+        "structured generation",
+        "repeated task",
+        "batch generate",
+        "format preserving",
+        "consistent output",
+        "slot filling",
+        "pattern matching",
+        "variable replacement",
+        "token swap",
+        "structured prompt",
+        "dynamic template",
+        "placeholder fill"
       ]
     },
     {
@@ -770,7 +1025,24 @@
             "description": "Open text inputs are used outside of conversations, such as for generating prompts to train the AI itself, seen here in Personal AI"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "free text",
+        "chat input",
+        "text area",
+        "conversation",
+        "natural language",
+        "open prompt",
+        "message box",
+        "type anything",
+        "freeform",
+        "unstructured input",
+        "chat box",
+        "prompt input",
+        "text field",
+        "conversational UI",
+        "ask anything"
+      ]
     },
     {
       "id": "regenerate",
@@ -856,6 +1128,23 @@
           "name": "aiuxpatterns.com",
           "url": "https://www.aiuxpatterns.com/pattern-full-regeneration.html"
         }
+      ],
+      "searchKeywords": [
+        "try again",
+        "redo",
+        "new version",
+        "refresh",
+        "rerun",
+        "another try",
+        "different result",
+        "regenerate response",
+        "new generation",
+        "retry",
+        "alternative result",
+        "re-roll",
+        "fresh output",
+        "same prompt new result",
+        "variation"
       ]
     },
     {
@@ -902,7 +1191,24 @@
             "description": "Udio supports restructuring as a core action when working with a pre-composed song. From the canvas, users can use sliders to adjust the intensity of different parameters or the tokens for the regenerated creation"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "reformat",
+        "reorganize",
+        "rearrange",
+        "transform layout",
+        "change structure",
+        "repurpose content",
+        "convert format",
+        "outline",
+        "table of contents",
+        "rewrite structure",
+        "content as input",
+        "existing content",
+        "starting point",
+        "document restructure",
+        "layout change"
+      ]
     },
     {
       "id": "restyle",
@@ -938,7 +1244,24 @@
             "description": "Udio allows you to adapt the style of a song as a style token to apply to other creations"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "style transfer",
+        "change style",
+        "aesthetic",
+        "visual style",
+        "tone change",
+        "look and feel",
+        "apply style",
+        "artistic style",
+        "design style",
+        "theme change",
+        "visual tone",
+        "reskin",
+        "style preset",
+        "creative direction",
+        "visual transformation"
+      ]
     },
     {
       "id": "summary",
@@ -981,7 +1304,24 @@
             "description": "Zoom uses the summary pattern in live meetings to let users quickly catch up on context they may have missed"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "summarize",
+        "TLDR",
+        "condense",
+        "digest",
+        "key points",
+        "brief",
+        "abstract",
+        "overview",
+        "distill",
+        "shorten",
+        "executive summary",
+        "quick read",
+        "highlights",
+        "main takeaways",
+        "recap"
+      ]
     },
     {
       "id": "synthesis",
@@ -1016,7 +1356,24 @@
             "description": "Shopify uses generative UI to create graphs that synthesize data in real time for easy consumption"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "combine",
+        "merge",
+        "consolidate",
+        "cross-reference",
+        "compare",
+        "analyze multiple",
+        "bring together",
+        "simplify complex",
+        "information synthesis",
+        "data fusion",
+        "aggregate",
+        "unified view",
+        "multi-source",
+        "pattern recognition",
+        "insight extraction"
+      ]
     },
     {
       "id": "change-form",
@@ -1066,7 +1423,24 @@
             "description": "Perplexity allows users to generate images of different styles from a search result"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "transform",
+        "convert",
+        "modality change",
+        "format change",
+        "text to image",
+        "image to text",
+        "code to docs",
+        "translate format",
+        "cross-modal",
+        "media conversion",
+        "content transformation",
+        "reformat",
+        "adapt content",
+        "change type",
+        "output format"
+      ]
     },
     {
       "id": "attachments",
@@ -1137,6 +1511,23 @@
           "name": "aiuxpatterns.com",
           "url": "https://www.aiuxpatterns.com/pattern-image.html"
         }
+      ],
+      "searchKeywords": [
+        "upload",
+        "file attachment",
+        "reference file",
+        "context file",
+        "image upload",
+        "document upload",
+        "anchor",
+        "ground",
+        "provide context",
+        "source material",
+        "input file",
+        "drag and drop",
+        "add file",
+        "reference image",
+        "supporting document"
       ]
     },
     {
@@ -1184,7 +1575,24 @@
             "description": "Poke's connectors allow the agent to combine context from the user's data to create a personalized experience."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "integration",
+        "external data",
+        "API connection",
+        "data source",
+        "third party",
+        "plug in",
+        "connect service",
+        "import data",
+        "knowledge base",
+        "external context",
+        "linked data",
+        "database connection",
+        "web search",
+        "tool use",
+        "MCP"
+      ]
     },
     {
       "id": "filters",
@@ -1220,7 +1628,24 @@
             "description": "Stable Diffusion has supported negative prompting from the start"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "constrain",
+        "narrow results",
+        "scope",
+        "limit",
+        "include exclude",
+        "facets",
+        "refinement",
+        "sort",
+        "content type filter",
+        "source filter",
+        "category filter",
+        "output filter",
+        "input constraint",
+        "boundary",
+        "guardrail"
+      ]
     },
     {
       "id": "model-management",
@@ -1282,6 +1707,23 @@
           "name": "aiuxpatterns.com",
           "url": "https://www.aiuxpatterns.com/pattern-modal-selection.html"
         }
+      ],
+      "searchKeywords": [
+        "model selector",
+        "choose model",
+        "GPT",
+        "Claude",
+        "model picker",
+        "AI model",
+        "LLM selection",
+        "engine",
+        "model version",
+        "model comparison",
+        "switch model",
+        "model settings",
+        "capability",
+        "model tier",
+        "provider"
       ]
     },
     {
@@ -1341,7 +1783,24 @@
             "description": "Superwhisper allows the user to define their own modes from the settings panel"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "context mode",
+        "persona",
+        "role",
+        "creative mode",
+        "professional mode",
+        "casual mode",
+        "focus mode",
+        "task mode",
+        "code mode",
+        "writing mode",
+        "specialized context",
+        "behavioral preset",
+        "agent mode",
+        "use case mode",
+        "scenario"
+      ]
     },
     {
       "id": "parameters",
@@ -1411,6 +1870,23 @@
           "name": "aiuxpatterns.com",
           "url": "https://www.aiuxpatterns.com/pattern-configure-controls.html"
         }
+      ],
+      "searchKeywords": [
+        "temperature",
+        "max tokens",
+        "top-p",
+        "constraints",
+        "generation settings",
+        "output length",
+        "creativity",
+        "precision",
+        "randomness",
+        "configuration",
+        "advanced settings",
+        "fine-tune output",
+        "control knobs",
+        "quality settings",
+        "response format"
       ]
     },
     {
@@ -1446,7 +1922,24 @@
             "description": "Udio's collection of styles is vast and can be filtered by genre and creator."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "style options",
+        "default styles",
+        "texture",
+        "aesthetic",
+        "tone presets",
+        "visual presets",
+        "quick style",
+        "one-click style",
+        "predefined look",
+        "style library",
+        "theme options",
+        "mood board",
+        "style picker",
+        "creative presets",
+        "design presets"
+      ]
     },
     {
       "id": "prompt-enhancer",
@@ -1520,6 +2013,23 @@
           "name": "aiuxpatterns.com",
           "url": "https://www.aiuxpatterns.com/pattern-quality-feedback.html"
         }
+      ],
+      "searchKeywords": [
+        "rewrite prompt",
+        "improve prompt",
+        "auto-enhance",
+        "prompt optimization",
+        "better prompt",
+        "smart rewrite",
+        "prompt expansion",
+        "quality boost",
+        "refine prompt",
+        "prompt engineering",
+        "auto-improve",
+        "enhance input",
+        "prompt upgrade",
+        "magic wand",
+        "prompt polish"
       ]
     },
     {
@@ -1554,7 +2064,24 @@
             "description": "Krea's video editor can generate a seed tag that can be used as a custom style to generate additional videos with the same characteristics."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "custom presets",
+        "style library",
+        "my styles",
+        "save for later",
+        "reusable style",
+        "personal preset",
+        "style bookmark",
+        "favorite style",
+        "style collection",
+        "user preset",
+        "custom theme",
+        "branded style",
+        "style template",
+        "design token",
+        "saved preference"
+      ]
     },
     {
       "id": "voice-and-tone",
@@ -1597,7 +2124,24 @@
             "description": "Tabnine supports different rules for the IDE to follow constraining stylistic instructions for writing code."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "writing style",
+        "brand voice",
+        "tone of voice",
+        "personality",
+        "formal informal",
+        "professional casual",
+        "communication style",
+        "brand guidelines",
+        "consistent voice",
+        "content tone",
+        "language style",
+        "editorial voice",
+        "writing persona",
+        "output style",
+        "audience appropriate"
+      ]
     },
     {
       "id": "action-plan",
@@ -1632,7 +2176,24 @@
             "description": "Zapier creates an outline of its planned workflow when in AI Drafting mode for the user to adjust before the steps are created."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "preview steps",
+        "show plan",
+        "before executing",
+        "step preview",
+        "execution plan",
+        "task breakdown",
+        "what will happen",
+        "plan review",
+        "pre-flight",
+        "approval flow",
+        "confirm steps",
+        "action preview",
+        "roadmap",
+        "proposed actions",
+        "plan before act"
+      ]
     },
     {
       "id": "branches",
@@ -1679,7 +2240,24 @@
             "description": "TypingMind uses the term “fork” instead of branch to create a new conversation that contains the context of the thread up to that point."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "version history",
+        "branching",
+        "fork",
+        "tree",
+        "exploration path",
+        "alternative path",
+        "iteration",
+        "undo tree",
+        "conversation branch",
+        "path comparison",
+        "divergent paths",
+        "explore options",
+        "parallel versions",
+        "branch and compare",
+        "decision tree"
+      ]
     },
     {
       "id": "citations",
@@ -1757,6 +2335,23 @@
           "name": "aiuxpatterns.com",
           "url": "https://www.aiuxpatterns.com/pattern-result-citations.html"
         }
+      ],
+      "searchKeywords": [
+        "source reference",
+        "footnote",
+        "attribution",
+        "inline citation",
+        "reference link",
+        "evidence",
+        "fact check",
+        "source link",
+        "bibliography",
+        "credibility",
+        "provenance",
+        "quoted source",
+        "linked reference",
+        "supporting evidence",
+        "research credit"
       ]
     },
     {
@@ -1803,7 +2398,24 @@
             "description": "Replit supports the notion of a queue, similar to how a developer would have multiple tasks in their backlog. Users can add new prompts to the queue for the AI to process once it's done with its last generation."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "stop generation",
+        "pause",
+        "cancel",
+        "abort",
+        "flow control",
+        "interrupt",
+        "mid-stream",
+        "stop button",
+        "halt",
+        "generation control",
+        "streaming control",
+        "real-time control",
+        "override",
+        "manual intervention",
+        "user control"
+      ]
     },
     {
       "id": "cost-estimates",
@@ -1869,6 +2481,23 @@
           "name": "aiuxpatterns.com",
           "url": "https://www.aiuxpatterns.com/pattern-generation-tokens.html"
         }
+      ],
+      "searchKeywords": [
+        "usage cost",
+        "token count",
+        "credits",
+        "pricing",
+        "compute cost",
+        "API cost",
+        "budget",
+        "resource usage",
+        "cost transparency",
+        "billing",
+        "usage meter",
+        "cost preview",
+        "affordable",
+        "cost management",
+        "consumption estimate"
       ]
     },
     {
@@ -1924,7 +2553,24 @@
             "description": "Synthesia produces a draft video walkthrough from the editing canvas for users to review before exporting. Video animations and dubbing are suppressed in draft mode to decrease processing needs."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "low fidelity",
+        "rough draft",
+        "preview mode",
+        "sketch",
+        "quick version",
+        "cheap generation",
+        "fast preview",
+        "exploration mode",
+        "iterative draft",
+        "work in progress",
+        "preliminary",
+        "low-cost preview",
+        "rapid prototype",
+        "disposable output",
+        "trial run"
+      ]
     },
     {
       "id": "memory",
@@ -1962,7 +2608,24 @@
             "description": "Perplexity does not support a full memory, but it does store information about the user if they provide an introduction"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "remember",
+        "context memory",
+        "personalization",
+        "user preferences",
+        "learned context",
+        "persistent memory",
+        "recall",
+        "user profile",
+        "stored context",
+        "conversation memory",
+        "long-term memory",
+        "custom instructions",
+        "remember me",
+        "personal context",
+        "knowledge base"
+      ]
     },
     {
       "id": "references",
@@ -2016,7 +2679,24 @@
             "description": "Notion hides its full list of references in a drawer above the summary with citations."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "sources used",
+        "reference list",
+        "context sources",
+        "knowledge sources",
+        "RAG",
+        "retrieved documents",
+        "source management",
+        "reference panel",
+        "cited sources",
+        "input references",
+        "source selection",
+        "context window",
+        "grounding sources",
+        "document references",
+        "knowledge input"
+      ]
     },
     {
       "id": "sample-response",
@@ -2042,7 +2722,24 @@
             "description": "Notion's action to \"try on this view\" proactively encourages users to test a prompt and validate it before running it across a full database."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "preview response",
+        "confirm intent",
+        "example output",
+        "dry run",
+        "test run",
+        "sample before commit",
+        "preview result",
+        "confirmation step",
+        "mock response",
+        "intent verification",
+        "output preview",
+        "trial output",
+        "what you will get",
+        "expected result",
+        "demo response"
+      ]
     },
     {
       "id": "shared-vision",
@@ -2066,7 +2763,24 @@
             "description": "ChatGPT Operator Mode lives seamlessly within the conversational interface. Users can observe as the AI navigates the multiple browser windows, taking action until it reaches the end of the task or a step that requires user intervention."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "live canvas",
+        "collaborative",
+        "shared workspace",
+        "real-time view",
+        "co-creation",
+        "live editing",
+        "watch AI work",
+        "shared screen",
+        "collaborative editing",
+        "workspace visibility",
+        "live progress",
+        "co-pilot view",
+        "joint workspace",
+        "transparent editing",
+        "live collaboration"
+      ]
     },
     {
       "id": "stream-of-thought",
@@ -2109,7 +2823,24 @@
             "description": "V0 follows a similar path, exposing its logic inline until it is ready to start building, after which the remaining steps are visible from the left drawer while the app builds the codebase in the main canvas."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "thinking process",
+        "reasoning",
+        "chain of thought",
+        "AI thinking",
+        "logic reveal",
+        "thought trace",
+        "step by step reasoning",
+        "decision process",
+        "tool use visibility",
+        "reasoning transparency",
+        "loading state",
+        "processing indicator",
+        "thinking animation",
+        "working indicator",
+        "deliberation"
+      ]
     },
     {
       "id": "variations",
@@ -2171,6 +2902,23 @@
           "name": "aiuxpatterns.com",
           "url": "https://www.aiuxpatterns.com/pattern-result-variations.html"
         }
+      ],
+      "searchKeywords": [
+        "multiple options",
+        "alternatives",
+        "version comparison",
+        "A/B options",
+        "choose best",
+        "option grid",
+        "side by side",
+        "variant picker",
+        "multiple results",
+        "compare options",
+        "selection carousel",
+        "option set",
+        "best of N",
+        "candidate results",
+        "output comparison"
       ]
     },
     {
@@ -2221,7 +2969,24 @@
             "description": "Replit has the user verify its action plan before progressing to the build itself, a time-heavy process that burns significant compute"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "confirm",
+        "approve",
+        "human approval",
+        "review",
+        "check before sending",
+        "safety check",
+        "confirmation dialog",
+        "user consent",
+        "approve action",
+        "manual review",
+        "double check",
+        "validate",
+        "sign off",
+        "permission gate",
+        "authorization step"
+      ]
     },
     {
       "id": "caveat",
@@ -2255,7 +3020,24 @@
             "description": "NotionAI provides a link to documentation"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "disclaimer",
+        "warning",
+        "limitation",
+        "risk notice",
+        "accuracy warning",
+        "may be wrong",
+        "hallucination warning",
+        "imperfect",
+        "beta notice",
+        "known limitation",
+        "error disclaimer",
+        "not guaranteed",
+        "use with caution",
+        "AI limitation",
+        "confidence qualifier"
+      ]
     },
     {
       "id": "consent",
@@ -2294,7 +3076,24 @@
             "description": "Notion shows a scrolling marquee when starting to transcribe notes, alerting the user of the requirement to explicitly request consent."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "permission",
+        "opt-in",
+        "data consent",
+        "user agreement",
+        "privacy consent",
+        "informed consent",
+        "data capture permission",
+        "GDPR",
+        "privacy",
+        "data collection notice",
+        "explicit consent",
+        "user permission",
+        "agree to terms",
+        "data sharing",
+        "consent management"
+      ]
     },
     {
       "id": "data-ownership",
@@ -2341,7 +3140,24 @@
             "description": "Substack adds a caveat to their setting panel"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "data control",
+        "my data",
+        "delete data",
+        "data rights",
+        "training data",
+        "data usage",
+        "privacy control",
+        "opt out training",
+        "data portability",
+        "export data",
+        "data governance",
+        "user data rights",
+        "data management",
+        "data retention",
+        "information control"
+      ]
     },
     {
       "id": "disclosure",
@@ -2389,7 +3205,24 @@
             "description": "Zoom discloses when AI enters a meeting with a large overlay that takes over the screen"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "AI label",
+        "transparency",
+        "AI generated",
+        "made by AI",
+        "attribution",
+        "machine-made",
+        "AI badge",
+        "AI indicator",
+        "content origin",
+        "generated content",
+        "AI disclosure",
+        "artificial intelligence label",
+        "automated content",
+        "bot indicator",
+        "source disclosure"
+      ]
     },
     {
       "id": "footprints",
@@ -2433,7 +3266,24 @@
             "description": "When used in discord, Midjourney's meta data on any variation links back to the original file. Months after starting a branch, a few clicks can route the user back through the history of their generation"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "audit trail",
+        "trace",
+        "history",
+        "breadcrumb",
+        "activity log",
+        "change history",
+        "version trail",
+        "provenance",
+        "step history",
+        "decision trail",
+        "process visibility",
+        "action log",
+        "paper trail",
+        "tracking",
+        "accountability trail"
+      ]
     },
     {
       "id": "incognito-mode",
@@ -2471,7 +3321,24 @@
             "description": "Perplexity's Comet browser defaults to dark mode and a prominent illustration when placed in incognito mode."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "private mode",
+        "no memory",
+        "anonymous",
+        "ephemeral",
+        "off the record",
+        "temporary session",
+        "privacy mode",
+        "forget conversation",
+        "stateless",
+        "untracked",
+        "private conversation",
+        "no history",
+        "session only",
+        "temporary context",
+        "disappearing chat"
+      ]
     },
     {
       "id": "watermark",
@@ -2509,7 +3376,24 @@
             "description": "IA Writer offers an example of a tool proactively watermarking generated text, distinguishing it in grey from text actually authored by the user"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "AI watermark",
+        "content mark",
+        "digital signature",
+        "C2PA",
+        "content authenticity",
+        "provenance mark",
+        "invisible watermark",
+        "metadata tag",
+        "origin mark",
+        "content credential",
+        "authenticity",
+        "AI stamp",
+        "traceability",
+        "content identification",
+        "digital fingerprint"
+      ]
     },
     {
       "id": "avatar",
@@ -2547,7 +3431,24 @@
             "description": "Zapier Copilot uses a simple geometric shape."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "AI avatar",
+        "bot icon",
+        "assistant image",
+        "profile picture",
+        "AI face",
+        "character",
+        "mascot",
+        "brand icon",
+        "visual identity",
+        "bot avatar",
+        "AI representation",
+        "agent icon",
+        "assistant avatar",
+        "chatbot icon",
+        "AI character"
+      ]
     },
     {
       "id": "color",
@@ -2594,7 +3495,24 @@
             "description": "Notion uses the standard color purple to signify AI actions"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "AI color",
+        "brand color",
+        "visual cue",
+        "color coding",
+        "accent color",
+        "highlight color",
+        "AI indicator color",
+        "theme color",
+        "differentiation",
+        "color system",
+        "AI visual language",
+        "color token",
+        "signature color",
+        "UI color",
+        "feature color"
+      ]
     },
     {
       "id": "iconography",
@@ -2611,7 +3529,24 @@
           "color"
         ],
         "examples": []
-      }
+      },
+      "searchKeywords": [
+        "AI icon",
+        "sparkle",
+        "wand",
+        "magic icon",
+        "AI symbol",
+        "feature icon",
+        "action icon",
+        "visual identifier",
+        "icon set",
+        "AI pictogram",
+        "interface icon",
+        "toolbar icon",
+        "AI badge",
+        "interaction icon",
+        "AI indicator icon"
+      ]
     },
     {
       "id": "name",
@@ -2662,7 +3597,24 @@
             "description": "While Notion has created a vibrant visual personality for its AI, it is referred to with the utilitarian \"AI\" name."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "AI name",
+        "assistant name",
+        "bot name",
+        "brand name",
+        "product name",
+        "agent name",
+        "AI identity",
+        "naming convention",
+        "character name",
+        "copilot",
+        "assistant identity",
+        "chatbot name",
+        "AI branding",
+        "voice assistant name",
+        "digital assistant"
+      ]
     },
     {
       "id": "personality",
@@ -2702,7 +3654,24 @@
             "description": "Zendesk has preset personas to choose from when creating a new bot."
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "AI personality",
+        "bot personality",
+        "character traits",
+        "AI behavior",
+        "temperament",
+        "vibe",
+        "disposition",
+        "conversational style",
+        "AI character",
+        "brand personality",
+        "assistant persona",
+        "communication style",
+        "friendly AI",
+        "professional AI",
+        "AI attitude"
+      ]
     },
     {
       "id": "voice-input",
@@ -2736,7 +3705,24 @@
             "aspectRatio": "16 / 10"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "speech to text",
+        "microphone",
+        "spoken language",
+        "voice command",
+        "dictation",
+        "audio input",
+        "hands-free",
+        "talk to AI",
+        "speech recognition",
+        "natural speech",
+        "verbal prompt",
+        "voice interface",
+        "accessibility",
+        "multimodal input",
+        "spoken word"
+      ]
     },
     {
       "id": "thread-options",
@@ -2770,7 +3756,24 @@
             "aspectRatio": "16 / 10"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "new thread",
+        "continue conversation",
+        "fresh start",
+        "conversation management",
+        "thread control",
+        "chat branch",
+        "new chat",
+        "context reset",
+        "conversation scope",
+        "session management",
+        "topic switch",
+        "clean slate",
+        "thread fork",
+        "parallel conversations",
+        "conversation mode"
+      ]
     },
     {
       "id": "thread-history",
@@ -2804,7 +3807,24 @@
             "aspectRatio": "16 / 10"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "conversation history",
+        "chat log",
+        "past conversations",
+        "history",
+        "previous chats",
+        "resume conversation",
+        "session history",
+        "chat archive",
+        "conversation list",
+        "recent chats",
+        "saved conversations",
+        "thread list",
+        "conversation memory",
+        "chat timeline",
+        "revisit"
+      ]
     },
     {
       "id": "result-options",
@@ -2838,7 +3858,24 @@
             "aspectRatio": "16 / 10"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "copy button",
+        "share result",
+        "save output",
+        "result actions",
+        "export",
+        "result toolbar",
+        "quick actions",
+        "result utilities",
+        "output options",
+        "result menu",
+        "copy paste",
+        "download result",
+        "result management",
+        "output controls",
+        "result handling"
+      ]
     },
     {
       "id": "result-actions",
@@ -2872,7 +3909,24 @@
             "aspectRatio": "16 / 10"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "contextual actions",
+        "task-specific",
+        "per-result action",
+        "result toolbar",
+        "action buttons",
+        "result interaction",
+        "workflow acceleration",
+        "quick apply",
+        "result utility",
+        "follow-up action",
+        "act on result",
+        "result menu",
+        "actionable output",
+        "next step",
+        "result operation"
+      ]
     },
     {
       "id": "result-rendered-preview",
@@ -2906,7 +3960,24 @@
             "aspectRatio": "16 / 10"
           }
         ]
-      }
+      },
+      "searchKeywords": [
+        "live preview",
+        "rendered output",
+        "code preview",
+        "visual preview",
+        "real-time render",
+        "preview pane",
+        "WYSIWYG",
+        "instant preview",
+        "output visualization",
+        "rendered code",
+        "preview mode",
+        "live output",
+        "visual result",
+        "display output",
+        "render view"
+      ]
     }
   ]
 }

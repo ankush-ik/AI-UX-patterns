@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import Fuse from "fuse.js";
+import type { FuseResultMatch } from "fuse.js";
 import Search from "@ingka/search";
 import { Compass, Mic, Sparkles, Settings, LayoutGrid, Pencil, Gavel, ShieldCheck, CircleCheck, Tag } from "lucide-react";
 import type { Category, Pattern } from "@/lib/patterns";
@@ -30,24 +31,49 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
     [categoryData]
   );
 
+  // Denormalize category name onto patterns for search
+  const searchablePatterns = useMemo(
+    () => allPatterns.map((p) => ({
+      ...p,
+      categoryName: categoryData.find((c) => c.category.id === p.categoryId)?.category.name ?? "",
+    })),
+    [allPatterns, categoryData]
+  );
+
   const fuse = useMemo(
     () =>
-      new Fuse(allPatterns, {
+      new Fuse(searchablePatterns, {
         keys: [
           { name: "title", weight: 2 },
           { name: "description", weight: 1.5 },
-          { name: "categoryId", weight: 0.5 },
+          { name: "searchKeywords", weight: 1 },
+          { name: "categoryName", weight: 0.8 },
+          { name: "categoryId", weight: 0.3 },
         ],
-        threshold: 0.2,
+        threshold: 0.3,
+        includeMatches: true,
         minMatchCharLength: 2,
       }),
-    [allPatterns]
+    [searchablePatterns]
   );
 
-  const searchResults = useMemo(() => {
+  const searchResultsRaw = useMemo(() => {
     if (!searchQuery.trim()) return [];
-    return fuse.search(searchQuery).map((result) => result.item);
+    return fuse.search(searchQuery);
   }, [fuse, searchQuery]);
+
+  const searchResults = useMemo(
+    () => searchResultsRaw.map((r) => r.item),
+    [searchResultsRaw]
+  );
+
+  const searchHighlights = useMemo(() => {
+    const map = new Map<string, FuseResultMatch[]>();
+    for (const r of searchResultsRaw) {
+      if (r.matches) map.set(r.item.id, r.matches as FuseResultMatch[]);
+    }
+    return map;
+  }, [searchResultsRaw]);
 
   const isSearching = searchQuery.trim().length > 0;
 
@@ -155,6 +181,7 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
                   title={pattern.title}
                   description={pattern.description}
                   thumbnail={pattern.thumbnail}
+                  matches={searchHighlights.get(pattern.id)}
                 />
               ))}
             </div>
