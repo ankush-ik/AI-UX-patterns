@@ -622,7 +622,7 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
                         onClick={async () => {
                           setFeedbackSubmitting(true);
                           try {
-                            await fetch("/api/feedback", {
+                            const res = await fetch("/api/feedback", {
                               method: "POST",
                               headers: { "Content-Type": "application/json" },
                               body: JSON.stringify({
@@ -631,7 +631,10 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
                                 comment: feedbackComment || undefined,
                               }),
                             });
+                            if (!res.ok) throw new Error("Failed");
                             setFeedbackSubmitted(true);
+                          } catch {
+                            alert("Could not submit feedback. Please try again.");
                           } finally {
                             setFeedbackSubmitting(false);
                           }

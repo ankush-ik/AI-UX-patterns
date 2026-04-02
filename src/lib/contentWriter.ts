@@ -42,10 +42,14 @@ async function githubWrite(filePath: string, content: string, message: string): 
   const encoded = Buffer.from(content).toString("base64");
 
   const url = `https://api.github.com/repos/${GITHUB_REPO}/contents/${filePath}`;
-  const body: Record<string, string> = {
+  const body: Record<string, unknown> = {
     message,
     content: encoded,
     branch: GITHUB_BRANCH,
+    committer: {
+      name: "AI UX Patterns Bot",
+      email: "ankush-ik@users.noreply.github.com",
+    },
   };
   if (sha) {
     body.sha = sha;
