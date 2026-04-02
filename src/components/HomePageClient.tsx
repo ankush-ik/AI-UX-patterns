@@ -146,7 +146,7 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
       <header className="border-b border-sk-border">
         <div className="container mx-auto flex flex-wrap items-center justify-between gap-4 px-4 py-12 md:py-14">
           <div>
-            <h1 className="mb-3 text-4xl font-bold leading-tight text-sk-primary md:text-5xl">AI Design Patterns</h1>
+            <h1 className="mb-3 text-4xl font-bold leading-tight text-sk-primary md:text-5xl">Designing AI</h1>
             <p className="max-w-none text-base leading-relaxed text-sk-text-muted md:text-lg lg:whitespace-nowrap">
               Foundational elements and interactions for AI-enabled experiences
             </p>
