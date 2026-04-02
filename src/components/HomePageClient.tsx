@@ -159,28 +159,15 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
             </p>
           </div>
           <div className="w-full md:max-w-sm">
-            <div className="md:hidden">
-              <Search
-                id="pattern-search-sm"
-                value={searchQuery}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
-                onClear={() => setSearchQuery("")}
-                placeholder="Search"
-                ariaLabel="Search patterns"
-                size="small"
-              />
-            </div>
-            <div className="hidden md:block">
-              <Search
-                id="pattern-search"
-                value={searchQuery}
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
-                onClear={() => setSearchQuery("")}
-                placeholder="Search"
-                ariaLabel="Search patterns"
-                size="large"
-              />
-            </div>
+            <Search
+              id="pattern-search"
+              value={searchQuery}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+              onClear={() => setSearchQuery("")}
+              placeholder="Search"
+              ariaLabel="Search patterns"
+              size="large"
+            />
           </div>
         </div>
       </header>
