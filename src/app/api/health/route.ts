@@ -40,6 +40,23 @@ export async function GET() {
 
     const hasBlockingIssue = !isHealthy || (isProduction && !adminCredentialsConfigured);
 
+    const githubRepo = process.env.GITHUB_REPO ?? "ankush-ik/AI-UX-patterns";
+    const githubTokenSet = Boolean(process.env.GITHUB_TOKEN);
+    let githubStatus = "not configured";
+    if (githubTokenSet) {
+      try {
+        const res = await fetch(`https://api.github.com/repos/${githubRepo}`, {
+          headers: {
+            Authorization: `Bearer ${process.env.GITHUB_TOKEN}`,
+            Accept: "application/vnd.github.v3+json",
+          },
+        });
+        githubStatus = res.ok ? "connected" : `error (${res.status})`;
+      } catch {
+        githubStatus = "unreachable";
+      }
+    }
+
     return Response.json(
       {
         status: hasBlockingIssue ? "unhealthy" : warnings.length > 0 ? "degraded" : "healthy",
@@ -47,6 +64,7 @@ export async function GET() {
         environment: process.env.NODE_ENV || "unknown",
         adminCredentialsConfigured,
         adminMutationsEnabled,
+        github: { repo: githubRepo, tokenSet: githubTokenSet, status: githubStatus },
         warnings,
         timestamp: new Date().toISOString(),
       },
