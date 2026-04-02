@@ -1,18 +1,23 @@
 import { ImageResponse } from 'next/og';
-import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
 
 export const alt = 'Designing AI — Foundational elements and interactions for AI-enabled experiences';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
+export const dynamic = 'force-dynamic';
 
 export default async function OgImage() {
-  const fontBold = await readFile(
-    join(process.cwd(), 'src/app/fonts/NotoIKEALatinOnlyIJ-Bold.ttf')
-  );
-  const fontRegular = await readFile(
-    join(process.cwd(), 'src/app/fonts/NotoIKEALatinOnlyIJ-Regular.ttf')
-  );
+  const siteUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ??
+    (process.env.VERCEL_PROJECT_PRODUCTION_URL
+      ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+      : process.env.VERCEL_URL
+        ? `https://${process.env.VERCEL_URL}`
+        : 'http://localhost:3000');
+
+  const [boldData, regularData] = await Promise.all([
+    fetch(`${siteUrl}/fonts/NotoIKEALatinOnlyIJ-Bold.ttf`).then((r) => r.arrayBuffer()),
+    fetch(`${siteUrl}/fonts/NotoIKEALatinOnlyIJ-Regular.ttf`).then((r) => r.arrayBuffer()),
+  ]);
 
   return new ImageResponse(
     (
@@ -65,8 +70,8 @@ export default async function OgImage() {
     {
       ...size,
       fonts: [
-        { name: 'Noto IKEA Latin', data: fontBold, weight: 700, style: 'normal' },
-        { name: 'Noto IKEA Latin', data: fontRegular, weight: 400, style: 'normal' },
+        { name: 'Noto IKEA Latin', data: boldData, weight: 700, style: 'normal' },
+        { name: 'Noto IKEA Latin', data: regularData, weight: 400, style: 'normal' },
       ],
     }
   );
