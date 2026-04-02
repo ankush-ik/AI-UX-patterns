@@ -19,7 +19,7 @@ Patterns are organized by category (Wayfinders, Prompt Actions, Settings, Result
 
 ## ✨ Features
 
-- **56+ AI/UX Design Patterns** - Organized by category with detailed descriptions
+- **60+ AI/UX Design Patterns** - Organized by category with detailed descriptions
 - **Interactive Pattern Gallery** - Browse, search, and explore patterns with rich media
 - **Content Admin Dashboard** - Audit pattern coverage, validate references, spot gaps
 - **Production-Ready CMS Architecture** - Flexible adapter pattern for seamless provider switching
