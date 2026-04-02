@@ -50,11 +50,10 @@ export default async function AdminPage() {
           </div>
         </div>
 
-        <section className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+        <section className="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
           <StatCard label="Categories" value={report.totalCategories} />
           <StatCard label="Patterns" value={report.totalPatterns} />
           <StatCard label="Missing examples" value={report.patternsWithoutExamples.length} tone={report.patternsWithoutExamples.length ? "warn" : "default"} />
-          <StatCard label="Missing sources" value={report.patternsWithoutSourceUrl.length} tone={report.patternsWithoutSourceUrl.length ? "warn" : "default"} />
           <StatCard label="Broken related refs" value={report.brokenRelatedPatterns.length} tone={report.brokenRelatedPatterns.length ? "danger" : "default"} />
         </section>
 
@@ -148,6 +147,7 @@ export default async function AdminPage() {
 
             <div className="rounded-3xl border border-sk-border bg-white p-6 shadow-sm">
               <h2 className="text-skapa-h2 text-sk-primary">Most referenced patterns</h2>
+              <p className="mt-1 text-skapa-body-sm text-sk-text-muted">Patterns most frequently linked from other patterns&apos; related lists.</p>
               <ol className="mt-5 space-y-3 text-skapa-body-sm text-sk-text">
                 {report.mostReferencedPatterns.map((entry) => (
                   <li key={entry.pattern.id} className="flex items-center justify-between gap-4 rounded-2xl bg-sk-surface-muted px-4 py-3">
@@ -164,25 +164,12 @@ export default async function AdminPage() {
           </div>
         </section>
 
-        <section className="mt-10 grid gap-6 lg:grid-cols-2">
+        <section className="mt-10">
           <div className="rounded-3xl border border-sk-border bg-white p-6 shadow-sm">
             <h2 className="text-skapa-h2 text-sk-primary">Patterns missing examples</h2>
             <p className="mt-1 text-skapa-body-sm text-sk-text-muted">Candidates for enrichment before a future CMS workflow.</p>
-            <div className="mt-5 space-y-3">
+            <div className="mt-5 grid gap-3 lg:grid-cols-2">
               {report.patternsWithoutExamples.slice(0, 12).map((pattern) => (
-                <Link key={pattern.id} href={`/patterns/${pattern.id}`} className="flex items-start justify-between gap-4 rounded-2xl border border-sk-border px-4 py-3 text-skapa-body-sm hover:border-sk-primary">
-                  <span className="font-medium text-sk-text">{pattern.title}</span>
-                  <span className="text-skapa-overline text-sk-text-muted">{pattern.categoryId}</span>
-                </Link>
-              ))}
-            </div>
-          </div>
-
-          <div className="rounded-3xl border border-sk-border bg-white p-6 shadow-sm">
-            <h2 className="text-skapa-h2 text-sk-primary">Patterns missing sources</h2>
-            <p className="mt-1 text-skapa-body-sm text-sk-text-muted">Good targets for editorial completion or CMS metadata.</p>
-            <div className="mt-5 space-y-3">
-              {report.patternsWithoutSourceUrl.slice(0, 12).map((pattern) => (
                 <Link key={pattern.id} href={`/patterns/${pattern.id}`} className="flex items-start justify-between gap-4 rounded-2xl border border-sk-border px-4 py-3 text-skapa-body-sm hover:border-sk-primary">
                   <span className="font-medium text-sk-text">{pattern.title}</span>
                   <span className="text-skapa-overline text-sk-text-muted">{pattern.categoryId}</span>
