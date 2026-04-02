@@ -580,8 +580,7 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
             <div className="mt-16 border-t border-sk-border pt-10">
               {feedbackSubmitted ? (
                 <div className="rounded-2xl border border-sk-border bg-sk-surface-muted px-6 py-5">
-                  <p className="text-lg font-medium text-sk-primary">Thanks for your feedback!</p>
-                  <p className="mt-1 text-base text-sk-text-muted">Your input helps improve the pattern library.</p>
+                  <p className="text-lg font-medium text-sk-primary">Thank you</p>
                 </div>
               ) : (
                 <div className="space-y-4">
