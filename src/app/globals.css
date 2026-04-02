@@ -26,6 +26,11 @@
     min-height: 3.5rem;
     font-size: 1rem;
   }
+
+  /* Scrollable edge padding: visible at start/end, scrolls away in the middle */
+  .mobile-tabs .overflow-carousel__content {
+    padding-inline: 24px;
+  }
 }
 
 :root {

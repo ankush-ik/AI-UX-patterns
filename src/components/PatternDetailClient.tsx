@@ -433,7 +433,7 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
 
       <div className="container mx-auto px-[24px] py-8 md:px-4">
         {/* Mobile horizontal tab bar */}
-        <div className="sticky top-0 z-10 -mx-[24px] mb-[24px] bg-white pl-[24px] lg:hidden">
+        <div className="mobile-tabs sticky top-0 z-10 -mx-[24px] mb-[24px] bg-white lg:hidden">
           <Tabs
             tabs={tabs.map((tab) => (
               <Tab

@@ -211,7 +211,7 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
           /* Category browsing view */
           <div>
             {/* Mobile horizontal category tab bar */}
-            <div className="sticky top-0 z-10 -mx-[24px] mb-[24px] bg-white pl-[24px] lg:hidden">
+            <div className="mobile-tabs sticky top-0 z-10 -mx-[24px] mb-[24px] bg-white lg:hidden">
               <Tabs
                 tabs={sidebarItems.map((item) => {
                   const iconName = resolveIcon(categories.find(c => c.id === item.id)?.icon ?? "");
