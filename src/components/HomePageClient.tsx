@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useMemo } from "react";
+import { useState, useMemo, useCallback } from "react";
 import { useSearchParams } from "next/navigation";
 import Fuse from "fuse.js";
 import type { FuseResultMatch } from "fuse.js";
@@ -19,6 +19,7 @@ import tagIcon from "@ingka/ssr-icon/paths/tag";
 import { Compass, Mic, Sparkles, Settings, LayoutGrid, Pencil, Gavel, ShieldCheck, CircleCheck, Tag } from "lucide-react";
 import type { Category, Pattern } from "@/lib/patterns";
 import { useIconResolver } from "@/hooks/useIconResolver";
+import { useScrollSpy } from "@/hooks/useScrollSpy";
 import { SidebarNav } from "@/components/SidebarNav";
 import { PatternCard } from "@/components/PatternCard";
 
@@ -117,37 +118,18 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
     tag: tagIcon,
   };
 
-  useEffect(() => {
-    const handleScroll = () => {
-      const categoryElements = categories.map((cat) =>
-        document.getElementById(`category-${cat.id}`)
-      );
-      const windowHeight = window.innerHeight;
-      const documentHeight = document.documentElement.scrollHeight;
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-      const isNearBottom = windowHeight + scrollTop >= documentHeight - 100;
+  // Category scroll-spy items for IntersectionObserver
+  const categorySpyItems = useMemo(
+    () => categories.map((c) => ({ id: c.id, label: c.name })),
+    [categories]
+  );
 
-      if (isNearBottom) {
-        setActiveCategory(categories[categories.length - 1].id);
-        return;
-      }
+  const handleCategoryChange = useCallback((id: string) => setActiveCategory(id), []);
 
-      for (let i = categoryElements.length - 1; i >= 0; i--) {
-        const element = categoryElements[i];
-        if (element) {
-          const rect = element.getBoundingClientRect();
-          if (rect.top <= 150) {
-            setActiveCategory(categories[i].id);
-            break;
-          }
-        }
-      }
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    handleScroll();
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, [categories]);
+  useScrollSpy(activeCategory, handleCategoryChange, categorySpyItems, {
+    prefix: "category-",
+    rootMargin: "-100px 0px -66% 0px",
+  });
 
   const scrollToCategory = (categoryId: string) => {
     const element = document.getElementById(`category-${categoryId}`);
@@ -172,7 +154,7 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
         <div className="container mx-auto flex flex-wrap items-center justify-between gap-4 px-[24px] py-6 md:px-4 md:py-12">
           <div>
             <h1 className="mb-3 text-4xl font-bold leading-tight text-sk-primary md:text-5xl">Designing AI</h1>
-            <p className="max-w-none text-base leading-relaxed text-sk-text-muted md:text-lg lg:whitespace-nowrap">
+            <p className="max-w-none text-lg leading-relaxed text-sk-text-muted md:text-xl lg:whitespace-nowrap">
               Foundational elements and interactions for AI-enabled experiences
             </p>
           </div>
@@ -244,10 +226,6 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
                   );
                 })}
                 activeTab={activeCategory ? `category-${activeCategory}` : undefined}
-                onTabChanged={(tabPanelId) => {
-                  const catId = tabPanelId.replace("category-", "");
-                  scrollToCategory(catId);
-                }}
                 tabPanels={[]}
                 ariaLabel="Categories"
               />

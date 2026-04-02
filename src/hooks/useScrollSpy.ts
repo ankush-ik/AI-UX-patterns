@@ -7,6 +7,7 @@ import { useEffect } from "react";
 interface ScrollSpyOptions {
   rootMargin?: string;
   threshold?: number | number[];
+  prefix?: string;
 }
 
 export function useScrollSpy(
@@ -18,6 +19,7 @@ export function useScrollSpy(
   const {
     rootMargin = "-100px 0px -66% 0px",
     threshold = [0, 0.25, 0.5, 0.75, 1],
+    prefix = "section-",
   } = options;
 
   useEffect(() => {
@@ -31,7 +33,7 @@ export function useScrollSpy(
 
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
-        const sectionId = entry.target.id.replace("section-", "");
+        const sectionId = entry.target.id.replace(prefix, "");
         if (entry.isIntersecting) {
           intersectingSections.set(sectionId, entry.intersectionRatio);
         } else {
@@ -53,7 +55,7 @@ export function useScrollSpy(
     }, observerOptions);
 
     tabs.forEach((tab) => {
-      const element = document.getElementById(`section-${tab.id}`);
+      const element = document.getElementById(`${prefix}${tab.id}`);
       if (element) observer.observe(element);
     });
 
@@ -61,5 +63,5 @@ export function useScrollSpy(
       observer.disconnect();
       intersectingSections.clear();
     };
-  }, [tabs, setActiveTab, rootMargin, threshold]);
+  }, [tabs, setActiveTab, rootMargin, threshold, prefix]);
 }

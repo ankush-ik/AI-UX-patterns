@@ -444,10 +444,6 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
               />
             ))}
             activeTab={`section-${activeTab}`}
-            onTabChanged={(tabPanelId) => {
-              const tabId = tabPanelId.replace("section-", "") as TabType;
-              scrollToSection(tabId);
-            }}
             tabPanels={[]}
             ariaLabel="Sections"
           />

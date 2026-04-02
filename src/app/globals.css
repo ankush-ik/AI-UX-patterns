@@ -20,6 +20,14 @@
   }
 }
 
+/* Larger Skapa tab items on mobile */
+@media (max-width: 1023px) {
+  .tabs__tab {
+    min-height: 3.5rem;
+    font-size: 1rem;
+  }
+}
+
 :root {
   --sk-color-primary: #111111;
   --sk-color-primary-strong: #000000;
