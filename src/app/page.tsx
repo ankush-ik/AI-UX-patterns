@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { getCategories, getPatternsByCategory } from "@/lib/patternRepository";
 import { HomePageClient } from "@/components/HomePageClient";
 
@@ -13,9 +14,11 @@ export default async function HomePage() {
   );
 
   return (
-    <HomePageClient
-      categories={categories}
-      categoryData={categoryData}
-    />
+    <Suspense>
+      <HomePageClient
+        categories={categories}
+        categoryData={categoryData}
+      />
+    </Suspense>
   );
 }

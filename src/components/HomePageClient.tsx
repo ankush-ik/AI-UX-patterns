@@ -1,8 +1,10 @@
 'use client';
 
-import { useState, useEffect, useMemo, useRef } from "react";
+import { useState, useEffect, useMemo } from "react";
+import { useSearchParams } from "next/navigation";
 import Fuse from "fuse.js";
-import { Compass, Mic, Sparkles, Settings, LayoutGrid, Pencil, Gavel, ShieldCheck, CircleCheck, Tag, Search, X } from "lucide-react";
+import Search from "@ingka/search";
+import { Compass, Mic, Sparkles, Settings, LayoutGrid, Pencil, Gavel, ShieldCheck, CircleCheck, Tag } from "lucide-react";
 import type { Category, Pattern } from "@/lib/patterns";
 import { useIconResolver } from "@/hooks/useIconResolver";
 import { SidebarNav } from "@/components/SidebarNav";
@@ -18,9 +20,9 @@ interface HomePageClientProps {
 
 export function HomePageClient({ categories, categoryData }: HomePageClientProps) {
   const { resolveIcon } = useIconResolver();
+  const searchParams = useSearchParams();
   const [activeCategory, setActiveCategory] = useState<string>("");
-  const [searchQuery, setSearchQuery] = useState("");
-  const searchInputRef = useRef<HTMLInputElement>(null);
+  const [searchQuery, setSearchQuery] = useState(searchParams.get("q") ?? "");
 
   // Flatten all patterns for Fuse.js index
   const allPatterns = useMemo(
@@ -117,46 +119,26 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
   return (
     <div className="min-h-screen bg-white">
       <header className="border-b border-sk-border">
-        <div className="container mx-auto flex flex-wrap items-start justify-between gap-4 px-4 py-12 md:py-14">
+        <div className="container mx-auto flex flex-wrap items-center justify-between gap-4 px-4 py-12 md:py-14">
           <div>
-            <h1 className="mb-3 text-5xl font-bold leading-tight text-sk-primary md:text-6xl">AI Design Patterns</h1>
+            <h1 className="mb-3 text-4xl font-bold leading-tight text-sk-primary md:text-5xl">AI Design Patterns</h1>
             <p className="max-w-none text-base leading-relaxed text-sk-text-muted md:text-lg lg:whitespace-nowrap">
               Foundational elements and interactions for AI-enabled experiences
             </p>
           </div>
-          <a
-            href="/admin"
-            className="inline-flex min-h-10 items-center border border-sk-border-strong px-4 text-skapa-body-sm text-sk-primary transition-colors hover:border-sk-primary"
-          >
-            Content admin
-          </a>
-        </div>
-      </header>
-
-      {/* Search bar */}
-      <div className="border-b border-sk-border bg-white">
-        <div className="container mx-auto px-4 py-4">
-          <div className="relative max-w-xl">
-            <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-sk-text-muted" />
-            <input
-              ref={searchInputRef}
-              type="text"
+          <div className="w-full max-w-sm">
+            <Search
+              id="pattern-search"
               value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder={'Search patterns\u2026 e.g. "help users get started"'}
-              className="w-full rounded-lg border border-sk-border bg-white py-2.5 pl-10 pr-10 text-skapa-body-md text-sk-text placeholder-sk-text-muted focus:border-sk-primary focus:outline-none focus:ring-1 focus:ring-sk-primary"
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+              onClear={() => setSearchQuery("")}
+              placeholder="Search"
+              ariaLabel="Search patterns"
+              size="large"
             />
-            {isSearching && (
-              <button
-                onClick={() => { setSearchQuery(""); searchInputRef.current?.focus(); }}
-                className="absolute right-3 top-1/2 -translate-y-1/2 rounded p-0.5 text-sk-text-muted hover:text-sk-text"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            )}
           </div>
         </div>
-      </div>
+      </header>
 
       <div className="container mx-auto px-4 py-12 md:py-14">
         {isSearching ? (
@@ -186,6 +168,14 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
               items={sidebarItems}
               activeItem={activeCategory}
               onItemClick={scrollToCategory}
+              footer={
+                <a
+                  href="/admin"
+                  className="block py-4 pl-[3.75rem] pr-5 text-base font-semibold leading-tight text-[#b0b0b0] transition-colors hover:text-sk-text-muted md:pl-[4rem] md:text-lg"
+                >
+                  Content admin
+                </a>
+              }
             />
 
             <main className="flex-1">
@@ -196,7 +186,7 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
                   className="mb-24 scroll-mt-20"
                 >
                   <div className="mb-6">
-                    <h2 className="mb-3 text-5xl font-bold leading-tight text-sk-primary md:text-6xl">{category.name}</h2>
+                    <h2 className="mb-3 text-4xl font-bold leading-tight text-sk-primary md:text-5xl">{category.name}</h2>
                     <p className="text-lg leading-relaxed text-sk-text-muted md:text-xl">{category.description}</p>
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

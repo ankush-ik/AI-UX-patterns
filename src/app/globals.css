@@ -1,3 +1,9 @@
+@import '@ingka/svg-icon/dist/style.css';
+@import '@ingka/button/dist/style.css';
+@import '@ingka/text/dist/style.css';
+@import '@ingka/search/dist/style.css';
+@import '@ingka/focus/dist/style.css';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;

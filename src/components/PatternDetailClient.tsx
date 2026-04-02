@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useEffect, useCallback } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import Search from "@ingka/search";
 import { ThumbsUp, ThumbsDown, X, ChevronLeft, ChevronRight } from "lucide-react";
 import type { Pattern, Category, PatternExample, PatternEmbedExample, PatternImageExample } from "@/lib/patterns";
 import { getPatternSources } from "@/lib/patterns";
@@ -26,6 +28,8 @@ function isImageExample(example: PatternExample): example is PatternImageExample
 }
 
 export function PatternDetailClient({ pattern, category, relatedPatterns }: PatternDetailClientProps) {
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState<TabType>("description");
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(null);
   const [feedbackRating, setFeedbackRating] = useState<"helpful" | "not-helpful" | null>(null);
@@ -399,7 +403,18 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
             <span>/</span>
             <span className="text-sk-primary">{pattern.title}</span>
           </div>
-          <a href="/admin" className="transition-colors hover:text-sk-primary">Content admin</a>
+          <div className="w-64">
+            <Search
+              id="detail-search"
+              value={searchQuery}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchQuery(e.target.value)}
+              onSearch={() => { if (searchQuery.trim()) router.push(`/?q=${encodeURIComponent(searchQuery.trim())}`); }}
+              onClear={() => setSearchQuery("")}
+              placeholder="Search"
+              ariaLabel="Search patterns"
+              size="small"
+            />
+          </div>
         </div>
       </div>
 
@@ -427,7 +442,7 @@ export function PatternDetailClient({ pattern, category, relatedPatterns }: Patt
           {/* Main Content */}
           <main className="flex-1 space-y-8 pr-0 lg:pr-10 xl:pr-16">
             <div className="max-w-[90ch]">
-              <h1 className="mb-4 text-5xl font-bold leading-tight text-sk-primary md:text-6xl">{pattern.title}</h1>
+              <h1 className="mb-4 text-4xl font-bold leading-tight text-sk-primary md:text-5xl">{pattern.title}</h1>
               <p className="mb-5 text-xl leading-[1.7] text-sk-text-muted md:text-2xl">{pattern.description}</p>
               {sources.length > 0 ? (
                 <p className="text-base text-sk-text-muted md:text-lg">
