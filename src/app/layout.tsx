@@ -8,14 +8,14 @@ const siteUrl =
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: 'AI UX Patterns',
-    template: '%s | AI UX Patterns',
+    default: 'Designing AI',
+    template: '%s | Designing AI',
   },
   description:
-    'A curated collection of AI UX design patterns — proven solutions for building intuitive AI-powered experiences.',
+    'Foundational elements and interactions for AI-enabled experiences',
   openGraph: {
     type: 'website',
-    siteName: 'AI UX Patterns',
+    siteName: 'Designing AI',
     locale: 'en_US',
   },
   twitter: {
