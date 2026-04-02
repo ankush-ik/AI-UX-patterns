@@ -1,16 +1,1 @@
-[
-  {
-    "id": "60a93266-5674-4183-8986-e73c152b0994",
-    "patternId": "disclosure",
-    "rating": "helpful",
-    "comment": "test from curl",
-    "createdAt": "2026-04-02T12:05:07.025Z"
-  },
-  {
-    "id": "d322c1c7-4860-4551-8fab-a0572f3bb0eb",
-    "patternId": "example-gallery",
-    "rating": "helpful",
-    "comment": "Test",
-    "createdAt": "2026-04-02T12:52:58.137Z"
-  }
-]
+[]
