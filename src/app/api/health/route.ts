@@ -40,7 +40,7 @@ export async function GET() {
 
     const hasBlockingIssue = !isHealthy || (isProduction && !adminCredentialsConfigured);
 
-    const githubRepo = process.env.GITHUB_REPO ?? "ankush-ik/AI-UX-patterns";
+    const githubRepo = process.env.GITHUB_REPO || "ankush-ik/AI-UX-patterns";
     const githubTokenSet = Boolean(process.env.GITHUB_TOKEN);
     let githubStatus = "not configured";
     if (githubTokenSet) {

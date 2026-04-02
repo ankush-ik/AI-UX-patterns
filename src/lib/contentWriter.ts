@@ -6,8 +6,8 @@ export const CONTENT_FILE = path.join(process.cwd(), "src/content/patterns.json"
 export const FEEDBACK_FILE = path.join(process.cwd(), "src/content/feedback.json");
 
 const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
-const GITHUB_REPO = process.env.GITHUB_REPO ?? "ankush-ik/AI-UX-patterns";
-const GITHUB_BRANCH = process.env.GITHUB_BRANCH ?? "main";
+const GITHUB_REPO = process.env.GITHUB_REPO || "ankush-ik/AI-UX-patterns";
+const GITHUB_BRANCH = process.env.GITHUB_BRANCH || "main";
 
 function useGitHubWriter(): boolean {
   return Boolean(GITHUB_TOKEN);
