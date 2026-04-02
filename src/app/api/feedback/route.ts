@@ -48,10 +48,15 @@ export async function POST(request: Request) {
     createdAt: new Date().toISOString(),
   };
 
-  const feedback = await readFeedback();
-  feedback.push(entry);
-  await writeFeedback(feedback);
-  resetCache();
+  try {
+    const feedback = await readFeedback();
+    feedback.push(entry);
+    await writeFeedback(feedback);
+    resetCache();
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Unknown error";
+    return Response.json({ error: "Failed to save feedback", detail: message }, { status: 500 });
+  }
 
   return Response.json({ feedback: entry }, { status: 201 });
 }
