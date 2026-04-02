@@ -52,14 +52,15 @@ export function HomePageClient({ categories, categoryData }: HomePageClientProps
         ],
         threshold: 0.3,
         includeMatches: true,
-        minMatchCharLength: 2,
+        includeScore: true,
+        minMatchCharLength: 3,
       }),
     [searchablePatterns]
   );
 
   const searchResultsRaw = useMemo(() => {
     if (!searchQuery.trim()) return [];
-    return fuse.search(searchQuery);
+    return fuse.search(searchQuery).filter((r) => (r.score ?? 1) < 0.25);
   }, [fuse, searchQuery]);
 
   const searchResults = useMemo(
